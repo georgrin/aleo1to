@@ -1,5 +1,4 @@
 export const Footer = (props: any) => {
-  console.log('some upd for test beta')
   return (
     <>
       <div className="h-14 md:h-10"></div>
