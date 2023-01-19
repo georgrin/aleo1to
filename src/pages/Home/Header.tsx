@@ -71,8 +71,8 @@ export const Header = ({ info }: any) => {
         </div>
 
         <div className="flex items-center ml-[auto] lg:ml-[20px] mr-[10px]">
-          <a target="_blank" href={socialData.github.value} className="relative inline-block icon telegram-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
-          <a target="_blank" href={socialData.telegram.value} className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
+          <a target="_blank" href={socialData.telegram.value} className="relative inline-block icon telegram-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
+          <a target="_blank" href={socialData.github.value} className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
         </div>
 
         <div className="lg:hidden">
