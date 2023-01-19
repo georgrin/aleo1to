@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 *.zip
+
+# Custom
+TODO.md

@@ -49,10 +49,9 @@ export const Header = ({ info }: any) => {
       <div className="container h-[68px] sm:h-[56px] flex items-center flex-wrap">
         <div className="flex items-center">
           <a href="/" className="font-bold text-xl">
-            <span className="relative inline-block top-[2px] icon logo-white-icon w-[160px] h-[50px]"></span>
+            <span className="relative inline-block sm:top-[2px] icon logo-white-icon w-[160px] h-[50px]"></span>
           </a>
-          <div className="relative text-default ml-4 hidden font-medium mr-4 
-                          sm:block sm:top-[2px]">
+          <div className="text-default ml-4 hidden md:block font-medium mr-4">
             Highly optimized pool for maximum performance
           </div>
         </div>
@@ -61,8 +60,7 @@ export const Header = ({ info }: any) => {
             return (
               <a
                 key={label}
-                className="relative block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors
-                           sm:top-[4px]"
+                className="block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors"
                 href={value}
                 target="_blank"
               >
