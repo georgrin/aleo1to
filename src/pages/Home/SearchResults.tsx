@@ -143,7 +143,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   function AddressLineCopyIcon() {
     return (
       <div
-        className="flex items-center cursor-pointer"
+        className="relative flex items-center cursor-pointer"
         onClick={async () => {
           await navigator.clipboard.writeText(address);
           setShowCopied(true);
@@ -153,7 +153,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         }}
       >
         <div
-          className={`
+          className={`  
                         w-[20px] h-[20px]
                         icon copy-blue-icon
                         group-[:nth-of-type(2n)]/search-result:copy-green-icon
@@ -175,8 +175,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           className={
             tooltipProps.className +
             `
-                        fixed
-                        top-[80px]
+                        absolute
+                        top-[30px]
                         left-1/2
                         translate-x-[-50%]
                     `
