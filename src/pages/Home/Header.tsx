@@ -4,19 +4,19 @@ export const Header = ({ info }: any) => {
   const linksData = [
     {
       label: "Join",
-      value: "docs.aleo1.to/join/ubuntu",
+      value: "https://docs.aleo1.to/join/ubuntu",
     },
     {
       label: "PPLNS",
-      value: "docs.aleo1.to/rewards/pool-rewards",
+      value: "https://docs.aleo1.to/rewards/pool-rewards",
     },
     {
       label: "Solo",
-      value: "docs.aleo1.to/rewards/solo-rewards",
+      value: "https://docs.aleo1.to/rewards/solo-rewards",
     },
     {
       label: "Team",
-      value: "docs.aleo1.to/about/team",
+      value: "https://docs.aleo1.to/about/team",
     },
   ];
 
@@ -61,7 +61,7 @@ export const Header = ({ info }: any) => {
               <a
                 key={label}
                 className="block text-sm font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors"
-                href={`/${value}`}
+                href={value}
                 target="_blank"
               >
                 {label}
