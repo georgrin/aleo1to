@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+        { "source": "/api/(.*)", "destination": "https://api.aleo1.to/v1/$1" }
+    ]
+}
