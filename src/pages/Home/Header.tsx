@@ -51,7 +51,8 @@ export const Header = ({ info }: any) => {
           <a href="/" className="font-bold text-xl">
             <span className="relative inline-block top-[2px] icon logo-white-icon w-[160px] h-[50px]"></span>
           </a>
-          <div className="text-default ml-4 hidden sm:block font-medium mr-4">
+          <div className="relative text-default ml-4 hidden font-medium mr-4 
+                          sm:block sm:top-[2px]">
             Highly optimized pool for maximum performance
           </div>
         </div>
@@ -60,7 +61,8 @@ export const Header = ({ info }: any) => {
             return (
               <a
                 key={label}
-                className="block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors"
+                className="relative block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors
+                           sm:top-[4px]"
                 href={value}
                 target="_blank"
               >
