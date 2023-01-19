@@ -4,19 +4,19 @@ export const Header = ({ info }: any) => {
   const linksData = [
     {
       label: "Join",
-      value: "docs.aleo1.to/join/ubuntu",
+      value: "https://docs.aleo1.to/join/ubuntu",
     },
     {
       label: "PPLNS",
-      value: "docs.aleo1.to/rewards/pool-rewards",
+      value: "https://docs.aleo1.to/rewards/pool-rewards",
     },
     {
       label: "Solo",
-      value: "docs.aleo1.to/rewards/solo-rewards",
+      value: "https://docs.aleo1.to/rewards/solo-rewards",
     },
     {
       label: "Team",
-      value: "docs.aleo1.to/about/team",
+      value: "https://docs.aleo1.to/about/team",
     },
   ];
 
@@ -49,9 +49,10 @@ export const Header = ({ info }: any) => {
       <div className="container h-[68px] sm:h-[56px] flex items-center flex-wrap">
         <div className="flex items-center">
           <a href="/" className="font-bold text-xl">
-            <span className="relative inline-block top-[2px] icon logo-white-icon w-[124px] h-[50px]"></span>
+            <span className="relative inline-block top-[2px] icon logo-white-icon w-[160px] h-[50px]"></span>
           </a>
-          <div className="text-default ml-4 hidden sm:block font-medium mr-4">
+          <div className="relative text-default ml-4 hidden font-medium mr-4 
+                          sm:block sm:top-[2px]">
             Highly optimized pool for maximum performance
           </div>
         </div>
@@ -60,8 +61,9 @@ export const Header = ({ info }: any) => {
             return (
               <a
                 key={label}
-                className="block text-sm font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors"
-                href={`/${value}`}
+                className="relative block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors
+                           sm:top-[4px]"
+                href={value}
                 target="_blank"
               >
                 {label}
@@ -71,8 +73,8 @@ export const Header = ({ info }: any) => {
         </div>
 
         <div className="flex items-center ml-[auto] lg:ml-[20px] mr-[10px]">
-          <a target="_blank" href={socialData.github.value} className="relative inline-block icon telegram-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
-          <a target="_blank" href={socialData.telegram.value} className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
+          <a target="_blank" href={socialData.telegram.value} className="relative inline-block icon telegram-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
+          <a target="_blank" href={socialData.github.value} className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"/>
         </div>
 
         <div className="lg:hidden">
