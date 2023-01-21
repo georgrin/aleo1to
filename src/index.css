@@ -98,6 +98,9 @@ html, body {
     .logo-white-icon {
         background-image: url('./assets/logo_white.svg');
     }
+    .logo-blue-white-icon {
+        background-image: url('./assets/logo_blue-white.svg');
+    }
     .logo-footer-icon {
         background-image: url('./assets/logo_footer_white.svg');
     }
