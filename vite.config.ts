@@ -10,6 +10,7 @@ export default defineConfig({
       '/api': {
         target: 'https://api.aleo1.to/v1/',
         changeOrigin: true,
+        timeout: 30000,
         rewrite: (path) => path.replace(/^\/api/, ''),
       }
     }
