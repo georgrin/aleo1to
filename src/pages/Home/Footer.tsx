@@ -4,7 +4,7 @@ export const Footer = (props: any) => {
       <div className="h-14 md:h-10"></div>
       <div className="fixed flex items-center bottom-0 w-full h-auto md:h-10 bg-surface top-line font-thirdly text-sm">
         <div className="container flex items-center">
-          <div className="mr-auto text-[12px]">1to (c) 2023</div>
+          {/* <div className="mr-auto text-[12px]">1to (c) 2023</div> */}
           <a
             target="_blank"
             href="https://www.ingonyama.com"
