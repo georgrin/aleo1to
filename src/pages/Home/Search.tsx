@@ -11,7 +11,7 @@ function SearchButton({ search, address }: { search: any; address: string }) {
   };
   return (
     <button
-      className="bg-primary-2 mt-2 px-[46px] font-extrabold text-xl h-[50px] rounded-[5px] hover:shadow-primary"
+      className="bg-primary-2 mt-2 sm:mt-0 sm:ml-2 px-[46px] font-extrabold text-base sm:text-xl h-[50px] rounded-[5px] hover:shadow-primary"
       onClick={clickHandler}
     >
       Search
@@ -24,7 +24,7 @@ export const Search = ({ search }: any) => {
 
   return (
     <div className="container">
-      <div className="bg-surface mt-1 md:px-6 py-6 flex flex-col">
+      <div className="bg-surface mt-1 md:px-6 py-6 flex flex-col sm:flex-row">
         <div className="w-full relative">
           {SearchInputIcon()}
           {SearchInput()}

@@ -17,13 +17,13 @@ export const JoinPool = (props: any) => {
     return (
         <div className='container'>
             <div className={
-                `bg-surface px-6 py-6 top-line
+                `bg-surface p-2 sm:p-6 top-line
                 border-[rgba(255,255,255,0.15)]
                 ${hasUpDownSwitch && !isDown?``:`rounded-b-[5px]`}
             `}>
                 {Header()}
 
-                <div className='w-full relative mt-6'>
+                <div className='relative w-full mt-6'>
                     {CommandLine()}
                     {CommandCopyIcon()}
                 </div>
@@ -36,9 +36,9 @@ export const JoinPool = (props: any) => {
     function Header() {
         return (
             <div className='flex justify-between'>
-                <div className="text-xl font-medium">
+                <p className="text-base sm:text-xl font-medium">
                     {title}
-                </div>
+                </p>
                 {hasUpDownSwitch && UpDownSwitch()}
             </div>
         )
@@ -63,11 +63,12 @@ export const JoinPool = (props: any) => {
         return (
             <div
                 className={`
-                    w-full pl-4 py-3
+                    w-full pl-4 py-3 pr-10
                     bg-default border-[rgba(255,255,255,0.15)] border-[1px]
                     outline-none rounded-[5px]
                     font-medium
                     text-default
+                    text-sm sm:text-base
                 `}
             >
                 {command}
@@ -79,7 +80,7 @@ export const JoinPool = (props: any) => {
         return (
             <div
                 className={`
-                    absolute top-1/2 -translate-y-1/2
+                    absolute top-[15px]
                     right-4 w-[20px] h-[20px]
                     icon copy-grey-icon
                     cursor-pointer
@@ -102,7 +103,7 @@ export const JoinPool = (props: any) => {
                         rounded-[5px] p-[14px]
                         top-12
                         px-10
-                        left-1/2
+                        left-[-30px]
                         translate-x-[-50%]
                     `}
                     variant="info"

@@ -6,7 +6,7 @@ import { SearchResult } from './model/SearchResult';
 import Modal from 'react-modal';
 import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
 import 'react-tooltip/dist/react-tooltip.css';
-import './index.css';
+import './index.scss';
 
 Modal.setAppElement('#modals');
 
@@ -43,7 +43,7 @@ function App() {
         <Home.Header info={info} />
 
         <div className='pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px]'>
-            <Home.Stat
+           <Home.Stat
                 info={info}
                 historyInfo={historyInfo}
                 updateHistoryInfo={updateHistoryInfo}
