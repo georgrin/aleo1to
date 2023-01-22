@@ -133,7 +133,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
 
   return (
     <div className="container pt-[22px] pb-[19px]">
-      <div className="relative flex flex-wrap gap-[15px] md:gap-[35px]">
+      <div className="relative flex flex-wrap gap-[15px] md:gap-[30px]">
         {renderItem({
           id: "miners_active",
           title: "Miners",
