@@ -13,7 +13,7 @@ export const SearchResults = ({
   deleteSearchResult,
 }: SearchResultsProps) => {
   return (
-    <div className="container font-secondary">
+    <div className="container font-secondary relative overflow-hidden">
       {searchResults.map((result) => (
         <SearchResult
           key={result.address}
