@@ -116,7 +116,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
 
     return (
         <div className='container pt-[22px] pb-[19px]'>
-            <div className="flex flex-wrap justify-between gap-4">
+            <div className="flex flex-wrap gap-4">
                 {renderItem({
                     id: 'miners_active',
                     title: 'Miners',
