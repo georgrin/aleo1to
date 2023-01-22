@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'react-ionicons';
+import { IoChevronUpSharp, IoChevronDownSharp } from 'react-icons/io5';
 import { Tooltip } from 'react-tooltip';
 
 export const JoinPool = (props: any) => {
@@ -51,8 +51,8 @@ export const JoinPool = (props: any) => {
             }}>
                 <div className='mr-2'>
                     {isDown ?
-                        <ChevronUp width='22px' height='22px' color='inherit' /> :
-                        <ChevronDown width='22px' height='22px' color='inherit' />}
+                        <IoChevronUpSharp size={22} color='inherit' /> :
+                        <IoChevronDownSharp size={22} color='inherit' />}
                 </div>
                 {isDown ? 'Up' : 'Down'}
             </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search as SearchIcon } from "react-ionicons"; // TODO: too large size. Use react instead
+import { TbSearch } from 'react-icons/tb';
 
 function SearchButton({ search, address }: { search: any; address: string }) {
   const clickHandler = () => {
@@ -58,7 +58,7 @@ export const Search = ({ search }: any) => {
   function SearchInputIcon() {
     return (
       <div className="absolute top-1/2 -translate-y-1/2 left-[16px]">
-        <SearchIcon color="rgba(255,255,255,0.5)" width="18px" />
+        <TbSearch color="rgba(255,255,255,0.5)" width="18px" />
       </div>
     );
   }

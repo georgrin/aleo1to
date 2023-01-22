@@ -1,4 +1,4 @@
-import { Close as CloseIcon, InformationCircleOutline } from "react-ionicons";
+import { MdClose, MdInfoOutline } from "react-icons/md";
 import { formatNumber } from "../../formatNumber";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
@@ -194,7 +194,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         className="cursor-pointer"
         onClick={() => deleteSearchResult(searchResult)}
       >
-        <CloseIcon color="rgb(255,66,90)" width="27px" height="27px" />
+        <MdClose color="rgb(255,66,90)" size={25} />
       </div>
     );
   }
@@ -219,9 +219,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`mined-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
@@ -243,9 +242,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`hashrate-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
@@ -264,9 +262,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`estimated-hashrate-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
@@ -297,9 +294,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`mined-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
@@ -321,9 +317,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`hashrate-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
@@ -345,9 +340,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`estimated-hashrate-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>

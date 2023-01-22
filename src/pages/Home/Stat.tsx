@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { formatNumber } from "../../formatNumber";
-import { InformationCircleOutline } from "react-ionicons";
+import { MdInfoOutline } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
+// TODO: Add dynamic load
 import Chart from "chart.js/auto";
 
 export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
@@ -152,9 +153,8 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
                 id="pool-rewards"
                 className="hover:text-primary cursor-pointer fill-current ml-2 mt-[2px]"
               >
-                <InformationCircleOutline
-                  width="22px"
-                  height="22px"
+                <MdInfoOutline
+                  size={22}
                   color="inherit"
                 />
               </div>
