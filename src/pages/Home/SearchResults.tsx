@@ -448,14 +448,14 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             ))}
           </div>
           <div className="mt-4">
-            <div className="text-sm sm:text-base mb-1">Hashrate (c/s): </div>
+            <div className="text-sm sm:text-base mb-1"><span className="text-default">Hashrate (c/s):</span></div>
               <span className="text-sm sm:text-base">{formatNumber(Math.round(miner.hashrate))}</span>
             <div className="text-sm sm:text-base mt-1">
-             <span className="text-sm sm:text-base">{formatNumber(Math.round(miner.hashrate_estimated))}</span>
+             <span className="text-sm sm:text-base text-default">{formatNumber(Math.round(miner.hashrate_estimated))}</span>
             </div>
           </div>
           <div className="text-sm sm:text-base mt-4">
-            <span>Shares: </span>
+            <span className="text-default">Shares: </span>
             <span className="whitespace-nowrap">
               {miner.shares_solo == null || miner.shares_pool != null
                 ? formatNumber(Math.round(miner.shares_pool))
