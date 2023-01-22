@@ -435,26 +435,27 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           <div className="text-default mb-4">Hardware:</div>
           <div className="mb-4">
             {miner.cpu.map((cpu: any, i: number) => (
-              <div key={i} className="text-sm sm:text-base mb-2">
+              <div key={i} className="mb-2">
                 CPU: {(cpu[1] > 1 ? cpu[1] + " x " : "") + cpu[0]}
               </div>
             ))}
           </div>
           <div>
             {miner.gpu.map((gpu: any, i: number) => (
-              <div key={i} className="text-sm sm:text-base mb-2">
+              <div key={i} className="mb-2">
                 GPU: {(gpu[1] > 1 ? gpu[1] + " x " : "") + gpu[0]}
               </div>
             ))}
           </div>
           <div className="mt-4">
-            <div className="text-sm sm:text-base mb-1"><span className="text-default">Hashrate (c/s):</span></div>
-              <span className="text-sm sm:text-base">{formatNumber(Math.round(miner.hashrate))}</span>
-            <div className="text-sm sm:text-base mt-1">
-             <span className="text-sm sm:text-base text-default">{formatNumber(Math.round(miner.hashrate_estimated))}</span>
+            <div className="text-default mb-1">Hashrate (c/s): </div>
+            {formatNumber(Math.round(miner.hashrate))}
+            <br />
+            <div className="text-default mt-1">
+              {formatNumber(Math.round(miner.hashrate_estimated))}
             </div>
           </div>
-          <div className="text-sm sm:text-base mt-4">
+          <div className="mt-4">
             <span className="text-default">Shares: </span>
             <span className="whitespace-nowrap">
               {miner.shares_solo == null || miner.shares_pool != null
