@@ -99,7 +99,7 @@ export const Header = ({ info }: any) => {
                 return (
                   <a
                     key={label}
-                    href={`/${value}`}
+                    href={value}
                     target="_blank"
                     className="font-medium hover:text-primary mb-[10px] last:mb-0"
                   >
