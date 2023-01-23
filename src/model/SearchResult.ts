@@ -1,5 +1,7 @@
+import { ISearchAddressResponse } from "../api";
+
 export interface SearchResult {
   address: string;
-  data: any;
+  data: ISearchAddressResponse | null;
   interval?: any;
 }
