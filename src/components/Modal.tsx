@@ -1,1 +1,1 @@
-export const Modal = (props: any) => {}
+export const Modal = (props: any) => {};

@@ -1,3 +1,3 @@
 export const Chart = (props: any) => {
-    return null;
-}
+  return null;
+};

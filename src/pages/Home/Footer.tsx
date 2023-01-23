@@ -11,7 +11,7 @@ export const Footer = (props: any) => {
             className="flex items-center"
           >
             <div className="relative sm:mt-[4px] mr-[10px] text-[12px]">
-             Built with:
+              Built with:
             </div>
             <span className="inline-block top-[2px] icon logo-footer-icon w-[90px] h-[25px] sm:w-[125px] sm:h-[30px]"></span>
           </a>

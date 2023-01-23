@@ -220,10 +220,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`mined-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip {...tooltipProps} anchorId={`mined-${address}`}>
                 Testnet3 credits
@@ -243,10 +240,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`hashrate-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip {...tooltipProps} anchorId={`hashrate-${address}`}>
                 Calculated by proves count on miner
@@ -263,10 +257,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`estimated-hashrate-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip
                 {...tooltipProps}
@@ -295,10 +286,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`mined-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip {...tooltipProps} anchorId={`mined-in-solo-${address}`}>
                 Testnet3 credits
@@ -318,10 +306,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`hashrate-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip
                 {...tooltipProps}
@@ -341,10 +326,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 id={`estimated-hashrate-in-solo-${address}`}
                 className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip
                 {...tooltipProps}

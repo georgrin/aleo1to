@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TbSearch } from 'react-icons/tb';
+import { TbSearch } from "react-icons/tb";
 
 function SearchButton({ search, address }: { search: any; address: string }) {
   const clickHandler = () => {

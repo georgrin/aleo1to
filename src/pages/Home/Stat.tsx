@@ -153,10 +153,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
                 id="pool-rewards"
                 className="hover:text-primary cursor-pointer fill-current ml-2 mt-[2px]"
               >
-                <MdInfoOutline
-                  size={22}
-                  color="inherit"
-                />
+                <MdInfoOutline size={22} color="inherit" />
               </div>
               <Tooltip
                 className={`

@@ -1,2 +1,2 @@
-export * from './getInfo';
-export * from './search';
+export * from "./getInfo";
+export * from "./search";
