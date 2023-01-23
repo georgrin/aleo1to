@@ -135,7 +135,7 @@ function useAppController() {
 
   async function updateHistoryInfo() {
     loadingBarRef.current?.continuousStart();
-    const info = (await api.getHistoryInfo()) as any[];
+    const info = await api.getHistoryInfo();
     let aggregatedInfo: any[] = [];
     let count = 0;
     info.forEach((item, i) => {
@@ -162,6 +162,8 @@ function useAppController() {
             if (k === "date") {
               return;
             }
+            // TODO: Add type
+            // @ts-ignore
             last[k] += item[k];
           });
         }
