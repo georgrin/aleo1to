@@ -227,6 +227,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
+              {/* TODO: idk what is it return */}
               {formatNumber(data.balance.total.toFixed(1))} {"("}+
               {formatNumber(data.balance.change_1h.toFixed(1))} 1h; +
               {formatNumber(data.balance.change_24h.toFixed(1))} 24h
