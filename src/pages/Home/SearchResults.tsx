@@ -3,6 +3,7 @@ import { formatNumber } from "../../formatNumber";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
+import { Miner } from "../../api";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -103,7 +104,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   );
 
   function getMiners() {
-    return data.miners.map((miner: any) => {
+    if (!data) return []
+    return data.miners.map((miner: Miner) => {
       const cpu: any[] = [];
       const gpu: any[] = [];
       miner.hardware.cpu.forEach((cpu_: any) => {
@@ -227,11 +229,14 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {/* TODO: idk what is it return */}
-              {formatNumber(data.balance.total.toFixed(1))} {"("}+
-              {formatNumber(data.balance.change_1h.toFixed(1))} 1h; +
-              {formatNumber(data.balance.change_24h.toFixed(1))} 24h
+              {/* TODO: Convert to React Component */}
+              {!data ? null : <>
+                {formatNumber(parseFloat(data.balance.total.toFixed(1)))} {"("}+
+                {formatNumber(parseFloat(data.balance.change_1h.toFixed(1)))} 1h; +
+                {formatNumber(parseFloat(data.balance.change_24h.toFixed(1)))} 24h
               {")"}
+              </>}
+              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -248,7 +253,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s
+              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s</>}
+              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -268,12 +274,13 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {formatNumber(Math.floor(data.hashrate.estimated.in_pool))} c/s
+              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.estimated.in_pool))} c/s</>}
+              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
             <div className="text-default mr-2">Shares</div>
-            <div>{formatNumber(data.shares.in_pool.valid)}</div>
+            <div>{!data ? null : <>{formatNumber(data.shares.in_pool.valid)}</>}</div>
           </div>
         </div>
         <div className="bg-surface w-full rounded-[5px] p-3">
@@ -294,10 +301,13 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {formatNumber(data.balance_solo.total.toFixed(1))} {"("}+
-              {formatNumber(data.balance_solo.change_1h.toFixed(1))} 1h; +
-              {formatNumber(data.balance_solo.change_24h.toFixed(1))} 24h
-              {")"}
+              {!data ? null : <>
+                {formatNumber(parseFloat(data.balance_solo.total.toFixed(1)))} {"("}+
+                {formatNumber(parseFloat(data.balance_solo.change_1h.toFixed(1)))} 1h; +
+                {formatNumber(parseFloat(data.balance_solo.change_24h.toFixed(1)))} 24h
+                {")"}
+              </>}
+              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -317,7 +327,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {formatNumber(Math.floor(data.hashrate.stat.in_solo))} c/s
+              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.stat.in_solo))} c/s</>}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -337,7 +347,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {formatNumber(Math.floor(data.hashrate.estimated.in_solo))} c/s
+              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.estimated.in_solo))} c/s</>}
+              
             </div>
           </div>
         </div>

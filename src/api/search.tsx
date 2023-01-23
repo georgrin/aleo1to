@@ -8,7 +8,7 @@ export interface ISearchAddressResponse {
   miners: Miner[];
 }
 
-interface Miner {
+export interface Miner {
   hardware_id: string;
   caption: string;
   ip: string;
