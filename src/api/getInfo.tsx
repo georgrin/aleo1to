@@ -28,7 +28,7 @@ interface Miners {
   inactive: number;
 }
 
-interface IGetHistoryInfoResponse {
+export interface IGetHistoryInfoResponse {
   date: string;
   miners_active: number;
   miners_total: number;

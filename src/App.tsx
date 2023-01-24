@@ -73,7 +73,7 @@ export default App;
 
 function useAppController() {
   const [info, setInfo] = useState<any>(null);
-  const [historyInfo, setHistoryInfo] = useState<any>(null);
+  const [historyInfo, setHistoryInfo] = useState<api.IGetHistoryInfoResponse[] | []>([]);
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   const [joinPoolIsDown, setJoinPoolIsDown] = useState(true);
@@ -84,7 +84,7 @@ function useAppController() {
   const [cookies, setCookie] = useCookies(["searchAddresses"]);
 
   const searchAddresses = loadSearchAddresses();
-
+  
   useEffect(() => {
     updateInfo();
     setInterval(() => {
@@ -136,7 +136,8 @@ function useAppController() {
   async function updateHistoryInfo() {
     loadingBarRef.current?.continuousStart();
     const info = await api.getHistoryInfo();
-    let aggregatedInfo: any[] = [];
+    
+    let aggregatedInfo: api.IGetHistoryInfoResponse[] = [];
     let count = 0;
     info.forEach((item, i) => {
       const date = new Date(item.date);
@@ -151,6 +152,7 @@ function useAppController() {
             if (k === "date") {
               return;
             }
+            // @ts-ignore
             last[k] /= count;
           });
           count = 0;
