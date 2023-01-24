@@ -258,7 +258,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
         <div className="flex items-center text-default text-md font-medium">
           {props.title}
         </div>
-        <div className="flex items-center text-[24px] font-medium mt-[6px]">
+        <div className="flex items-center text-[22px] font-medium mt-[6px]">
           {props.value}
           <div
             className="cursor-pointer"

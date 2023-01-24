@@ -129,8 +129,7 @@ export const JoinPool = (props: any) => {
       <div className="mt-4 text-sm text-default font-medium">
         {!joinPoolCommand && (
           <>
-           {/* FIXME: Add space private key */} 
-            Script will generate <span className="text-white">private key</span>
+            Script will generate <span className="text-white">private key </span>
             and <span className="text-white">address</span>, it appears on
             console and will be saved on your disk. If you already have an
             address — <span className="text-white">type it above</span> for
@@ -138,13 +137,13 @@ export const JoinPool = (props: any) => {
             <br />
           </>
         )}
-        If it not works or too easy for you, see our
+        If it not works or too easy for you, see our 
         <a
           className="text-primary hover:underline font-bold"
           href="https://docs.aleo1.to/join/"
           target="_blank"
         >
-          detailed guide
+          <span> detailed guide</span>
         </a>
       </div>
     );
