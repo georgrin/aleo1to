@@ -358,7 +358,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
 
   function TableHead() {
     return (
-      <div className="p-6 flex grow-0 shrink-0">
+      <div className="hidden p-6 sm:flex grow-0 shrink-0">
         <div className="self-center min-w-[10%] max-w-[100%] md:max-w-[25%] w-[10%] grow-[1]">
           Host
         </div>
@@ -382,9 +382,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
     return (
       <div
         key={i}
-        className="top-line border-[rgba(255,255,255,0.15)] p-6 flex grow-0 shrink-0"
+        className="top-line border-[rgba(255,255,255,0.15)] p-6 sm:flex grow-0 shrink-0"
       >
-        <div className="min-w-[10%] max-w-[50%] w-[10%] grow-[1] pr-5 md:max-w-[25%]">
+        <div className="relative min-w-[10%] sm:max-w-[50%] sm:w-[10%] grow-[1] sm:pr-5 pl-[20px] sm:pl-0 md:max-w-[25%] mb-[30px] sm:mb-0">
+          <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">Host</p>
           <div>{miner.ip}</div>
           <div className="text-sm text-default font-default font-medium mt-2 break-words">
             {miner.hostname}
@@ -425,7 +426,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             ? formatNumber(Math.round(miner.shares_pool))
             : formatNumber(Math.round(miner.shares_solo))}
         </div>
-        <div className="md:hidden min-w-[10%] max-w-[100%] w-[10%] grow-[1]">
+        <div className="relative md:hidden min-w-[10%] max-w-[100%] sm:w-[10%] sm:pr-5 pl-[20px] sm:pl-0 grow-[1]">
+        <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">Host info</p>
           <div className="text-default mb-4">Hardware:</div>
           <div className="mb-4">
             {miner.cpu.map((cpu: any, i: number) => (
