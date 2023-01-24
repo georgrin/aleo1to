@@ -129,6 +129,7 @@ export const JoinPool = (props: any) => {
       <div className="mt-4 text-sm text-default font-medium">
         {!joinPoolCommand && (
           <>
+           {/* FIXME: Add space private key */} 
             Script will generate <span className="text-white">private key</span>
             and <span className="text-white">address</span>, it appears on
             console and will be saved on your disk. If you already have an

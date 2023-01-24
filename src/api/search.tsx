@@ -65,7 +65,7 @@ interface Stat {
   in_solo: number;
 }
 
-interface Balance {
+export interface Balance {
   total: number;
   change_1h: number;
   change_24h: number;

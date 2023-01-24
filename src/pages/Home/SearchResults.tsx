@@ -231,12 +231,14 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             <div>
               {/* TODO: Convert to React Component */}
               {!data ? null : <>
-                {formatNumber(parseFloat(data.balance.total.toFixed(1)))} {"("}+
-                {formatNumber(parseFloat(data.balance.change_1h.toFixed(1)))} 1h; +
-                {formatNumber(parseFloat(data.balance.change_24h.toFixed(1)))} 24h
-              {")"}
+                {/* @ts-ignore */}
+                {formatNumber(data.balance.total.toFixed(1))} {"("}+
+                {/* @ts-ignore */}
+                {formatNumber(data.balance.change_1h.toFixed(1))} 1h; +
+                {/* @ts-ignore */}
+                {formatNumber(data.balance.change_24h.toFixed(1))} 24h
+                {")"}
               </>}
-              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -254,7 +256,6 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             </div>
             <div>
               {!data ? null : <>{formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s</>}
-              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -302,12 +303,15 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             </div>
             <div>
               {!data ? null : <>
-                {formatNumber(parseFloat(data.balance_solo.total.toFixed(1)))} {"("}+
-                {formatNumber(parseFloat(data.balance_solo.change_1h.toFixed(1)))} 1h; +
-                {formatNumber(parseFloat(data.balance_solo.change_24h.toFixed(1)))} 24h
-                {")"}
+                {/* TODO: Convert to React Component */}
+                {/* @ts-ignore */}
+                {formatNumber(data.balance_solo.total.toFixed(1))} {"("}+
+                {/* @ts-ignore */}
+                {formatNumber(data.balance_solo.change_1h.toFixed(1))} 1h; +
+                {/* @ts-ignore */}
+                {formatNumber(data.balance_solo.change_24h.toFixed(1))} 24h
+              {")"}
               </>}
-              
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
