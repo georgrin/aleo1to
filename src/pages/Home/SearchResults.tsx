@@ -1,5 +1,4 @@
 import { MdClose, MdInfoOutline } from "react-icons/md";
-import { formatNumber } from "../../formatNumber";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
@@ -274,7 +273,12 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             </div>
             <div>
               {!data ? null : (
-                <>{formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s</>
+                <>
+                  {getNumberWithCommas({
+                    value: Math.floor(data.hashrate.stat.in_pool),
+                  })}{" "}
+                  c/s
+                </>
               )}
             </div>
           </div>
@@ -297,7 +301,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             <div>
               {!data ? null : (
                 <>
-                  {formatNumber(Math.floor(data.hashrate.estimated.in_pool))}{" "}
+                  {getNumberWithCommas({
+                    value: Math.floor(data.hashrate.estimated.in_pool),
+                  })}{" "}
                   c/s
                 </>
               )}
@@ -306,7 +312,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           <div className="mt-[6px] flex flex-wrap leading-[1]">
             <div className="text-default mr-2">Shares</div>
             <div>
-              {!data ? null : <>{formatNumber(data.shares.in_pool.valid)}</>}
+              {!data ? null : (
+                <>{getNumberWithCommas({ value: data.shares.in_pool.valid })}</>
+              )}
             </div>
           </div>
         </div>
@@ -355,7 +363,12 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             </div>
             <div>
               {!data ? null : (
-                <>{formatNumber(Math.floor(data.hashrate.stat.in_solo))} c/s</>
+                <>
+                  {getNumberWithCommas({
+                    value: Math.floor(data.hashrate.stat.in_solo),
+                  })}{" "}
+                  c/s
+                </>
               )}
             </div>
           </div>
@@ -378,7 +391,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             <div>
               {!data ? null : (
                 <>
-                  {formatNumber(Math.floor(data.hashrate.estimated.in_solo))}{" "}
+                  {getNumberWithCommas({
+                    value: Math.floor(data.hashrate.estimated.in_solo),
+                  })}{" "}
                   c/s
                 </>
               )}
@@ -450,16 +465,18 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           </div>
         </div>
         <div className="hidden md:block min-w-[10%] max-w-[20%] w-[10%] grow-[1] pr-5">
-          {formatNumber(Math.round(miner.hashrate))}
+          {getNumberWithCommas({ value: Math.round(miner.hashrate) })}
           <br />
           <div className="mt-4 text-default">
-            {formatNumber(Math.round(miner.hashrate_estimated))}
+            {getNumberWithCommas({
+              value: Math.round(miner.hashrate_estimated),
+            })}
           </div>
         </div>
         <div className="hidden md:block min-w-[10%] max-w-[10%] w-[10%] grow-[1]">
           {miner.shares_solo == null || miner.shares_pool != null
-            ? formatNumber(Math.round(miner.shares_pool))
-            : formatNumber(Math.round(miner.shares_solo))}
+            ? getNumberWithCommas({ value: Math.round(miner.shares_pool) })
+            : getNumberWithCommas({ value: Math.round(miner.shares_solo) })}
         </div>
         <div className="relative md:hidden min-w-[10%] max-w-[100%] sm:w-[10%] sm:pr-5 pl-[20px] sm:pl-0 grow-[1]">
           <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">
@@ -482,18 +499,20 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           </div>
           <div className="mt-4">
             <div className="text-default mb-1">Hashrate (c/s): </div>
-            {formatNumber(Math.round(miner.hashrate))}
+            {getNumberWithCommas({ value: Math.round(miner.hashrate) })}
             <br />
             <div className="text-default mt-1">
-              {formatNumber(Math.round(miner.hashrate_estimated))}
+              {getNumberWithCommas({
+                value: Math.round(miner.hashrate_estimated),
+              })}
             </div>
           </div>
           <div className="mt-4">
             <span className="text-default">Shares: </span>
             <span className="whitespace-nowrap">
               {miner.shares_solo == null || miner.shares_pool != null
-                ? formatNumber(Math.round(miner.shares_pool))
-                : formatNumber(Math.round(miner.shares_solo))}
+                ? getNumberWithCommas({ value: Math.round(miner.shares_pool) })
+                : getNumberWithCommas({ value: Math.round(miner.shares_solo) })}
             </span>
           </div>
         </div>
