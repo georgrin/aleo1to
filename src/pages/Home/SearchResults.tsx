@@ -3,7 +3,28 @@ import { formatNumber } from "../../formatNumber";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
-import { Miner } from "../../api";
+import { Balance, Miner } from "../../api";
+import { getNumberWithCommas } from "../../helpers/getNumberWithComas";
+
+/**
+ * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
+ */
+const ResultMinerInSolo = ({ total, change_1h, change_24h }: Balance) => {
+  const firstNumber = getNumberWithCommas({ value: total.toFixed(1) });
+  const secondNumber = getNumberWithCommas({ value: change_1h.toFixed(1) });
+  const thirdNumber = getNumberWithCommas({ value: change_24h.toFixed(1) });
+  return <>{`${firstNumber} (+${secondNumber} 1h; +${thirdNumber} 24h)`}</>;
+};
+
+/**
+ * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
+ */
+const ResultMinerInPool = ({ total, change_1h, change_24h }: Balance) => {
+  const firstNumber = getNumberWithCommas({ value: total.toFixed(1) });
+  const secondNumber = getNumberWithCommas({ value: change_1h.toFixed(1) });
+  const thirdNumber = getNumberWithCommas({ value: change_24h.toFixed(1) });
+  return <>{`${firstNumber} (+${secondNumber} 1h; +${thirdNumber} 24h)`}</>;
+};
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -104,7 +125,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   );
 
   function getMiners() {
-    if (!data) return []
+    if (!data) return [];
     return data.miners.map((miner: Miner) => {
       const cpu: any[] = [];
       const gpu: any[] = [];
@@ -229,16 +250,13 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {/* TODO: Convert to React Component */}
-              {!data ? null : <>
-                {/* @ts-ignore */}
-                {formatNumber(data.balance.total.toFixed(1))} {"("}+
-                {/* @ts-ignore */}
-                {formatNumber(data.balance.change_1h.toFixed(1))} 1h; +
-                {/* @ts-ignore */}
-                {formatNumber(data.balance.change_24h.toFixed(1))} 24h
-                {")"}
-              </>}
+              {!data ? null : (
+                <ResultMinerInPool
+                  total={data.balance.total}
+                  change_1h={data.balance.change_1h}
+                  change_24h={data.balance.change_24h}
+                />
+              )}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -255,7 +273,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s</>}
+              {!data ? null : (
+                <>{formatNumber(Math.floor(data.hashrate.stat.in_pool))} c/s</>
+              )}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -275,13 +295,19 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.estimated.in_pool))} c/s</>}
-              
+              {!data ? null : (
+                <>
+                  {formatNumber(Math.floor(data.hashrate.estimated.in_pool))}{" "}
+                  c/s
+                </>
+              )}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
             <div className="text-default mr-2">Shares</div>
-            <div>{!data ? null : <>{formatNumber(data.shares.in_pool.valid)}</>}</div>
+            <div>
+              {!data ? null : <>{formatNumber(data.shares.in_pool.valid)}</>}
+            </div>
           </div>
         </div>
         <div className="bg-surface w-full rounded-[5px] p-3">
@@ -302,16 +328,13 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {!data ? null : <>
-                {/* TODO: Convert to React Component */}
-                {/* @ts-ignore */}
-                {formatNumber(data.balance_solo.total.toFixed(1))} {"("}+
-                {/* @ts-ignore */}
-                {formatNumber(data.balance_solo.change_1h.toFixed(1))} 1h; +
-                {/* @ts-ignore */}
-                {formatNumber(data.balance_solo.change_24h.toFixed(1))} 24h
-              {")"}
-              </>}
+              {!data ? null : (
+                <ResultMinerInSolo
+                  total={data.balance_solo.total}
+                  change_1h={data.balance_solo.change_1h}
+                  change_24h={data.balance_solo.change_24h}
+                />
+              )}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -331,7 +354,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.stat.in_solo))} c/s</>}
+              {!data ? null : (
+                <>{formatNumber(Math.floor(data.hashrate.stat.in_solo))} c/s</>
+              )}
             </div>
           </div>
           <div className="mt-[6px] flex flex-wrap leading-[1]">
@@ -351,8 +376,12 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               </Tooltip>
             </div>
             <div>
-              {!data ? null : <>{formatNumber(Math.floor(data.hashrate.estimated.in_solo))} c/s</>}
-              
+              {!data ? null : (
+                <>
+                  {formatNumber(Math.floor(data.hashrate.estimated.in_solo))}{" "}
+                  c/s
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -389,7 +418,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         className="top-line border-[rgba(255,255,255,0.15)] p-6 sm:flex grow-0 shrink-0"
       >
         <div className="relative min-w-[10%] sm:max-w-[50%] sm:w-[10%] grow-[1] sm:pr-5 pl-[20px] sm:pl-0 md:max-w-[25%] mb-[30px] sm:mb-0">
-          <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">Host</p>
+          <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">
+            Host
+          </p>
           <div>{miner.ip}</div>
           <div className="text-sm text-default font-default font-medium mt-2 break-words">
             {miner.hostname}
@@ -431,7 +462,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             : formatNumber(Math.round(miner.shares_solo))}
         </div>
         <div className="relative md:hidden min-w-[10%] max-w-[100%] sm:w-[10%] sm:pr-5 pl-[20px] sm:pl-0 grow-[1]">
-        <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">Host info</p>
+          <p className="absolute left-0 origin-top-left rotate-90 sm:hidden text-default">
+            Host info
+          </p>
           <div className="text-default mb-4">Hardware:</div>
           <div className="mb-4">
             {miner.cpu.map((cpu: any, i: number) => (
