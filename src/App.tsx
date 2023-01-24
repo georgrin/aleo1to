@@ -73,7 +73,7 @@ export default App;
 
 function useAppController() {
   const [info, setInfo] = useState<any>(null);
-  const [historyInfo, setHistoryInfo] = useState<api.IGetHistoryInfoResponse[] | []>([]);
+  const [historyInfo, setHistoryInfo] = useState<api.IGetHistoryInfoResponse[] | null>(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   const [joinPoolIsDown, setJoinPoolIsDown] = useState(true);
