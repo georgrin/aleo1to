@@ -24,7 +24,7 @@ export const Search = ({ search }: any) => {
 
   return (
     <div className="container">
-      <div className="bg-surface mt-1 md:px-6 py-6 flex flex-col sm:flex-row">
+      <div className="flex flex-col bg-surface mt-1 py-3 md:py-6 px-2 md:px-6 sm:flex-row">
         <div className="w-full relative">
           {SearchInputIcon()}
           {SearchInput()}
