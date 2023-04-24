@@ -1,18 +1,21 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig, loadEnv } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
+export default ({ mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  return defineConfig({
+    plugins: [react()],
+    server: {
+      proxy: {
+        "/api": {
+          target: process.env.VITE_API_URL,
+          changeOrigin: true,
+          timeout: 300000,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
+      },
+    },
+  });
+};
 
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://api.aleo1.to/v1/',
-        changeOrigin: true,
-        timeout: 300000,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      }
-    }
-  }
-});

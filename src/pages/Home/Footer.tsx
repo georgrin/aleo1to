@@ -1,13 +1,4 @@
-import { useEffect } from "react";
-
 export const Footer = (props: any) => {
-  useEffect(() => {
-    try {
-      throw Error("This is an example error on Footer");
-    } catch (error) {
-      console.log('error message: ', error);
-    }
-  }, []);
   return (
     <>
       <div className="h-14 md:h-10"></div>
