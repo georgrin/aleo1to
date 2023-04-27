@@ -313,7 +313,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                   Testnet3 credits earned in <br /> incentivized period of phase 2
                 </Tooltip>
               </div>
-              <p>{!data ? null : <>{getNumberWithCommas({ value: data.balance_phase2.in_pool_incentivize.total })}</>}</p>
+              <p>{!data ? null : <>{getNumberWithCommas({ value: data.balance_phase2.in_pool_incentivize.total, separator: "" })}</>}</p>
             </div>
             {/* IN POOL:Phase END */}
           </div>
