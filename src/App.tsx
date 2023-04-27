@@ -27,7 +27,7 @@ function App() {
       <LoadingBar color="rgba(0,117,255,1)" height={4} shadow ref={loadingBarRef} />
       <Home.Header info={info} />
 
-      <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px]">
+      <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden">
         <Home.Stat info={info} historyInfo={historyInfo} updateHistoryInfo={updateHistoryInfo} />
         <Home.Search search={searchAddress} />
         {!joinPoolIsDown && joinPool}

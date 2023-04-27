@@ -226,10 +226,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             >
               In Pool
             </div>
-            <div className="mt-[12.5px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[8px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Mined
-                <div id={`mined-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`mined-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`mined-${address}`}>
@@ -248,10 +248,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             </div>
 
             {/* IN POOL:Hashrate START */}
-            <div className="mt-[6px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Hashrate
-                <div id={`hashrate-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`hashrate-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`hashrate-${address}`}>
@@ -272,10 +272,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             {/* IN POOL:Hashrate END */}
 
             {/* IN POOL:Estimated Hashrate START */}
-            <div className="mt-[6px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Estimated Hashrate
-                <div id={`estimated-hashrate-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`estimated-hashrate-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`estimated-hashrate-${address}`}>
@@ -296,17 +296,17 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             {/* IN POOL:Estimated Hashrate END */}
 
             {/* IN POOL:Shares START */}
-            <div className="mt-[2px] flex flex-wrap leading-[22px]">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
               <p className="text-default mr-2">Shares</p>
               <p>{!data ? null : <>{getNumberWithCommas({ value: data.shares.in_pool.valid })}</>}</p>
             </div>
             {/* IN POOL:Shares END */}
 
             {/* IN POOL:Phase START */}
-            <div className="mt-[6px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Phase 2
-                <div id={`mined-in-solo-Phase2`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`mined-in-solo-Phase2`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`mined-in-solo-Phase2`}>
@@ -322,10 +322,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           {/* IN SOLO START */}
           <div className="bg-surface w-full rounded-[5px] p-3">
             <div className="bg-[rgba(255,255,255,0.1)] w-fit px-2 py-[3px] font-default font-medium rounded-[5px]">In Solo</div>
-            <div className="mt-[12.5px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[8px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Mined
-                <div id={`mined-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`mined-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`mined-in-solo-${address}`}>
@@ -341,10 +341,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 )}
               </div>
             </div>
-            <div className="mt-[6px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Hashrate
-                <div id={`hashrate-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`hashrate-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`hashrate-in-solo-${address}`}>
@@ -362,10 +362,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 )}
               </div>
             </div>
-            <div className="mt-[6px] flex flex-wrap leading-[1]">
-              <div className="text-default flex mr-2">
+            <div className="mt-[2px] flex flex-wrap leading-[26px]">
+              <div className="text-default flex items-center mr-2">
                 Estimated Hashrate
-                <div id={`estimated-hashrate-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1 relative top-[-2px]">
+                <div id={`estimated-hashrate-in-solo-${address}`} className="hover:text-primary cursor-pointer fill-current ml-1">
                   <MdInfoOutline size={22} color="inherit" />
                 </div>
                 <Tooltip {...tooltipProps} anchorId={`estimated-hashrate-in-solo-${address}`}>
