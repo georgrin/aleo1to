@@ -11,7 +11,7 @@ export default ({ mode }) => {
         "/api": {
           target: process.env.VITE_API_URL,
           changeOrigin: true,
-          timeout: 300000,
+          timeout: 1000,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },

@@ -173,27 +173,37 @@ function useAppController() {
       loadingBarRef.current?.continuousStart();
       // TODO: try catch?
       const { data } = await api.searchAddress(address);
-      if (data) {
-        result.data = data;
-        loadingBarRef.current?.complete();
-        if (!result.data.miners.length && result.data.balance.total <= 0 && result.data.balance_solo.total <= 0) {
-          setJoinPoolIsDown(false);
-          setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
-          deleteSearchResult(result);
-          return;
-        }
-        if (!result.interval) {
-          setJoinPoolIsDown(true);
-          setJoinPoolCommand(null);
-          result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
-        }
-        setSearchResults((results) => {
-          if (results.indexOf(result) < 0) {
-            return [result, ...results];
+      try {
+        if (data) {
+          result.data = data;
+          loadingBarRef.current?.complete();
+          /**
+           * нужно сравнивать 
+            balance.in_pool.total
+            balance.solo.total
+            balance_phase2.in_pool_incentivize.total
+           */
+          if (!result.data.miners.length && result.data.balance.in_pool.total <= 0 && result.data.balance.solo.total <= 0 && result.data.balance_phase2.in_pool_incentivize.total) {
+            setJoinPoolIsDown(false);
+            setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
+            deleteSearchResult(result);
+            return;
           }
+          if (!result.interval) {
+            setJoinPoolIsDown(true);
+            setJoinPoolCommand(null);
+            result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
+          }
+          setSearchResults((results) => {
+            if (results.indexOf(result) < 0) {
+              return [result, ...results];
+            }
 
-          return [...results];
-        });
+            return [...results];
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }
