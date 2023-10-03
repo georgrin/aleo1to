@@ -65,7 +65,17 @@ interface Stat {
   in_solo: number;
 }
 
-export interface Balance {
+interface Balances {
+  in_pool: BalanceOne;
+  solo: BalanceOne;
+}
+
+interface BalancesPhase2 {
+  in_pool: BalanceOne;
+  in_pool_incentivize: BalanceOne;
+}
+
+export interface BalanceOne {
   in_pool: {
     total: number;
     change_1h: number;
