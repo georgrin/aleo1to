@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export interface ISearchAddressResponse {
-  balance: Balance;
-  balance_phase2: BalancePhase2;
+  balance: Balances;
+  balance_phase2: BalancesPhase2;
   hashrate: Hashrate;
   shares: Shares;
   miners: Miner[];
