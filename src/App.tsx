@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as api from "./api";
 import * as Home from "./pages/Home";
+import { withProfiler } from "@sentry/react";
 import { useCookies } from "react-cookie";
 import { SearchResult } from "./model/SearchResult";
 import Modal from "react-modal";
@@ -13,54 +14,24 @@ Modal.setAppElement("#modals");
 const UPDATE_INTERVAL = 1000 * 60 * 5; // 5 minutes;
 
 function App() {
-  const {
-    loadingBarRef,
-    info,
-    historyInfo,
-    updateHistoryInfo,
-    joinPoolIsDown,
-    setJoinPoolIsDown,
-    joinPoolCommand,
-    searchAddress,
-    searchResults,
-    deleteSearchResult,
-  } = useAppController();
+  const { loadingBarRef, info, historyInfo, updateHistoryInfo, joinPoolIsDown, setJoinPoolIsDown, joinPoolCommand, searchAddress, searchResults, deleteSearchResult } = useAppController();
 
   if (!info) {
     return null;
   }
 
-  const joinPool = (
-    <Home.JoinPool
-      joinPoolCommand={joinPoolCommand}
-      hasUpDownSwitch={!!searchResults.filter((result) => result.data).length}
-      isDown={joinPoolIsDown}
-      setIsDown={setJoinPoolIsDown}
-    />
-  );
+  const joinPool = <Home.JoinPool joinPoolCommand={joinPoolCommand} hasUpDownSwitch={!!searchResults.filter((result) => result.data).length} isDown={joinPoolIsDown} setIsDown={setJoinPoolIsDown} />;
 
   return (
     <>
-      <LoadingBar
-        color="rgba(0,117,255,1)"
-        height={4}
-        shadow
-        ref={loadingBarRef}
-      />
+      <LoadingBar color="rgba(0,117,255,1)" height={4} shadow ref={loadingBarRef} />
       <Home.Header info={info} />
 
-      <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px]">
-        <Home.Stat
-          info={info}
-          historyInfo={historyInfo}
-          updateHistoryInfo={updateHistoryInfo}
-        />
+      <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden">
+        <Home.Stat info={info} historyInfo={historyInfo} updateHistoryInfo={updateHistoryInfo} />
         <Home.Search search={searchAddress} />
         {!joinPoolIsDown && joinPool}
-        <Home.SearchResults
-          searchResults={searchResults}
-          deleteSearchResult={deleteSearchResult}
-        />
+        <Home.SearchResults searchResults={searchResults} deleteSearchResult={deleteSearchResult} />
         {joinPoolIsDown && joinPool}
       </div>
 
@@ -69,7 +40,7 @@ function App() {
   );
 }
 
-export default App;
+export default withProfiler(App);
 
 function useAppController() {
   const [info, setInfo] = useState<any>(null);
@@ -84,7 +55,7 @@ function useAppController() {
   const [cookies, setCookie] = useCookies(["searchAddresses"]);
 
   const searchAddresses = loadSearchAddresses();
-  
+
   useEffect(() => {
     updateInfo();
     setInterval(() => {
@@ -123,10 +94,7 @@ function useAppController() {
   }
 
   function saveSearchAddresses() {
-    setCookie(
-      "searchAddresses",
-      encodeURIComponent(JSON.stringify(searchAddresses))
-    );
+    setCookie("searchAddresses", encodeURIComponent(JSON.stringify(searchAddresses)));
   }
 
   async function updateInfo() {
@@ -136,7 +104,7 @@ function useAppController() {
   async function updateHistoryInfo() {
     loadingBarRef.current?.continuousStart();
     const info = await api.getHistoryInfo();
-    
+
     let aggregatedInfo: api.IGetHistoryInfoResponse[] = [];
     let count = 0;
     info.forEach((item, i) => {
@@ -205,33 +173,37 @@ function useAppController() {
       loadingBarRef.current?.continuousStart();
       // TODO: try catch?
       const { data } = await api.searchAddress(address);
-      if (data) {
-        result.data = data;
-        loadingBarRef.current?.complete();
-        if (
-          !result.data.miners.length &&
-          result.data.balance.total <= 0 &&
-          result.data.balance_solo.total <= 0
-        ) {
-          setJoinPoolIsDown(false);
-          setJoinPoolCommand(
-            `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
-          );
-          deleteSearchResult(result);
-          return;
-        }
-        if (!result.interval) {
-          setJoinPoolIsDown(true);
-          setJoinPoolCommand(null);
-          result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
-        }
-        setSearchResults((results) => {
-          if (results.indexOf(result) < 0) {
-            return [result, ...results];
+      try {
+        if (data) {
+          result.data = data;
+          loadingBarRef.current?.complete();
+          /**
+           * нужно сравнивать 
+            balance.in_pool.total
+            balance.solo.total
+            balance_phase2.in_pool_incentivize.total
+           */
+          if (!result.data.miners.length && result.data.balance.in_pool.total <= 0 && result.data.balance.solo.total <= 0 && result.data.balance_phase2.in_pool_incentivize.total) {
+            setJoinPoolIsDown(false);
+            setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
+            deleteSearchResult(result);
+            return;
           }
+          if (!result.interval) {
+            setJoinPoolIsDown(true);
+            setJoinPoolCommand(null);
+            result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
+          }
+          setSearchResults((results) => {
+            if (results.indexOf(result) < 0) {
+              return [result, ...results];
+            }
 
-          return [...results];
-        });
+            return [...results];
+          });
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }
