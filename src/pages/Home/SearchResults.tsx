@@ -2,13 +2,13 @@ import { MdClose, MdInfoOutline } from "react-icons/md";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
-import { Balance, Miner } from "../../api";
+import { BalanceOne, Miner } from "../../api";
 import { getNumberWithCommas } from "../../helpers/getNumberWithComas";
 
 /**
  * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
  */
-const ResultMinerInSolo = ({ total, change_1h, change_24h }: { total: number; change_1h: number; change_24h: number }) => {
+const ResultMinerInSolo = ({ total, change_1h, change_24h }: BalanceOne) => {
   const firstNumber = getNumberWithCommas({ value: total.toFixed(1) });
   const secondNumber = getNumberWithCommas({ value: change_1h.toFixed(1) });
   const thirdNumber = getNumberWithCommas({ value: change_24h.toFixed(1) });
@@ -19,7 +19,7 @@ const ResultMinerInSolo = ({ total, change_1h, change_24h }: { total: number; ch
  * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
  */
 
-const ResultMinerInPool = ({ total, change_1h, change_24h }: { total: number; change_1h: number; change_24h: number }) => {
+const ResultMinerInPool = ({ total, change_1h, change_24h }: BalanceOne) => {
   const firstNumber = getNumberWithCommas({ value: total.toFixed(1) });
   const secondNumber = getNumberWithCommas({ value: change_1h.toFixed(1) });
   const thirdNumber = getNumberWithCommas({ value: change_24h.toFixed(1) });
@@ -241,7 +241,11 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               <div>
                 {!data ? null : (
                   <>
-                    <ResultMinerInPool total={data.balance.in_pool.total} change_1h={data.balance.in_pool.change_1h} change_24h={data.balance.in_pool.change_24h} />
+                    <ResultMinerInPool 
+                      total={data.balance.in_pool.total}
+                      change_1h={data.balance.in_pool.change_1h}
+                      change_24h={data.balance.in_pool.change_24h}
+                    />
                   </>
                 )}
               </div>
