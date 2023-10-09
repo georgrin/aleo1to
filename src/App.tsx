@@ -183,7 +183,7 @@ function useAppController() {
             balance.solo.total
             balance_phase2.in_pool_incentivize.total
            */
-          if (!result.data.miners.length && result.data.balance.in_pool.total <= 0 && result.data.balance.solo.total <= 0 && result.data.balance_phase2.in_pool_incentivize.total) {
+          if (!result.data.miners.length && result.data.balance.in_pool.total <= 0 && result.data.balance.solo.total <= 0 && !result.data.balance_phase2.in_pool_incentivize.total) {
             setJoinPoolIsDown(false);
             setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
             deleteSearchResult(result);

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 export interface ISearchAddressResponse {
-  balance: Balance;
-  balance_phase2: BalancePhase2;
+  balance: Balances;
+  balance_phase2: BalancesPhase2;
   hashrate: Hashrate;
   shares: Shares;
   miners: Miner[];
@@ -65,30 +65,33 @@ interface Stat {
   in_solo: number;
 }
 
-export interface Balance {
-  in_pool: {
-    total: number;
-    change_1h: number;
-    change_24h: number; 
-  },
-  solo: {
-    total: number;
-    change_1h: number;
-    change_24h: number; 
-  }
+interface Balances {
+  in_pool: BalanceOne;
+  solo: BalanceOne;
+}
+
+interface BalancesPhase2 {
+  in_pool: BalanceOne;
+  in_pool_incentivize: BalanceOne;
+}
+
+export interface BalanceOne {
+  total: number;
+  change_1h: number;
+  change_24h: number;
 }
 
 export interface BalancePhase2 {
   in_pool: {
     total: number;
     change_1h: number;
-    change_24h: number; 
-  },
+    change_24h: number;
+  };
   in_pool_incentivize: {
     total: number;
     change_1h: number;
-    change_24h: number; 
-  }
+    change_24h: number;
+  };
 }
 
 export async function searchAddress(address: string) {
