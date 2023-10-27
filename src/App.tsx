@@ -1,40 +1,97 @@
-import { useEffect, useRef, useState } from "react";
-import * as api from "./api";
-import * as Home from "./pages/Home";
-import { withProfiler } from "@sentry/react";
-import { useCookies } from "react-cookie";
-import { SearchResult } from "./model/SearchResult";
-import Modal from "react-modal";
-import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
-import "react-tooltip/dist/react-tooltip.css";
-import "./index.scss";
+import { useEffect, useRef, useState } from 'react';
+import * as api from './api';
+import * as Home from './pages/Home';
+import { useMemo } from 'react';
+import { withProfiler } from '@sentry/react';
+import { useCookies } from 'react-cookie';
+import { SearchResult } from './model/SearchResult';
+import Modal from 'react-modal';
+import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
+import 'react-tooltip/dist/react-tooltip.css';
+import './index.scss';
+import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
+import { WalletProvider } from '@demox-labs/aleo-wallet-adapter-react';
+import {
+  DecryptPermission,
+  WalletAdapterNetwork,
+} from '@demox-labs/aleo-wallet-adapter-base';
+import {
+  WalletModalProvider,
+  WalletMultiButton,
+} from '@demox-labs/aleo-wallet-adapter-reactui';
 
-Modal.setAppElement("#modals");
+Modal.setAppElement('#modals');
 
 const UPDATE_INTERVAL = 1000 * 60 * 5; // 5 minutes;
 
 function App() {
-  const { loadingBarRef, info, historyInfo, updateHistoryInfo, joinPoolIsDown, setJoinPoolIsDown, joinPoolCommand, searchAddress, searchResults, deleteSearchResult } = useAppController();
+  const wallets = useMemo(
+    () => [
+      new LeoWalletAdapter({
+        appName: 'Leo Demo App',
+      }),
+    ],
+    []
+  );
+  const {
+    loadingBarRef,
+    info,
+    historyInfo,
+    updateHistoryInfo,
+    joinPoolIsDown,
+    setJoinPoolIsDown,
+    joinPoolCommand,
+    searchAddress,
+    searchResults,
+    deleteSearchResult,
+  } = useAppController();
 
   if (!info) {
     return null;
   }
 
-  const joinPool = <Home.JoinPool joinPoolCommand={joinPoolCommand} hasUpDownSwitch={!!searchResults.filter((result) => result.data).length} isDown={joinPoolIsDown} setIsDown={setJoinPoolIsDown} />;
+  const joinPool = (
+    <Home.JoinPool
+      joinPoolCommand={joinPoolCommand}
+      hasUpDownSwitch={!!searchResults.filter((result) => result.data).length}
+      isDown={joinPoolIsDown}
+      setIsDown={setJoinPoolIsDown}
+    />
+  );
 
   return (
     <>
-      <LoadingBar color="rgba(0,117,255,1)" height={4} shadow ref={loadingBarRef} />
+      <LoadingBar
+        color='rgba(0,117,255,1)'
+        height={4}
+        shadow
+        ref={loadingBarRef}
+      />
       <Home.Header info={info} />
 
-      <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden">
-        <Home.Stat info={info} historyInfo={historyInfo} updateHistoryInfo={updateHistoryInfo} />
-        <Home.Search search={searchAddress} />
-        {!joinPoolIsDown && joinPool}
-        <Home.SearchResults searchResults={searchResults} deleteSearchResult={deleteSearchResult} />
-        {joinPoolIsDown && joinPool}
-      </div>
-
+      <WalletProvider
+        wallets={wallets}
+        decryptPermission={DecryptPermission.UponRequest}
+        network={WalletAdapterNetwork.Localnet}
+        autoConnect
+      >
+        <WalletModalProvider>
+          <div className='pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden'>
+            <Home.Stat
+              info={info}
+              historyInfo={historyInfo}
+              updateHistoryInfo={updateHistoryInfo}
+            />
+            <Home.Search search={searchAddress} />
+            {!joinPoolIsDown && joinPool}
+            <Home.SearchResults
+              searchResults={searchResults}
+              deleteSearchResult={deleteSearchResult}
+            />
+            {joinPoolIsDown && joinPool}
+          </div>
+        </WalletModalProvider>
+      </WalletProvider>
       <Home.Footer />
     </>
   );
@@ -44,7 +101,9 @@ export default withProfiler(App);
 
 function useAppController() {
   const [info, setInfo] = useState<any>(null);
-  const [historyInfo, setHistoryInfo] = useState<api.IGetHistoryInfoResponse[] | null>(null);
+  const [historyInfo, setHistoryInfo] = useState<
+    api.IGetHistoryInfoResponse[] | null
+  >(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
 
   const [joinPoolIsDown, setJoinPoolIsDown] = useState(true);
@@ -52,7 +111,7 @@ function useAppController() {
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
-  const [cookies, setCookie] = useCookies(["searchAddresses"]);
+  const [cookies, setCookie] = useCookies(['searchAddresses']);
 
   const searchAddresses = loadSearchAddresses();
 
@@ -63,8 +122,8 @@ function useAppController() {
       updateHistoryInfo();
     }, UPDATE_INTERVAL);
 
-    while (searchAddresses.indexOf("") >= 0) {
-      const addressIndex = searchAddresses.indexOf("");
+    while (searchAddresses.indexOf('') >= 0) {
+      const addressIndex = searchAddresses.indexOf('');
       if (addressIndex >= 0) {
         searchAddresses.splice(addressIndex, 1);
         saveSearchAddresses();
@@ -94,7 +153,10 @@ function useAppController() {
   }
 
   function saveSearchAddresses() {
-    setCookie("searchAddresses", encodeURIComponent(JSON.stringify(searchAddresses)));
+    setCookie(
+      'searchAddresses',
+      encodeURIComponent(JSON.stringify(searchAddresses))
+    );
   }
 
   async function updateInfo() {
@@ -117,7 +179,7 @@ function useAppController() {
         const lastDay = `${lastDate.getMonth() + 1}-${lastDate.getDate()}`;
         if (lastDay !== day || i === info.length - 1) {
           Object.keys(last).forEach((k) => {
-            if (k === "date") {
+            if (k === 'date') {
               return;
             }
             // @ts-ignore
@@ -129,7 +191,7 @@ function useAppController() {
           }
         } else {
           Object.keys(last).forEach((k) => {
-            if (k === "date") {
+            if (k === 'date') {
               return;
             }
             // TODO: Add type
@@ -183,9 +245,16 @@ function useAppController() {
             balance.solo.total
             balance_phase2.in_pool_incentivize.total
            */
-          if (!result.data.miners.length && result.data.balance.in_pool.total <= 0 && result.data.balance.solo.total <= 0 && !result.data.balance_phase2.in_pool_incentivize.total) {
+          if (
+            !result.data.miners.length &&
+            result.data.balance.in_pool.total <= 0 &&
+            result.data.balance.solo.total <= 0 &&
+            !result.data.balance_phase2.in_pool_incentivize.total
+          ) {
             setJoinPoolIsDown(false);
-            setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
+            setJoinPoolCommand(
+              `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
+            );
             deleteSearchResult(result);
             return;
           }

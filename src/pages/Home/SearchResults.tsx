@@ -3,13 +3,14 @@ import * as model from '../../model/SearchResult';
 import { Tooltip } from 'react-tooltip';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { BalanceOne, Miner } from '../../api';
 import { getNumberWithCommas } from '../../helpers/getNumberWithComas';
-import { CommandLine } from '../../components/CommandLine';
-import { CommandCopyIcon } from '../../components/CommandCopyIcon';
+import { TextLine } from '../../components/TextLine';
+import { TextLineCopy } from '../../components/TextLineCopy';
 import { IconAddCard } from '../../components/icons/IconAddCard';
-import { IconLogoLeo } from '../../components/icons/IconLogoLeo';
 import { IconCancel } from '../../components/icons/IconCancel';
+import {WalletWrapper} from '../../components/WalletWrapper'
 
 
 Modal.setAppElement('#modals');
@@ -55,7 +56,6 @@ export const SearchResults = ({
     </div>
   );
 };
-
 const tooltipProps = {
   className: `
         text-[rgba(247,163,40,1)] 
@@ -147,23 +147,11 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
           </button>
         </div>
         <h3 className='w-full text-[#6C7683] font-medium'>Address for request</h3>
-        <div className="relative w-full">
-          {CommandLine({command: address})}
-          {CommandCopyIcon({command: address})}
+        <div className="relative w-full text-white">
+          {TextLine({command: address})}
+          {TextLineCopy({command: address})}
         </div>
-        <div className='flex flex-wrap w-full'>
-          <h3 className='w-full text-[#6C7683] font-medium'>Wallet extension</h3>
-          <div className='border border-[#32363B] rounded flex justify-between items-center w-full mt-4 py-[6px] pr-[6px] px-4'>
-            <div className='flex gap-2'>
-              <IconLogoLeo className='' />
-              <span className='text-[#6C7683]'>Leo wallet required,</span>
-              <span>please install it</span>
-            </div>
-            <a href='https://www.leo.app/' className='inline-block text-[#00FFF0] bg-[#00FFF0]/10 py-2 px-4 rounded'>
-                Install Wallet
-              </a>
-          </div>
-        </div>
+        <WalletWrapper />
         <button className='bg-[#00FFF0]/50 w-full rounded p-3'>Sign</button>
       </Modal>
     </div>

@@ -1,4 +1,4 @@
-export const CommandLine = ({ command }: { command: string }) => {
+export const TextLine = ({ command }: { command: string }) => {
   return (
     <div
       className={`
@@ -6,7 +6,6 @@ export const CommandLine = ({ command }: { command: string }) => {
                     bg-default border-[rgba(255,255,255,0.15)] border-[1px]
                     outline-none rounded-[5px]
                     font-medium
-                    text-default
                     text-sm sm:text-base
                 `}
     >
