@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 
-export const CommandCopyIcon = ({ command }: { command: string }) => {
+export const TextLineCopy = ({ command }: { command: string }) => {
     const [showCopied, setShowCopied] = useState(false);
     return (
         <div
