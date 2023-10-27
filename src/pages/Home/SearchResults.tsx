@@ -2,13 +2,15 @@ import { MdClose, MdInfoOutline } from 'react-icons/md';
 import * as model from '../../model/SearchResult';
 import { Tooltip } from 'react-tooltip';
 import { useState } from 'react';
+import Modal from 'react-modal';
 import { BalanceOne, Miner } from '../../api';
 import { getNumberWithCommas } from '../../helpers/getNumberWithComas';
+import { CommandLine } from '../../components/CommandLine';
+import { CommandCopyIcon } from '../../components/CommandCopyIcon';
 import { IconAddCard } from '../../components/icons/IconAddCard';
-import { IconCopy } from '../../components/icons/IconCopy';
 import { IconLogoLeo } from '../../components/icons/IconLogoLeo';
 import { IconCancel } from '../../components/icons/IconCancel';
-import Modal from 'react-modal';
+
 
 Modal.setAppElement('#modals');
 
@@ -134,10 +136,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Example Modal'
-        className='bg-black flex flex-wrap w-[600px] p-4 gap-4'
+        className='bg-black flex flex-wrap w-[800px] p-4 gap-4'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
-        <div className='flex gap-1 w-full'>
+        <div className='flex items-center gap-1 w-full'>
           <IconAddCard />
           <h2>Request payout</h2>
           <button onClick={closeModal} className='ml-auto'>
@@ -146,15 +148,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         </div>
 
         <h3 className='w-full'>Address for request</h3>
-        <div className='relative w-full'>
-          <input
-            className=' w-full pl-4 py-3 pr-10
-                    bg-default border-[rgba(255,255,255,0.15)] border-[1px]
-                    outline-none rounded-[5px] font-medium text-default text-sm sm:text-base'
-          />
-          <button className='absolute right-2 z-10 top-3'>
-            <IconCopy />
-          </button>
+        <div className="relative w-full mt-6">
+          {CommandLine({command: address})}
+          {CommandCopyIcon({command: address})}
         </div>
         <div className='flex flex-wrap w-full'>
           <h3 className='w-full'>Wallet extension</h3>
@@ -164,11 +160,9 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               <span className='text-[#6C7683]'>Leo wallet required,</span>
               <span>please install it</span>
             </div>
-            <div className=''>
-              <button className='text-[#00FFF0] bg-[#00FFF0]/10 py-3 px-4 rounded'>
+            <a href='https://www.leo.app/' className='inline-block text-[#00FFF0] bg-[#00FFF0]/10 py-3 px-4 rounded'>
                 Install Wallet
-              </button>
-            </div>
+              </a>
           </div>
         </div>
         <button className='bg-[#00FFF0]/50 w-full rounded p-3'>Sign</button>
