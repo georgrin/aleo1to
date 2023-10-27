@@ -146,21 +146,20 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             <IconCancel />
           </button>
         </div>
-
-        <h3 className='w-full'>Address for request</h3>
-        <div className="relative w-full mt-6">
+        <h3 className='w-full text-[#6C7683] font-medium'>Address for request</h3>
+        <div className="relative w-full">
           {CommandLine({command: address})}
           {CommandCopyIcon({command: address})}
         </div>
         <div className='flex flex-wrap w-full'>
-          <h3 className='w-full'>Wallet extension</h3>
-          <div className='border border-[#32363B] rounded flex justify-between items-center w-full p-2'>
+          <h3 className='w-full text-[#6C7683] font-medium'>Wallet extension</h3>
+          <div className='border border-[#32363B] rounded flex justify-between items-center w-full mt-4 py-[6px] pr-[6px] px-4'>
             <div className='flex gap-2'>
               <IconLogoLeo className='' />
               <span className='text-[#6C7683]'>Leo wallet required,</span>
               <span>please install it</span>
             </div>
-            <a href='https://www.leo.app/' className='inline-block text-[#00FFF0] bg-[#00FFF0]/10 py-3 px-4 rounded'>
+            <a href='https://www.leo.app/' className='inline-block text-[#00FFF0] bg-[#00FFF0]/10 py-2 px-4 rounded'>
                 Install Wallet
               </a>
           </div>
