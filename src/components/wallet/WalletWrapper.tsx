@@ -48,8 +48,8 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
           wallet: publicKey,
           app: 'aleo1.to',
           nonce: nonceResponse.nonce,
-          signature: signature,
         },
+        signature: signature,
       });
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
@@ -86,6 +86,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
       return <NotFoundWallet requestAddress={requestAddress} />;
     }
   };
+  
   return (
     <div className='w-full'>
       <header className='flex items-center gap-1 w-full mb-8'>

@@ -73,7 +73,6 @@ function App() {
         wallets={wallets}
         decryptPermission={DecryptPermission.UponRequest}
         network={WalletAdapterNetwork.Testnet}
-        autoConnect
       >
         <WalletModalProvider>
           <div className='pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden'>

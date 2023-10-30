@@ -13,8 +13,8 @@ export interface TokenRequest {
     wallet: string,
     app: string,
     nonce: string,
-    signature: string,
   },
+  signature: string,
 }
 
 export async function getNonce(address: string) {

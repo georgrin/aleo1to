@@ -1,6 +1,6 @@
 import { WalletAdapterNetwork } from '@demox-labs/aleo-wallet-adapter-base';
 import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
-import { useMemo, MouseEventHandler, useCallback } from 'react';
+import { useMemo, MouseEventHandler, useCallback, useEffect } from 'react';
 import { AddressLine } from './AddressLine';
 import { IconLogoLeo } from '../icons/IconLogoLeo';
 
@@ -13,34 +13,31 @@ export const DisconnectedWallet = ({
   requestAddress,
   ...props
 }: any) => {
-  const { wallet, connecting, connected, connect, select } = useWallet();
+  const { wallet, connecting, connected, connect, select, autoConnect } =
+    useWallet();
   const content = useMemo(() => {
     if (connecting) return 'Connecting ...';
     if (connected) return 'Connected';
     if (wallet) return 'Connect Wallet';
     return 'Connect Wallet';
   }, [connecting, connected, wallet]);
-  const connectWallet: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      console.log('connectWallet', event.defaultPrevented);
-      if (!event.defaultPrevented) {
-        select(props.adapter);
-        connect(
-          decryptPermission || 'NO_DECRYPT',
-          network || WalletAdapterNetwork.Testnet,
-          programs ?? []
-        ).catch((error) => {
-          console.log('connectWallet error', { error: error });
-        });
-      }
-    },
-    [onClick, connect]
-  );
+
+  const connectWallet = () => {
+    connect(
+      decryptPermission || 'NO_DECRYPT',
+      network || WalletAdapterNetwork.Testnet,
+      programs ?? []
+    ).catch((error) => {
+      console.log('connectWallet error', { error: error });
+    });
+  };
+  useEffect(() => {
+    select(props.adapter);
+  }, []);
   return (
     <>
       <div>
-      <AddressLine requestAddress={requestAddress} />
+        <AddressLine requestAddress={requestAddress} />
         <h3 className='w-full text-[#6C7683] font-medium mb-4'>Leo Wallet</h3>
         <div className='border border-[#32363B] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
           <div className='flex items-center text-sm font-medium'>
@@ -56,12 +53,10 @@ export const DisconnectedWallet = ({
           </button>
         </div>
         <footer className='mt-8 w-full'>
-        <button
-          className='w-full bg-[#00FFF0]/50 rounded h-[50px] text-black font-bold'
-        >
-          Sign
-        </button>
-      </footer>
+          <button className='w-full bg-[#00FFF0]/50 rounded h-[50px] text-black font-bold'>
+            Sign
+          </button>
+        </footer>
       </div>
     </>
   );
