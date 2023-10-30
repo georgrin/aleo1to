@@ -6,12 +6,10 @@ import Modal from 'react-modal';
 import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { BalanceOne, Miner } from '../../api';
 import { getNumberWithCommas } from '../../helpers/getNumberWithComas';
-import { TextLine } from '../../components/TextLine';
-import { TextLineCopy } from '../../components/TextLineCopy';
-import { IconAddCard } from '../../components/icons/IconAddCard';
-import { IconCancel } from '../../components/icons/IconCancel';
-import {WalletWrapper} from '../../components/WalletWrapper'
 
+import { IconAddCard } from '../../components/icons/IconAddCard';
+
+import { WalletWrapper } from '../../components/wallet/WalletWrapper';
 
 Modal.setAppElement('#modals');
 
@@ -136,23 +134,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Example Modal'
-        className='bg-black flex flex-wrap w-[800px] p-4 gap-4'
+        className='bg-black flex flex-wrap w-[800px] p-4 gap-6'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
-        <div className='flex items-center gap-1 w-full'>
-          <IconAddCard />
-          <h2>Request payout</h2>
-          <button onClick={closeModal} className='ml-auto'>
-            <IconCancel />
-          </button>
-        </div>
-        <h3 className='w-full text-[#6C7683] font-medium'>Address for request</h3>
-        <div className="relative w-full text-white">
-          {TextLine({command: address})}
-          {TextLineCopy({command: address})}
-        </div>
-        <WalletWrapper />
-        <button className='bg-[#00FFF0]/50 w-full rounded p-3'>Sign</button>
+        <WalletWrapper requestAddress={address} close={closeModal} />
       </Modal>
     </div>
   );
@@ -273,7 +258,10 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 In Pool
               </div>
               {showRequestPayout && (
-                <button className='flex items-center rounded gap-2 px-2.5 h-full bg-[#00FFF0]/10 text-[#00FFF0]' onClick={openModal}>
+                <button
+                  className='flex items-center rounded gap-2 px-2.5 h-full bg-[#00FFF0]/10 text-[#00FFF0]'
+                  onClick={openModal}
+                >
                   <IconAddCard className='' />
                   Request payout
                 </button>
@@ -626,6 +614,4 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   function closeModal() {
     setIsOpen(false);
   }
-
-  
 }

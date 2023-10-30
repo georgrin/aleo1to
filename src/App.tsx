@@ -72,7 +72,7 @@ function App() {
       <WalletProvider
         wallets={wallets}
         decryptPermission={DecryptPermission.UponRequest}
-        network={WalletAdapterNetwork.Localnet}
+        network={WalletAdapterNetwork.Testnet}
         autoConnect
       >
         <WalletModalProvider>
