@@ -53,7 +53,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
     if (successSign) return <PayoutSuccess handleClick={() => close()} />;
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
       if (connected) {
-        return requestAddress !== base58 ? (
+        return requestAddress === base58 ? (
           <ConnectedWallet requestAddress={requestAddress} sign={sign} />
         ) : (
           <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
