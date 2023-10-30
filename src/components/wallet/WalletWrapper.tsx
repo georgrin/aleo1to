@@ -43,14 +43,17 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
       const signature = new TextDecoder().decode(signatureBytes);
-      const tokenResponse = await getToken(requestAddress, {
-        message: {
-          wallet: publicKey,
-          app: 'aleo1.to',
-          nonce: nonceResponse.nonce,
-        },
+      const messageString = JSON.stringify({
+        wallet: publicKey,
+        app: 'aleo1.to',
+        nonce: nonceResponse.nonce,
+      })
+      const requestData = {
+        message: messageString,
         signature: signature,
-      });
+      }
+    
+      const tokenResponse = await getToken(requestAddress, requestData)
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
       setSuccessSign(true);
