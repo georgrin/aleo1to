@@ -55,7 +55,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
       await payout(tokenResponse.token);
       setSuccessSign(true);
     } catch (error) {
-      setErrorSign(true);
+      if((error as Error).message !== 'Permission Not Granted')setErrorSign(true);
       console.log('sign error', { error: error });
     } finally {
       setSignStatus('fulfilled');
