@@ -5,9 +5,24 @@ export interface AuthResponse {
   nonce: string;
   wallet: string;
 }
+export interface TokenResponse {
+  token: string;
+}
+export interface TokenRequest {
+  message: {
+    wallet: string,
+    app: string,
+    nonce: string,
+    signature: string,
+  },
+}
 
-export async function startSign(address: string) {
+export async function getNonce(address: string) {
   const response = await axios.get<AuthResponse>(`api/auth/${address}`);
+  return response.data;
+}
+export async function getToken(address: string, data: TokenRequest) {
+  const response = await axios.post<TokenResponse>(`api/auth/${address}`, data);
   return response.data;
 }
 

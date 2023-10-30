@@ -6,7 +6,7 @@ import {
   WalletReadyState,
 } from '@demox-labs/aleo-wallet-adapter-base';
 import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import { startSign, payout } from '../../api/wallet';
+import { getNonce, getToken, payout } from '../../api/wallet';
 
 import { ConnectedWallet } from './ConnectedWallet';
 import { ConnectedWalletDoesnMatch } from './ConnectedWalletDoesnMatch';
@@ -27,26 +27,38 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
   const leoWallet = wallets.find((item) => item.adapter.name === 'Leo Wallet');
   const [nonce, setNonce] = useState('');
   const [token, setToken] = useState('');
+  const [signStatus, setSignStatus] = useState('');
   const [errorSign, setErrorSign] = useState(false);
   const [successSign, setSuccessSign] = useState(false);
 
   const sign = async () => {
     try {
-      const response = await startSign(requestAddress);
-      setNonce(response.nonce);
+      const nonceResponse = await getNonce(requestAddress);
+      setNonce(nonceResponse.nonce);
       if (!publicKey) throw new WalletNotConnectedError();
       const message = 'a message to sign';
       const bytes = new TextEncoder().encode(message);
+      setSignStatus('pending');
       const signatureBytes = await (
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
       const signature = new TextDecoder().decode(signatureBytes);
-      setToken(signature);
-      await payout(signature);
+      const tokenResponse = await getToken(requestAddress, {
+        message: {
+          wallet: publicKey,
+          app: 'aleo1.to',
+          nonce: nonceResponse.nonce,
+          signature: signature,
+        },
+      });
+      setToken(tokenResponse.token);
+      await payout(tokenResponse.token);
       setSuccessSign(true);
     } catch (error) {
       setErrorSign(true);
       console.log('sign error', { error: error });
+    } finally {
+      setSignStatus('fulfilled');
     }
   };
   const Content = () => {
@@ -54,7 +66,11 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
       if (connected) {
         return requestAddress === base58 ? (
-          <ConnectedWallet requestAddress={requestAddress} sign={sign} />
+          <ConnectedWallet
+            requestAddress={requestAddress}
+            sign={sign}
+            signStatus={signStatus}
+          />
         ) : (
           <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
         );
@@ -86,7 +102,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
           </div>
         </div>
       ) : (
-        <PayoutError handleClick={()=> setErrorSign(false)} />
+        <PayoutError handleClick={() => setErrorSign(false)} />
       )}
     </div>
   );

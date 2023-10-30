@@ -18,7 +18,7 @@ export const ConnectedWalletDoesnMatch = ({ requestAddress, sign, ...props }: an
         <div className='border border-[#FF425A] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
           <div className='flex items-center text-sm font-medium'>
             <IconLogoLeo className='' />
-            <span className='ml-2'>{publicKey}</span>
+            <span className='ml-2 break-all'>{publicKey}</span>
           </div>
           <button
             onClick={disconnectHandler}

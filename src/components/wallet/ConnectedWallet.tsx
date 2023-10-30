@@ -3,7 +3,12 @@ import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { AddressLine } from './AddressLine';
 import { IconLogoLeo } from '../icons/IconLogoLeo';
 
-export const ConnectedWallet = ({ requestAddress, sign, ...props }: any) => {
+export const ConnectedWallet = ({
+  requestAddress,
+  sign,
+  signStatus,
+  ...props
+}: any) => {
   const { publicKey, disconnect } = useWallet();
   const disconnectHandler: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
@@ -18,7 +23,7 @@ export const ConnectedWallet = ({ requestAddress, sign, ...props }: any) => {
       <div className='border border-[#32363B] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
         <div className='flex items-center text-sm font-medium'>
           <IconLogoLeo className='' />
-          <span className='ml-2'>{publicKey}</span>
+          <span className='ml-2 break-all'>{publicKey}</span>
         </div>
         <button
           onClick={disconnectHandler}
@@ -28,12 +33,21 @@ export const ConnectedWallet = ({ requestAddress, sign, ...props }: any) => {
         </button>
       </div>
       <footer className='mt-8 w-full'>
-        <button
-          className='w-full bg-[#00FFF0] rounded h-[50px] text-black font-bold'
-          onClick={() => sign()}
-        >
-          Sign
-        </button>
+        {signStatus === 'pending' ? (
+          <button
+            className='w-full bg-[#00FFF0]/50 rounded h-[50px] text-black font-bold'
+            onClick={() => sign()}
+          >
+            Sign message in your wallet
+          </button>
+        ) : (
+          <button
+            className='w-full bg-[#00FFF0] rounded h-[50px] text-black font-bold'
+            onClick={() => sign()}
+          >
+            Sign
+          </button>
+        )}
       </footer>
     </>
   );
