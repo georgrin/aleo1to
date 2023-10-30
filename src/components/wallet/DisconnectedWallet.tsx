@@ -55,6 +55,13 @@ export const DisconnectedWallet = ({
             {content}
           </button>
         </div>
+        <footer className='mt-8 w-full'>
+        <button
+          className='w-full bg-[#00FFF0]/50 rounded h-[50px] text-black font-bold'
+        >
+          Sign
+        </button>
+      </footer>
       </div>
     </>
   );
