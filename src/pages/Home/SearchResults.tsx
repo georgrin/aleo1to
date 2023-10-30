@@ -134,7 +134,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Example Modal'
-        className='bg-black flex flex-wrap w-[800px] p-4 gap-6'
+        className='bg-black flex flex-wrap w-full max-w-[800px] p-4 gap-6'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
         <WalletWrapper requestAddress={address} close={closeModal} />
