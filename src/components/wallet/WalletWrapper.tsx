@@ -25,7 +25,6 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const leoWallet = wallets.find((item) => item.adapter.name === 'Leo Wallet');
-  const [nonce, setNonce] = useState('');
   const [token, setToken] = useState('');
   const [signStatus, setSignStatus] = useState('');
   const [errorSign, setErrorSign] = useState(false);
@@ -33,18 +32,17 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
 
   const sign = async () => {
     try {
-      const nonceResponse = await getChallenge(requestAddress);
-      setNonce(nonceResponse.nonce);
+      const challenge = await getChallenge(requestAddress);
+      console.log('challenge', { challenge: challenge });
       if (!publicKey) throw new WalletNotConnectedError();
-      const message = JSON.stringify(nonceResponse);
-      const bytes = new TextEncoder().encode(message);
+      const bytes = new TextEncoder().encode(challenge);
       setSignStatus('pending');
       const signatureBytes = await (
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
       const signature = new TextDecoder().decode(signatureBytes);
       const requestData = {
-        message: message,
+        message: challenge,
         signature: signature,
       };
       const tokenResponse = await getToken(requestAddress, requestData);

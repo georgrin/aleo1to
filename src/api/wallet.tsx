@@ -14,7 +14,12 @@ export interface TokenRequest {
 }
 
 export async function getChallenge(address: string) {
-  const response = await axios.get<AuthResponse>(`api/auth/${address}`);
+  const response = await axios.get<string>(`api/auth/${address}`, {
+    transformResponse: (res) => {
+        return res;
+    },
+    responseType: 'json'
+});
   return response.data;
 }
 export async function getToken(address: string, data: TokenRequest) {
