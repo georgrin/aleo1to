@@ -43,22 +43,17 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
       const signature = new TextDecoder().decode(signatureBytes);
-      const messageString = JSON.stringify({
-        wallet: publicKey,
-        app: 'aleo1.to',
-        nonce: nonceResponse.nonce,
-      })
       const requestData = {
-        message: messageString,
+        message: message,
         signature: signature,
-      }
-    
-      const tokenResponse = await getToken(requestAddress, requestData)
+      };
+      const tokenResponse = await getToken(requestAddress, requestData);
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
       setSuccessSign(true);
     } catch (error) {
-      if((error as Error).message !== 'Permission Not Granted')setErrorSign(true);
+      if ((error as Error).message !== 'Permission Not Granted')
+        setErrorSign(true);
       console.log('sign error', { error: error });
     } finally {
       setSignStatus('fulfilled');
@@ -89,7 +84,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
       return <NotFoundWallet requestAddress={requestAddress} />;
     }
   };
-  
+
   return (
     <div className='w-full'>
       <header className='flex items-center gap-1 w-full mb-8'>
