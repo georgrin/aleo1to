@@ -13,7 +13,7 @@ export interface TokenRequest {
   signature: string,
 }
 
-export async function getNonce(address: string) {
+export async function getChallenge(address: string) {
   const response = await axios.get<AuthResponse>(`api/auth/${address}`);
   return response.data;
 }
