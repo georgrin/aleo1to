@@ -17,8 +17,8 @@ export async function getNonce(address: string) {
   const response = await axios.get<AuthResponse>(`api/auth/${address}`);
   return response.data;
 }
-export async function getToken(address: string, data: string) {
-  const response = await axios.post<TokenResponse>(`api/auth/${address}`, data);
+export async function getToken(address: string, data: TokenRequest) {
+  const response = await axios.post<TokenResponse>(`api/auth`, data);
   return response.data;
 }
 
