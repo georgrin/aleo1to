@@ -6,7 +6,7 @@ import {
   WalletReadyState,
 } from '@demox-labs/aleo-wallet-adapter-base';
 import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import { getNonce, getToken, payout } from '../../api/wallet';
+import { getChallenge, getToken, payout } from '../../api/wallet';
 
 import { ConnectedWallet } from './ConnectedWallet';
 import { ConnectedWalletDoesnMatch } from './ConnectedWalletDoesnMatch';
@@ -33,10 +33,10 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
 
   const sign = async () => {
     try {
-      const nonceResponse = await getNonce(requestAddress);
+      const nonceResponse = await getChallenge(requestAddress);
       setNonce(nonceResponse.nonce);
       if (!publicKey) throw new WalletNotConnectedError();
-      const message = 'a message to sign';
+      const message = JSON.stringify(nonceResponse);
       const bytes = new TextEncoder().encode(message);
       setSignStatus('pending');
       const signatureBytes = await (
