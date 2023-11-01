@@ -42,7 +42,6 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
       ).signMessage(bytes);
       const signature = new TextDecoder().decode(signatureBytes);
       const requestData = {
-        message: challenge,
         signature: signature,
       };
       const tokenResponse = await getToken(requestAddress, requestData);
