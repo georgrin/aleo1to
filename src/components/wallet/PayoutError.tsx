@@ -7,7 +7,7 @@ export function PayoutError({ handleClick }: { handleClick: Function }) {
         <IconInfo className='text-[#F7A328]' />
       </div>
       <div className='font-bold text-2xl mb-2'>Something went wrong</div>
-      <div className='text-[#6C7683] font-bold'>Please try again</div>
+      <div className='text-grey font-bold'>Please try again</div>
       <footer className='mt-8 w-full'>
         <button
           className='w-full bg-[#00FFF0] rounded h-[50px] text-black font-bold'

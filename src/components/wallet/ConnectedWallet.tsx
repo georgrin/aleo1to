@@ -19,7 +19,7 @@ export const ConnectedWallet = ({
   return (
     <>
       <AddressLine requestAddress={requestAddress} />
-      <h3 className='w-full text-[#6C7683] font-medium mb-4'>Leo Wallet</h3>
+      <h3 className='w-full text-grey font-medium mt-6 mb-4'>Leo Wallet</h3>
       <div className='border border-[#32363B] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
         <div className='flex items-center text-sm font-medium'>
           <IconLogoLeo className='' />
@@ -27,7 +27,7 @@ export const ConnectedWallet = ({
         </div>
         <button
           onClick={disconnectHandler}
-          className='inline-block text-red-500 bg-[#FF425A]/10 py-2 px-4 rounded leading-none'
+          className='inline-block text-red-500 bg-[#FF425A]/10 text-sm py-[10px] px-4 rounded leading-none font-medium'
         >
           Disconnect
         </button>
@@ -35,14 +35,14 @@ export const ConnectedWallet = ({
       <footer className='mt-8 w-full'>
         {signStatus === 'pending' ? (
           <button
-            className='w-full bg-[#00FFF0]/50 rounded h-[50px] text-black font-bold'
+            className='w-full bg-aleo-cyan/50 rounded h-[50px] text-black font-bold'
             onClick={() => sign()}
           >
             Sign message in your wallet
           </button>
         ) : (
           <button
-            className='w-full bg-[#00FFF0] rounded h-[50px] text-black font-bold'
+            className='w-full btn font-bold'
             onClick={() => sign()}
           >
             Sign

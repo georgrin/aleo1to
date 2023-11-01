@@ -134,7 +134,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel='Example Modal'
-        className='bg-black flex flex-wrap w-full max-w-[800px] p-4 gap-6'
+        className='bg-black flex flex-wrap w-full max-w-[800px] p-8 gap-6 rounded-2xl'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
         <WalletWrapper requestAddress={address} close={closeModal} />
@@ -252,14 +252,14 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
                 className={`
                         bg-primary-2
                         group-[:nth-of-type(2n)]/search-result:bg-secondary-2
-                        w-fit px-2 py-[3px] font-default font-medium rounded-[5px]
+                        w-fit px-3 py-2 font-default font-medium rounded
                     `}
               >
                 In Pool
               </div>
               {showRequestPayout && (
                 <button
-                  className='flex items-center rounded gap-2 px-2.5 h-full bg-[#00FFF0]/10 text-[#00FFF0]'
+                  className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm'
                   onClick={openModal}
                 >
                   <IconAddCard className='' />

@@ -84,9 +84,9 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
 
   return (
     <div className='w-full'>
-      <header className='flex items-center gap-1 w-full mb-8'>
-        <IconAddCard />
-        <h2>Request payout</h2>
+      <header className='flex items-center gap-2 w-full mb-6'>
+        <IconAddCard className="w-6 h-6" />
+        <h2 className='text-2xl font-bold'>Request payout</h2>
         <button onClick={() => close()} className='ml-auto'>
           <IconCancel />
         </button>
