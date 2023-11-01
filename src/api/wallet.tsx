@@ -9,7 +9,6 @@ export interface TokenResponse {
   token: string;
 }
 export interface TokenRequest {
-  message: string,
   signature: string,
 }
 
@@ -23,7 +22,7 @@ export async function getChallenge(address: string) {
   return response.data;
 }
 export async function getToken(address: string, data: TokenRequest) {
-  const response = await axios.post<TokenResponse>(`api/auth`, data);
+  const response = await axios.post<TokenResponse>(`api/auth/${address}`, data);
   return response.data;
 }
 
