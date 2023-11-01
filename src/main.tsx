@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import './tailwind.css'
 import.meta.env.MODE === "production" && Sentry.init({
   dsn: "https://66b0e1921ac6417083c93c0c4d77c3d1@sentry.nod.run/6",
   integrations: [new Sentry.BrowserTracing()],

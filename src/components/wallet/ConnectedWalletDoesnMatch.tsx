@@ -14,7 +14,7 @@ export const ConnectedWalletDoesnMatch = ({ requestAddress, sign, ...props }: an
   return (
     <>
         <AddressLine requestAddress={requestAddress} />
-        <h3 className='w-full text-[#6C7683] font-medium mb-4'>Leo Wallet</h3>
+        <h3 className='w-full text-grey font-medium mt-6 mb-4'>Leo Wallet</h3>
         <div className='border border-[#FF425A] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
           <div className='flex items-center text-sm font-medium'>
             <IconLogoLeo className='' />
@@ -22,7 +22,7 @@ export const ConnectedWalletDoesnMatch = ({ requestAddress, sign, ...props }: an
           </div>
           <button
             onClick={disconnectHandler}
-            className='inline-block text-red-500 bg-[#FF425A]/10 py-2 px-4 rounded leading-none'
+            className='inline-block text-red-500 bg-[#FF425A]/10 text-sm py-[10px] px-4 rounded leading-none font-medium'
           >
             Disconnect
           </button>
