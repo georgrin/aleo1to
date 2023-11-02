@@ -6,6 +6,13 @@ export interface ISearchAddressResponse {
   hashrate: Hashrate;
   shares: Shares;
   miners: Miner[];
+  payout: RequestPayout;
+}
+
+export interface RequestPayout {
+  requested: number;
+  done: number;
+  available: number;
 }
 
 export interface Miner {
