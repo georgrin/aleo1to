@@ -3,16 +3,15 @@ import * as model from '../../model/SearchResult';
 import { Tooltip } from 'react-tooltip';
 import { useState } from 'react';
 import Modal from 'react-modal';
-import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { BalanceOne, Miner } from '../../api';
 import { getNumberWithCommas } from '../../helpers/getNumberWithComas';
 
 import { IconAddCard } from '../../components/icons/IconAddCard';
-
+import { IconClockLoader } from '../../components/icons/IconClockLoader';
 import { WalletWrapper } from '../../components/wallet/WalletWrapper';
 
 Modal.setAppElement('#modals');
-
+const MIN_PAYOUT = 0.1
 /**
  * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
  */
@@ -240,7 +239,33 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
       </div>
     );
   }
-
+function RequestBtn() {
+  if(searchResult.data) {
+    if(searchResult.data.payout.requested > 0 ) {
+      return (
+        <button
+          className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm opacity-50 cursor-progress'
+        >
+          <IconClockLoader className='' />
+          Payout requested...
+        </button>
+      )
+      
+    } else if(searchResult.data.payout.available > MIN_PAYOUT) {
+      return (
+        <button
+          className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm'
+          onClick={openModal}
+        >
+          <IconAddCard className='' />
+          Request payout
+        </button>
+      )
+    }
+  }
+  
+  // return searchResult.data.payout.available
+}
   function Stat() {
     return (
       <>
@@ -257,15 +282,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
               >
                 In Pool
               </div>
-              {showRequestPayout && (
-                <button
-                  className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm'
-                  onClick={openModal}
-                >
-                  <IconAddCard className='' />
-                  Request payout
-                </button>
-              )}
+              <RequestBtn />
             </div>
 
             <div className='mt-[8px] flex flex-wrap leading-[26px]'>
