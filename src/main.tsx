@@ -7,7 +7,7 @@ import.meta.env.MODE === "production" && Sentry.init({
   integrations: [new Sentry.BrowserTracing()],
   tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!
 });
-
+console.log('__APP_VERSION__', __APP_VERSION__)
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <App />
 );
