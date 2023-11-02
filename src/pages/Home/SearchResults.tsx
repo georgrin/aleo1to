@@ -11,7 +11,7 @@ import { IconClockLoader } from '../../components/icons/IconClockLoader';
 import { WalletWrapper } from '../../components/wallet/WalletWrapper';
 
 Modal.setAppElement('#modals');
-const MIN_PAYOUT = 0.1
+const MIN_PAYOUT = 0.1;
 /**
  * @returns return string like 69.5 (+0.0 1h; +0.0 24h)
  */
@@ -239,33 +239,36 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
       </div>
     );
   }
-function RequestBtn() {
-  if(searchResult.data) {
-    if(searchResult.data.payout.requested > 0 ) {
+  function RequestBtn() {
+    if (searchResult.data) {
+      if (searchResult.data.payout.requested > 0) {
+        return (
+          <button className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm opacity-50 cursor-progress'>
+            <IconClockLoader className='' />
+            Payout requested...
+          </button>
+        );
+      } else if (searchResult.data.payout.available > MIN_PAYOUT) {
+        return (
+          <button
+            className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm'
+            onClick={openModal}
+          >
+            <IconAddCard className='' />
+            Request payout
+          </button>
+        );
+      } else {
+        return (
+          <span></span>
+        )
+      };
+    } else {
       return (
-        <button
-          className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm opacity-50 cursor-progress'
-        >
-          <IconClockLoader className='' />
-          Payout requested...
-        </button>
+        <span></span>
       )
-      
-    } else if(searchResult.data.payout.available > MIN_PAYOUT) {
-      return (
-        <button
-          className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm'
-          onClick={openModal}
-        >
-          <IconAddCard className='' />
-          Request payout
-        </button>
-      )
-    } else return(<span></span>)
+    }
   }
-  
-  // return searchResult.data.payout.available
-}
   function Stat() {
     return (
       <>
