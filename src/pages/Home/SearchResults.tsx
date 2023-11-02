@@ -261,7 +261,7 @@ function RequestBtn() {
           Request payout
         </button>
       )
-    }
+    } else return(<span></span>)
   }
   
   // return searchResult.data.payout.available
