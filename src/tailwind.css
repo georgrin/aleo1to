@@ -86,6 +86,9 @@
     .github-icon {
         background-image: url("./assets/github_black.svg");
     }
+    .twitter-icon {
+        background-image: url("./assets/twitter.svg");
+    }
 }
 
 @layer utilities {

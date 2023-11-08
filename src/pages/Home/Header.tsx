@@ -29,6 +29,10 @@ export const Header = ({ info }: any) => {
       label: "telegram",
       value: "https://t.me/aleo1to",
     },
+    twitter: {
+      label: "twitter",
+      value: "https://twitter.com/0x1to",
+    },
   };
 
   const [showMenu, setShowMenu] = useState(false);
@@ -81,6 +85,11 @@ export const Header = ({ info }: any) => {
               target="_blank"
               href={socialData.github.value}
               className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"
+            />
+            <a
+              target="_blank"
+              href={socialData.twitter.value}
+              className="relative inline-block icon twitter-icon w-[25px] h-[25px] mr-[10px] last:mr-0"
             />
           </div>
 
