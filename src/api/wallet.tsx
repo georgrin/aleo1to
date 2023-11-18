@@ -28,7 +28,7 @@ export async function getToken(address: string, data: TokenRequest) {
 
 export async function payout(token: string) {
   const response = await axios.post(
-    `api/payout`,
+    `api/payout`, {},
     {
       headers: {
         Authorization: `Bearer ${token}`,
