@@ -35,12 +35,10 @@ const ResultMinerInPool = ({ total, change_1h, change_24h }: BalanceOne) => {
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
-  refetchAddress: Function;
   deleteSearchResult: Function;
 }
 export const SearchResults = ({
   searchResults,
-  refetchAddress,
   deleteSearchResult,
 }: SearchResultsProps) => {
   return (
@@ -49,7 +47,6 @@ export const SearchResults = ({
         <SearchResult
           key={result.address}
           searchResult={result}
-          refetchAddress={refetchAddress}
           deleteSearchResult={deleteSearchResult}
         />
       ))}
@@ -75,14 +72,16 @@ const tooltipProps = {
 interface SearchResultProps {
   searchResult: model.SearchResult;
   deleteSearchResult: Function;
-  refetchAddress: Function;
 }
-function SearchResult({ searchResult, deleteSearchResult, refetchAddress }: SearchResultProps) {
+function SearchResult({
+  searchResult,
+  deleteSearchResult,
+}: SearchResultProps) {
   const { address, data } = searchResult;
   const miners = getMiners();
 
   const [showCopied, setShowCopied] = useState(false);
-  const [showRequestPayout, setShowRequestPayout] = useState(true);
+  const [payoutRequested, setPayoutRequested] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
 
   return (
@@ -140,7 +139,11 @@ function SearchResult({ searchResult, deleteSearchResult, refetchAddress }: Sear
         className='bg-black flex flex-wrap w-full max-w-[800px] p-8 gap-6 rounded-2xl'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
-        <WalletWrapper requestAddress={address} refetchAddress={refetchAddress} close={closeModal} />
+        <WalletWrapper
+          requestAddress={address}
+          close={closeModal}
+          setPayoutRequested={setPayoutRequested}
+        />
       </Modal>
     </div>
   );
@@ -245,7 +248,7 @@ function SearchResult({ searchResult, deleteSearchResult, refetchAddress }: Sear
   }
   function RequestBtn() {
     if (searchResult.data) {
-      if (searchResult.data.payout.requested > 0) {
+      if (payoutRequested || searchResult.data.payout.requested > 0) {
         return (
           <button className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm opacity-50 cursor-progress'>
             <IconClockLoader className='' />
@@ -263,14 +266,10 @@ function SearchResult({ searchResult, deleteSearchResult, refetchAddress }: Sear
           </button>
         );
       } else {
-        return (
-          <span></span>
-        )
-      };
+        return <span></span>;
+      }
     } else {
-      return (
-        <span></span>
-      )
+      return <span></span>;
     }
   }
   function Stat() {
