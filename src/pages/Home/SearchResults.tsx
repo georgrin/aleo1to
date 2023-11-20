@@ -35,10 +35,12 @@ const ResultMinerInPool = ({ total, change_1h, change_24h }: BalanceOne) => {
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
+  refetchAddress: Function;
   deleteSearchResult: Function;
 }
 export const SearchResults = ({
   searchResults,
+  refetchAddress,
   deleteSearchResult,
 }: SearchResultsProps) => {
   return (
@@ -47,6 +49,7 @@ export const SearchResults = ({
         <SearchResult
           key={result.address}
           searchResult={result}
+          refetchAddress={refetchAddress}
           deleteSearchResult={deleteSearchResult}
         />
       ))}
@@ -72,8 +75,9 @@ const tooltipProps = {
 interface SearchResultProps {
   searchResult: model.SearchResult;
   deleteSearchResult: Function;
+  refetchAddress: Function;
 }
-function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
+function SearchResult({ searchResult, deleteSearchResult, refetchAddress }: SearchResultProps) {
   const { address, data } = searchResult;
   const miners = getMiners();
 
@@ -136,7 +140,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         className='bg-black flex flex-wrap w-full max-w-[800px] p-8 gap-6 rounded-2xl'
         overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
       >
-        <WalletWrapper requestAddress={address} close={closeModal} />
+        <WalletWrapper requestAddress={address} refetchAddress={refetchAddress} close={closeModal} />
       </Modal>
     </div>
   );
