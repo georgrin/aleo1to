@@ -20,12 +20,12 @@ import { PayoutError } from './PayoutError';
 interface Prop {
   requestAddress: string;
   close: Function;
-  refetchAddress: Function;
+  setPayoutRequested: Function;
 }
 export const WalletWrapper = ({
   requestAddress,
-  refetchAddress,
   close,
+  setPayoutRequested
 }: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
@@ -53,7 +53,7 @@ export const WalletWrapper = ({
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
       setSuccessSign(true);
-      refetchAddress(requestAddress);
+      setPayoutRequested(true);
     } catch (error) {
       if ((error as Error).message !== 'Permission Not Granted')
         setErrorSign(true);
