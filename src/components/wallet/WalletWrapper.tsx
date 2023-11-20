@@ -20,8 +20,13 @@ import { PayoutError } from './PayoutError';
 interface Prop {
   requestAddress: string;
   close: Function;
+  refetchAddress: Function;
 }
-export const WalletWrapper = ({ requestAddress, close }: Prop) => {
+export const WalletWrapper = ({
+  requestAddress,
+  refetchAddress,
+  close,
+}: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const leoWallet = wallets.find((item) => item.adapter.name === 'Leo Wallet');
@@ -48,6 +53,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
       setSuccessSign(true);
+      refetchAddress(requestAddress);
     } catch (error) {
       if ((error as Error).message !== 'Permission Not Granted')
         setErrorSign(true);
@@ -85,7 +91,7 @@ export const WalletWrapper = ({ requestAddress, close }: Prop) => {
   return (
     <div className='w-full'>
       <header className='flex items-center gap-2 w-full mb-6'>
-        <IconAddCard className="w-6 h-6" />
+        <IconAddCard className='w-6 h-6' />
         <h2 className='text-2xl font-bold'>Request payout</h2>
         <button onClick={() => close()} className='ml-auto'>
           <IconCancel />

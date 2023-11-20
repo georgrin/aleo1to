@@ -42,6 +42,7 @@ function App() {
     setJoinPoolIsDown,
     joinPoolCommand,
     searchAddress,
+    refetchAddress,
     searchResults,
     deleteSearchResult,
   } = useAppController();
@@ -85,6 +86,7 @@ function App() {
             {!joinPoolIsDown && joinPool}
             <Home.SearchResults
               searchResults={searchResults}
+              refetchAddress={refetchAddress}
               deleteSearchResult={deleteSearchResult}
             />
             {joinPoolIsDown && joinPool}
@@ -140,6 +142,7 @@ function useAppController() {
     setJoinPoolIsDown,
     joinPoolCommand,
     searchAddress,
+    refetchAddress,
     searchResults,
     deleteSearchResult,
   };
@@ -206,7 +209,7 @@ function useAppController() {
     loadingBarRef.current?.complete();
   }
 
-  function searchAddress(address: string) {
+  function searchAddress(address: string) {    
     if (searchAddresses.includes(address)) {
       setJoinPoolIsDown(true);
       setJoinPoolCommand(null);
@@ -218,6 +221,43 @@ function useAppController() {
     saveSearchAddresses();
 
     _searchAddress(address);
+  }
+  async function refetchAddress(address: string) {
+    setSearchResults([])
+    loadingBarRef.current?.continuousStart();
+    const result: SearchResult = {
+      address,
+      data: null,
+    };
+    const { data } = await api.searchAddress(address);
+    try {
+      if (data) {
+        result.data = data;
+        loadingBarRef.current?.complete();
+        if (
+          !result.data.miners.length &&
+          result.data.balance.in_pool.total <= 0 &&
+          result.data.balance.solo.total <= 0 &&
+          !result.data.balance_phase2.in_pool_incentivize.total
+        ) {
+          setJoinPoolIsDown(false);
+          setJoinPoolCommand(
+            `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
+          );
+          deleteSearchResult(result);
+          return;
+        }
+        setSearchResults((results) => {
+          if (results.indexOf(result) < 0) {
+            return [result, ...results];
+          }
+
+          return [...results];
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function _searchAddress(address: string) {
