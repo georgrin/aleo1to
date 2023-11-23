@@ -299,6 +299,7 @@ function useAppController() {
     try {
       loadingBarRef.current?.continuousStart();
       const { data } = await api.searchAddress(address);
+      loadingBarRef.current?.complete();
       console.log('getWalletData', data);
       return data;
     } catch (error) {
