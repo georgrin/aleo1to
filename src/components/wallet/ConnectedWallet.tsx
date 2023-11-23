@@ -33,7 +33,7 @@ export const ConnectedWallet = ({
 
   return (
     <>
-      <div className='flex gap-5 mb-6'>
+      <div className='flex gap-5 mb-6 font-secondary'>
         <div className='flex'>
           <div className='text-grey font-medium'>Amount</div>
           <div className='ml-2'>{calcAmountSum()}</div>
