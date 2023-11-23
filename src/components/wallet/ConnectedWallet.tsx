@@ -2,13 +2,23 @@ import { MouseEventHandler, useCallback } from 'react';
 import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { AddressLine } from './AddressLine';
 import { IconLogoLeo } from '../icons/IconLogoLeo';
+import { RequestPayout } from '../../api';
+
+interface Prop {
+  requestAddress: string;
+  sign: Function;
+  signStatus: string;
+  payoutData?: RequestPayout;
+}
+const PAYOUT_FEE = 0.263388;
 
 export const ConnectedWallet = ({
   requestAddress,
   sign,
   signStatus,
+  payoutData,
   ...props
-}: any) => {
+}: Prop) => {
   const { publicKey, disconnect } = useWallet();
   const disconnectHandler: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
@@ -16,8 +26,23 @@ export const ConnectedWallet = ({
     },
     [disconnect]
   );
+
+  function calcAmountSum() {
+    return payoutData ? payoutData.available - PAYOUT_FEE : ' — ';
+  }
+
   return (
     <>
+      <div className='flex gap-5 mb-6'>
+        <div className='flex'>
+          <div className='text-grey font-medium'>Amount</div>
+          <div className='ml-2'>{calcAmountSum()}</div>
+        </div>
+        <div className='flex'>
+          <span className='text-grey font-medium'>Fee</span>
+          <output className='ml-2'>{PAYOUT_FEE}</output>
+        </div>
+      </div>
       <AddressLine requestAddress={requestAddress} />
       <h3 className='w-full text-grey font-medium mt-6 mb-4'>Leo Wallet</h3>
       <div className='border border-[#32363B] rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4'>
@@ -41,10 +66,7 @@ export const ConnectedWallet = ({
             Sign message in your wallet
           </button>
         ) : (
-          <button
-            className='w-full btn font-bold'
-            onClick={() => sign()}
-          >
+          <button className='w-full btn font-bold' onClick={() => sign()}>
             Sign
           </button>
         )}

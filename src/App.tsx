@@ -44,6 +44,7 @@ function App() {
     searchAddress,
     searchResults,
     deleteSearchResult,
+    replaceSearchResult,
   } = useAppController();
 
   if (!info) {
@@ -86,6 +87,7 @@ function App() {
             <Home.SearchResults
               searchResults={searchResults}
               deleteSearchResult={deleteSearchResult}
+              replaceSearchResult={replaceSearchResult}
             />
             {joinPoolIsDown && joinPool}
           </div>
@@ -130,19 +132,6 @@ function useAppController() {
     }
     searchAddresses.forEach(_searchAddress);
   }, []);
-
-  return {
-    loadingBarRef,
-    info,
-    historyInfo,
-    updateHistoryInfo,
-    joinPoolIsDown,
-    setJoinPoolIsDown,
-    joinPoolCommand,
-    searchAddress,
-    searchResults,
-    deleteSearchResult,
-  };
 
   function loadSearchAddresses(): string[] {
     if (!cookies.searchAddresses) {
@@ -206,7 +195,7 @@ function useAppController() {
     loadingBarRef.current?.complete();
   }
 
-  function searchAddress(address: string) {    
+  function searchAddress(address: string) {
     if (searchAddresses.includes(address)) {
       setJoinPoolIsDown(true);
       setJoinPoolCommand(null);
@@ -248,7 +237,8 @@ function useAppController() {
             !result.data.miners.length &&
             result.data.balance.in_pool.total <= 0 &&
             result.data.balance.solo.total <= 0 &&
-            !result.data.balance_phase2.in_pool_incentivize.total
+            !result.data.balance_phase2.in_pool_incentivize.total &&
+            (result.data.payout.requested > 0 || result.data.payout.done > 0)
           ) {
             setJoinPoolIsDown(false);
             setJoinPoolCommand(
@@ -294,4 +284,39 @@ function useAppController() {
       return [...results];
     });
   }
+
+  async function replaceSearchResult(address: string) {
+    const result = await getWalletData(address);
+    setSearchResults(
+      searchResults.map((item) => {
+        if (item.address === address) {
+          return { address: address, data: result };
+        } else return item;
+      })
+    );
+  }
+  async function getWalletData(address: string) {
+    try {
+      loadingBarRef.current?.continuousStart();
+      const { data } = await api.searchAddress(address);
+      console.log('getWalletData', data);
+      return data;
+    } catch (error) {
+      console.log({ 'getWalletData error': error });
+    }
+  }
+
+  return {
+    loadingBarRef,
+    info,
+    historyInfo,
+    updateHistoryInfo,
+    joinPoolIsDown,
+    setJoinPoolIsDown,
+    joinPoolCommand,
+    searchAddress,
+    searchResults,
+    deleteSearchResult,
+    replaceSearchResult,
+  };
 }

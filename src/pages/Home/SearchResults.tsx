@@ -36,10 +36,12 @@ const ResultMinerInPool = ({ total, change_1h, change_24h }: BalanceOne) => {
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
   deleteSearchResult: Function;
+  replaceSearchResult: Function;
 }
 export const SearchResults = ({
   searchResults,
   deleteSearchResult,
+  replaceSearchResult
 }: SearchResultsProps) => {
   return (
     <div className='container font-secondary relative overflow-hidden'>
@@ -48,6 +50,7 @@ export const SearchResults = ({
           key={result.address}
           searchResult={result}
           deleteSearchResult={deleteSearchResult}
+          replaceSearchResult={replaceSearchResult}
         />
       ))}
     </div>
@@ -72,11 +75,9 @@ const tooltipProps = {
 interface SearchResultProps {
   searchResult: model.SearchResult;
   deleteSearchResult: Function;
+  replaceSearchResult: Function;
 }
-function SearchResult({
-  searchResult,
-  deleteSearchResult,
-}: SearchResultProps) {
+function SearchResult({ searchResult, deleteSearchResult, replaceSearchResult }: SearchResultProps) {
   const { address, data } = searchResult;
   const miners = getMiners();
 
@@ -143,6 +144,8 @@ function SearchResult({
           requestAddress={address}
           close={closeModal}
           setPayoutRequested={setPayoutRequested}
+          payoutData={searchResult.data?.payout}
+          replaceSearchResult={replaceSearchResult}
         />
       </Modal>
     </div>
@@ -252,7 +255,7 @@ function SearchResult({
         return (
           <button className='flex items-center rounded gap-2 px-3 py-2 h-full bg-aleo-cyan/10 text-aleo-cyan font-bold text-sm opacity-50 cursor-progress'>
             <IconClockLoader className='' />
-            Payout requested...
+            {calcRequestedSum(searchResult.data.payout.requested)} requested...
           </button>
         );
       } else if (searchResult.data.payout.available > MIN_PAYOUT) {
@@ -271,6 +274,9 @@ function SearchResult({
     } else {
       return <span></span>;
     }
+  }
+  function calcRequestedSum(requested: number) {
+    return Number.isInteger(requested) ? requested : requested.toFixed(2);
   }
   function Stat() {
     return (
