@@ -16,16 +16,21 @@ import { IconCancel } from '../../components/icons/IconCancel';
 import { IconAddCard } from '../../components/icons/IconAddCard';
 import { PayoutSuccess } from './PayoutSuccess';
 import { PayoutError } from './PayoutError';
+import { RequestPayout } from '../../api';
 
 interface Prop {
   requestAddress: string;
   close: Function;
   setPayoutRequested: Function;
+  replaceSearchResult: Function;
+  payoutData?: RequestPayout
 }
 export const WalletWrapper = ({
   requestAddress,
   close,
-  setPayoutRequested
+  setPayoutRequested,
+  replaceSearchResult,
+  payoutData
 }: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
@@ -38,7 +43,7 @@ export const WalletWrapper = ({
   const sign = async () => {
     try {
       const challenge = await getChallenge(requestAddress);
-      console.log('challenge', { challenge: challenge });
+      // console.log('challenge', { challenge: challenge });
       if (!publicKey) throw new WalletNotConnectedError();
       const bytes = new TextEncoder().encode(challenge);
       setSignStatus('pending');
@@ -52,6 +57,7 @@ export const WalletWrapper = ({
       const tokenResponse = await getToken(requestAddress, requestData);
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
+      replaceSearchResult(requestAddress)
       setSuccessSign(true);
       setPayoutRequested(true);
     } catch (error) {
@@ -71,6 +77,7 @@ export const WalletWrapper = ({
             requestAddress={requestAddress}
             sign={sign}
             signStatus={signStatus}
+            payoutData={payoutData}
           />
         ) : (
           <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
