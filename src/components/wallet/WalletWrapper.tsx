@@ -16,16 +16,23 @@ import { IconCancel } from '../../components/icons/IconCancel';
 import { IconAddCard } from '../../components/icons/IconAddCard';
 import { PayoutSuccess } from './PayoutSuccess';
 import { PayoutError } from './PayoutError';
+import { RequestPayout } from '../../api';
 
 interface Prop {
   requestAddress: string;
   close: Function;
   setPayoutRequested: Function;
+  replaceSearchResult: Function;
+  payoutData?: RequestPayout;
 }
+const PAYOUT_FEE = 0.263388;
+
 export const WalletWrapper = ({
   requestAddress,
   close,
-  setPayoutRequested
+  setPayoutRequested,
+  replaceSearchResult,
+  payoutData,
 }: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
@@ -38,7 +45,7 @@ export const WalletWrapper = ({
   const sign = async () => {
     try {
       const challenge = await getChallenge(requestAddress);
-      console.log('challenge', { challenge: challenge });
+      // console.log('challenge', { challenge: challenge });
       if (!publicKey) throw new WalletNotConnectedError();
       const bytes = new TextEncoder().encode(challenge);
       setSignStatus('pending');
@@ -52,6 +59,7 @@ export const WalletWrapper = ({
       const tokenResponse = await getToken(requestAddress, requestData);
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
+      replaceSearchResult(requestAddress);
       setSuccessSign(true);
       setPayoutRequested(true);
     } catch (error) {
@@ -62,6 +70,9 @@ export const WalletWrapper = ({
       setSignStatus('fulfilled');
     }
   };
+  function calcAmountSum() {
+    return payoutData ? payoutData.available - PAYOUT_FEE : ' — ';
+  }
   const Content = () => {
     if (successSign) return <PayoutSuccess handleClick={() => close()} />;
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
@@ -97,6 +108,16 @@ export const WalletWrapper = ({
           <IconCancel />
         </button>
       </header>
+      <div className='flex gap-5 mb-6 font-secondary'>
+        <div className='flex'>
+          <div className='text-grey font-medium'>Amount</div>
+          <div className='ml-2'>{calcAmountSum()}</div>
+        </div>
+        <div className='flex'>
+          <span className='text-grey font-medium'>Fee</span>
+          <output className='ml-2'>{PAYOUT_FEE}</output>
+        </div>
+      </div>
       {!errorSign ? (
         <div className='w-full'>
           <div className='w-full p-0 mt-4'>

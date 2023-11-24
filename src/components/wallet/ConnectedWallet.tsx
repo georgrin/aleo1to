@@ -3,12 +3,18 @@ import { useWallet } from '@demox-labs/aleo-wallet-adapter-react';
 import { AddressLine } from './AddressLine';
 import { IconLogoLeo } from '../icons/IconLogoLeo';
 
+interface Prop {
+  requestAddress: string;
+  sign: Function;
+  signStatus: string;
+}
+
 export const ConnectedWallet = ({
   requestAddress,
   sign,
   signStatus,
   ...props
-}: any) => {
+}: Prop) => {
   const { publicKey, disconnect } = useWallet();
   const disconnectHandler: MouseEventHandler<HTMLButtonElement> = useCallback(
     (event) => {
@@ -16,6 +22,7 @@ export const ConnectedWallet = ({
     },
     [disconnect]
   );
+
   return (
     <>
       <AddressLine requestAddress={requestAddress} />
@@ -41,10 +48,7 @@ export const ConnectedWallet = ({
             Sign message in your wallet
           </button>
         ) : (
-          <button
-            className='w-full btn font-bold'
-            onClick={() => sign()}
-          >
+          <button className='w-full btn font-bold' onClick={() => sign()}>
             Sign
           </button>
         )}
