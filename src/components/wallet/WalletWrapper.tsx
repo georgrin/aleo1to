@@ -23,14 +23,16 @@ interface Prop {
   close: Function;
   setPayoutRequested: Function;
   replaceSearchResult: Function;
-  payoutData?: RequestPayout
+  payoutData?: RequestPayout;
 }
+const PAYOUT_FEE = 0.263388;
+
 export const WalletWrapper = ({
   requestAddress,
   close,
   setPayoutRequested,
   replaceSearchResult,
-  payoutData
+  payoutData,
 }: Prop) => {
   const { publicKey, wallet, wallets, select, connected } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
@@ -57,7 +59,7 @@ export const WalletWrapper = ({
       const tokenResponse = await getToken(requestAddress, requestData);
       setToken(tokenResponse.token);
       await payout(tokenResponse.token);
-      replaceSearchResult(requestAddress)
+      replaceSearchResult(requestAddress);
       setSuccessSign(true);
       setPayoutRequested(true);
     } catch (error) {
@@ -68,6 +70,9 @@ export const WalletWrapper = ({
       setSignStatus('fulfilled');
     }
   };
+  function calcAmountSum() {
+    return payoutData ? payoutData.available - PAYOUT_FEE : ' — ';
+  }
   const Content = () => {
     if (successSign) return <PayoutSuccess handleClick={() => close()} />;
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
@@ -77,7 +82,6 @@ export const WalletWrapper = ({
             requestAddress={requestAddress}
             sign={sign}
             signStatus={signStatus}
-            payoutData={payoutData}
           />
         ) : (
           <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
@@ -104,6 +108,16 @@ export const WalletWrapper = ({
           <IconCancel />
         </button>
       </header>
+      <div className='flex gap-5 mb-6 font-secondary'>
+        <div className='flex'>
+          <div className='text-grey font-medium'>Amount</div>
+          <div className='ml-2'>{calcAmountSum()}</div>
+        </div>
+        <div className='flex'>
+          <span className='text-grey font-medium'>Fee</span>
+          <output className='ml-2'>{PAYOUT_FEE}</output>
+        </div>
+      </div>
       {!errorSign ? (
         <div className='w-full'>
           <div className='w-full p-0 mt-4'>
