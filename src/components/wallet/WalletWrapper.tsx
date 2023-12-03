@@ -73,18 +73,37 @@ export const WalletWrapper = ({
   function calcAmountSum() {
     return payoutData ? payoutData.available - PAYOUT_FEE : ' — ';
   }
+  function CalcAmountFee() {
+    return (
+      <div className='flex gap-5 mb-6 font-secondary'>
+        <div className='flex'>
+          <div className='text-grey font-medium'>Amount</div>
+          <div className='ml-2'>{calcAmountSum()}</div>
+        </div>
+        <div className='flex'>
+          <span className='text-grey font-medium'>Fee</span>
+          <output className='ml-2'>{PAYOUT_FEE}</output>
+        </div>
+      </div>
+    )
+  }
   const Content = () => {
     if (successSign) return <PayoutSuccess handleClick={() => close()} />;
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
       if (connected) {
         return requestAddress === base58 ? (
+          <div>
+          <CalcAmountFee />
           <ConnectedWallet
             requestAddress={requestAddress}
             sign={sign}
             signStatus={signStatus}
-          />
+          /></div>
         ) : (
-          <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
+          <div>
+            <CalcAmountFee />
+            <ConnectedWalletDoesnMatch requestAddress={requestAddress} />
+          </div>
         );
       } else {
         return (
@@ -108,16 +127,7 @@ export const WalletWrapper = ({
           <IconCancel />
         </button>
       </header>
-      <div className='flex gap-5 mb-6 font-secondary'>
-        <div className='flex'>
-          <div className='text-grey font-medium'>Amount</div>
-          <div className='ml-2'>{calcAmountSum()}</div>
-        </div>
-        <div className='flex'>
-          <span className='text-grey font-medium'>Fee</span>
-          <output className='ml-2'>{PAYOUT_FEE}</output>
-        </div>
-      </div>
+      
       {!errorSign ? (
         <div className='w-full'>
           <div className='w-full p-0 mt-4'>
