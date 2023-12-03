@@ -238,7 +238,8 @@ function useAppController() {
             result.data.balance.in_pool.total <= 0 &&
             result.data.balance.solo.total <= 0 &&
             !result.data.balance_phase2.in_pool_incentivize.total &&
-            (result.data.payout.requested > 0 || result.data.payout.done > 0)
+            !result.data.payout.requested &&
+            !result.data.payout.done
           ) {
             setJoinPoolIsDown(false);
             setJoinPoolCommand(
