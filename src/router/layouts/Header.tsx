@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { navigate } from "../utils/navigate";
+import { Route } from "../../model";
 
 export const Header = ({ info }: any) => {
   const linksData = [
@@ -53,7 +55,11 @@ export const Header = ({ info }: any) => {
       <div className="container h-[68px] sm:h-[56px] flex items-center flex-wrap">
         <div className="flex items-center w-full">
           <div className="relative sm:top-[2px] flex items-center">
-            <a href="/" className="font-bold text-xl">
+            <a
+              href={Route.HOME}
+              onClick={(e) => navigate(e, Route.HOME)}
+              className="font-bold text-xl"
+            >
               <span className="inline-block icon logo-blue-white-icon w-[160px] h-[50px]"></span>
             </a>
             <div className="text-default ml-4 hidden md:block font-medium mr-4">
@@ -61,6 +67,13 @@ export const Header = ({ info }: any) => {
             </div>
           </div>
           <div className="hidden lg:flex items-center ml-auto">
+            <a
+              className="block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors gradient-main"
+              href={Route.REWARDS}
+              onClick={(e) => navigate(e, Route.REWARDS)}
+            >
+              Testnet Rewards
+            </a>
             {linksData.map(({ label, value }) => {
               return (
                 <a
