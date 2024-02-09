@@ -1,26 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
-import * as api from './api';
-import * as Home from './pages/Home';
-import { useMemo } from 'react';
-import { withProfiler } from '@sentry/react';
-import { useCookies } from 'react-cookie';
-import { SearchResult } from './model/SearchResult';
-import Modal from 'react-modal';
-import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
-import 'react-tooltip/dist/react-tooltip.css';
-import './index.scss';
-import { LeoWalletAdapter } from '@demox-labs/aleo-wallet-adapter-leo';
-import { WalletProvider } from '@demox-labs/aleo-wallet-adapter-react';
+import { useEffect, useRef, useState } from "react";
+import * as api from "./api";
+import * as Home from "./pages/Home";
+import { useMemo } from "react";
+import { withProfiler } from "@sentry/react";
+import { useCookies } from "react-cookie";
+import { SearchResult } from "./model/SearchResult";
+import Modal from "react-modal";
+import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
+import "react-tooltip/dist/react-tooltip.css";
+import "./index.scss";
+import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
+import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
 import {
   DecryptPermission,
   WalletAdapterNetwork,
-} from '@demox-labs/aleo-wallet-adapter-base';
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from '@demox-labs/aleo-wallet-adapter-reactui';
+} from "@demox-labs/aleo-wallet-adapter-base";
+import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
+import { Header } from "./router/layouts/Header";
+import { Footer } from "./router/layouts/Footer";
+import TestnetRewards from "./pages/TestnetRewards";
+import { Route } from "./model";
 
-Modal.setAppElement('#modals');
+Modal.setAppElement("#modals");
 
 const UPDATE_INTERVAL = 1000 * 60 * 5; // 5 minutes;
 
@@ -28,7 +29,7 @@ function App() {
   const wallets = useMemo(
     () => [
       new LeoWalletAdapter({
-        appName: 'Leo Demo App',
+        appName: "Leo Demo App",
       }),
     ],
     []
@@ -45,6 +46,7 @@ function App() {
     searchResults,
     deleteSearchResult,
     replaceSearchResult,
+    currentRoute,
   } = useAppController();
 
   if (!info) {
@@ -60,40 +62,54 @@ function App() {
     />
   );
 
+  const HomePage = (
+    <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden">
+      <Home.Stat
+        info={info}
+        historyInfo={historyInfo}
+        updateHistoryInfo={updateHistoryInfo}
+      />
+      <Home.Search search={searchAddress} />
+      {!joinPoolIsDown && joinPool}
+      <Home.SearchResults
+        searchResults={searchResults}
+        deleteSearchResult={deleteSearchResult}
+        replaceSearchResult={replaceSearchResult}
+      />
+      {joinPoolIsDown && joinPool}
+    </div>
+  );
+
+  // Simple route matching
+  const renderComponent = () => {
+    switch (currentRoute) {
+      case Route.HOME:
+        return HomePage;
+      case Route.REWARDS:
+        return <TestnetRewards />;
+      default:
+        return HomePage;
+    }
+  };
+
   return (
     <>
       <LoadingBar
-        color='rgba(0,117,255,1)'
+        color="rgba(0,117,255,1)"
         height={4}
         shadow
         ref={loadingBarRef}
       />
-      <Home.Header info={info} />
+      <Header info={info} />
 
       <WalletProvider
         wallets={wallets}
         decryptPermission={DecryptPermission.UponRequest}
         network={WalletAdapterNetwork.Testnet}
       >
-        <WalletModalProvider>
-          <div className='pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden'>
-            <Home.Stat
-              info={info}
-              historyInfo={historyInfo}
-              updateHistoryInfo={updateHistoryInfo}
-            />
-            <Home.Search search={searchAddress} />
-            {!joinPoolIsDown && joinPool}
-            <Home.SearchResults
-              searchResults={searchResults}
-              deleteSearchResult={deleteSearchResult}
-              replaceSearchResult={replaceSearchResult}
-            />
-            {joinPoolIsDown && joinPool}
-          </div>
-        </WalletModalProvider>
+        <WalletModalProvider>{renderComponent()}</WalletModalProvider>
       </WalletProvider>
-      <Home.Footer />
+      <Footer />
     </>
   );
 }
@@ -112,9 +128,19 @@ function useAppController() {
 
   const loadingBarRef = useRef<LoadingBarRef>(null);
 
-  const [cookies, setCookie] = useCookies(['searchAddresses']);
+  const [cookies, setCookie] = useCookies(["searchAddresses"]);
 
   const searchAddresses = loadSearchAddresses();
+
+  const [currentRoute, setCurrentRoute] = useState(window.location.pathname);
+
+  //simple router
+  useEffect(() => {
+    const onLocationChange = () => setCurrentRoute(window.location.pathname);
+    window.addEventListener("popstate", onLocationChange);
+
+    return () => window.removeEventListener("popstate", onLocationChange);
+  }, []);
 
   useEffect(() => {
     updateInfo();
@@ -123,8 +149,8 @@ function useAppController() {
       updateHistoryInfo();
     }, UPDATE_INTERVAL);
 
-    while (searchAddresses.indexOf('') >= 0) {
-      const addressIndex = searchAddresses.indexOf('');
+    while (searchAddresses.indexOf("") >= 0) {
+      const addressIndex = searchAddresses.indexOf("");
       if (addressIndex >= 0) {
         searchAddresses.splice(addressIndex, 1);
         saveSearchAddresses();
@@ -142,7 +168,7 @@ function useAppController() {
 
   function saveSearchAddresses() {
     setCookie(
-      'searchAddresses',
+      "searchAddresses",
       encodeURIComponent(JSON.stringify(searchAddresses))
     );
   }
@@ -167,7 +193,7 @@ function useAppController() {
         const lastDay = `${lastDate.getMonth() + 1}-${lastDate.getDate()}`;
         if (lastDay !== day || i === info.length - 1) {
           Object.keys(last).forEach((k) => {
-            if (k === 'date') {
+            if (k === "date") {
               return;
             }
             // @ts-ignore
@@ -179,7 +205,7 @@ function useAppController() {
           }
         } else {
           Object.keys(last).forEach((k) => {
-            if (k === 'date') {
+            if (k === "date") {
               return;
             }
             // TODO: Add type
@@ -301,10 +327,10 @@ function useAppController() {
       loadingBarRef.current?.continuousStart();
       const { data } = await api.searchAddress(address);
       loadingBarRef.current?.complete();
-      console.log('getWalletData', data);
+      console.log("getWalletData", data);
       return data;
     } catch (error) {
-      console.log({ 'getWalletData error': error });
+      console.log({ "getWalletData error": error });
     }
   }
 
@@ -320,5 +346,6 @@ function useAppController() {
     searchResults,
     deleteSearchResult,
     replaceSearchResult,
+    currentRoute,
   };
 }
