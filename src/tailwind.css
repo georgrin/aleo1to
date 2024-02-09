@@ -166,4 +166,10 @@
     .font-thirdly {
         font-family: "Space Grotesk", sans-serif;
     }
+
+    .gradient-main {
+        background: linear-gradient(135deg, rgba(88, 175, 255, 1), rgba(142, 88, 255, 1), rgba(0, 255, 240, 1));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 }
