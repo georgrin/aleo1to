@@ -38,6 +38,7 @@ export const Header = ({ info }: any) => {
   };
 
   const [showMenu, setShowMenu] = useState(false);
+
   useEffect(() => {
     function click(e: MouseEvent) {
       if (!(e.target as HTMLElement).classList.contains("menu")) {
