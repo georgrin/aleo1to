@@ -89,6 +89,9 @@
     .twitter-icon {
         background-image: url("./assets/twitter.svg");
     }
+    .gradient-bg {
+        background-image: url("./assets/testnet-bg.svg");
+    }
 }
 
 @layer utilities {
@@ -165,6 +168,10 @@
 
     .font-thirdly {
         font-family: "Space Grotesk", sans-serif;
+    }
+
+    .border-primary {
+        border: 1px solid rgba(50, 54, 59, 1)
     }
 
     .gradient-main {
