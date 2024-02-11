@@ -35,7 +35,7 @@ export const useWalletSign = ({ address, action }: Props) => {
 
   // useEffect(() => {
   //   (leoWallet?.adapter as LeoWalletAdapter).on(
-  //     "accountChange",
+  //     "readyStateChange",
   //     handleAccountChange
   //   );
 
@@ -43,7 +43,7 @@ export const useWalletSign = ({ address, action }: Props) => {
   //   // Removes event listener during component teardown
   //   return () => {
   //     (leoWallet?.adapter as LeoWalletAdapter).off(
-  //       "disconnect",
+  //       "readyStateChange",
   //       handleAccountChange
   //     );
   //   };
