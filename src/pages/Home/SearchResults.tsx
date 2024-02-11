@@ -8,7 +8,7 @@ import { getNumberWithCommas } from '../../helpers/getNumberWithComas';
 
 import { IconAddCard } from '../../components/icons/IconAddCard';
 import { IconClockLoader } from '../../components/icons/IconClockLoader';
-import { WalletWrapper } from '../../components/wallet/WalletWrapper';
+import { DeprecatedWalletWrapper } from "../../components/deprecatedWallet/DeprecatedWalletWrapper";
 
 Modal.setAppElement('#modals');
 const MIN_PAYOUT = 0.1;
@@ -96,7 +96,7 @@ function SearchResult({ searchResult, deleteSearchResult, replaceSearchResult }:
         border-[rgba(255,255,255,0.1)] border-t-[1px]
     `}
     >
-      <div className='flex justify-between items-center gap-4'>
+      <div className="flex justify-between items-center gap-4">
         <div
           className={`
                 md:w-[728px] flex justify-between flex-wrap
@@ -129,18 +129,18 @@ function SearchResult({ searchResult, deleteSearchResult, replaceSearchResult }:
                 grid-flow-row
             `}
         >
-          <div className='text-default'>{TableHead()}</div>
+          <div className="text-default">{TableHead()}</div>
           <div>{miners.map(TableRow)}</div>
         </div>
       )}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel='Example Modal'
-        className='bg-black flex flex-wrap w-full max-w-[800px] p-8 gap-6 rounded-2xl'
-        overlayClassName='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50'
+        contentLabel="Example Modal"
+        className="bg-black flex flex-wrap w-full max-w-[800px] p-8 gap-6 rounded-2xl"
+        overlayClassName="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black/50"
       >
-        <WalletWrapper
+        <DeprecatedWalletWrapper
           requestAddress={address}
           close={closeModal}
           setPayoutRequested={setPayoutRequested}
