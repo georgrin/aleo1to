@@ -75,8 +75,7 @@ const NewPhaseRewardTable = ({ address }: Props) => {
         </div>
         <WalletSign
           dataToSign={{
-            address:
-              "aleo1t4xjpsfrdw8k8cca3xr9v9vlkkpftun9ww9nr0208fvq8r77dvgsjmmvmm",
+            address: address,
             action: async () => {},
           }}
         />
