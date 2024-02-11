@@ -63,7 +63,7 @@ function App() {
   );
 
   const HomePage = (
-    <>
+    <div className="min-h-[100vh] pt-[68px] sm:pt-[56px] pb-[10px] overflow-x-hidden">
       <Home.Stat
         info={info}
         historyInfo={historyInfo}
@@ -77,7 +77,7 @@ function App() {
         replaceSearchResult={replaceSearchResult}
       />
       {joinPoolIsDown && joinPool}
-    </>
+    </div>
   );
 
   // Simple route matching
@@ -107,11 +107,7 @@ function App() {
         decryptPermission={DecryptPermission.UponRequest}
         network={WalletAdapterNetwork.Testnet}
       >
-        <WalletModalProvider>
-          <div className="pt-[68px] sm:pt-[56px] min-h-[100vh] pb-[10px] overflow-x-hidden">
-            {renderComponent()}
-          </div>
-        </WalletModalProvider>
+        <WalletModalProvider>{renderComponent()}</WalletModalProvider>
       </WalletProvider>
       <Footer />
     </>

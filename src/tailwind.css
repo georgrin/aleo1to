@@ -92,6 +92,10 @@
     .gradient-bg {
         background-image: url("./assets/testnet-bg.svg");
     }
+
+    .fit {
+        min-height: calc(100vh - 108px);
+    }
 }
 
 @layer utilities {
@@ -168,6 +172,10 @@
 
     .font-thirdly {
         font-family: "Space Grotesk", sans-serif;
+    }
+
+    .font-orbiton {
+        font-family: "Orbitron", sans-serif;
     }
 
     .border-primary {

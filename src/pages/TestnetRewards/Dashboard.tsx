@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
-import NewPhaseRewardTable from "./components/NewPhaseRewardTable";
+import NewPhaseRewardTable from "./components/NewRewardTable";
 
 interface Props {
   title: JSX.Element;
@@ -9,8 +9,15 @@ interface Props {
 }
 
 const Dashboard: React.FC<Props> = ({ title, description, style }) => {
+  const [search, setSearch] = useState("");
+  const [submited, setSubmited] = useState(false);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmited(true);
+  };
   return (
-    <div className={`p-6 font-medium ${style}`}>
+    <div className={`p-6 font-medium flex flex-col ${style}`}>
       {title}
       <div>{description}</div>
       <div className="pt-4">
@@ -20,10 +27,15 @@ const Dashboard: React.FC<Props> = ({ title, description, style }) => {
         >
           Testnet 2 address
         </label>
-        <form className="flex items-center rounded space-x-2 text-xs">
+        <form
+          className="flex items-center rounded space-x-2 text-xs"
+          onSubmit={onSubmit}
+        >
           <input
             type="text"
             id="testnet-address"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Testnet 2 address"
             className="flex-1 px-4 py-2 leading-[18px] rounded outline-none bg-default border-primary"
           />
@@ -32,17 +44,20 @@ const Dashboard: React.FC<Props> = ({ title, description, style }) => {
           </button>
         </form>
       </div>
-      <NewPhaseRewardTable />
-      {/* <div className="flex items-center flex-col mt-[50%]">
-        <IconDatabase />
-        <div className="mt-[8px] text-center">
-          <span>Input your address&nbsp;</span>
-          <span className="text-default">
-            to see if
-            <br /> rewards are available to you
-          </span>
+      {submited ? (
+        <NewPhaseRewardTable address={search} />
+      ) : (
+        <div className="flex items-center flex-col mt-[50%]">
+          <IconDatabase />
+          <div className="mt-[8px] text-center">
+            <span>Input your address&nbsp;</span>
+            <span className="text-default">
+              to see if
+              <br /> rewards are available to you
+            </span>
+          </div>
         </div>
-      </div> */}
+      )}
     </div>
   );
 };

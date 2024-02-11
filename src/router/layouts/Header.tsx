@@ -69,7 +69,7 @@ export const Header = ({ info }: any) => {
           </div>
           <div className="hidden lg:flex items-center ml-auto">
             <a
-              className="block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors gradient-main"
+              className="block text-sm font-orbiton font-bold mr-[16px] last:mr-0 hover:text-primary transition-colors gradient-main"
               href={Route.REWARDS}
               onClick={(e) => navigate(e, Route.REWARDS)}
             >
@@ -79,7 +79,7 @@ export const Header = ({ info }: any) => {
               return (
                 <a
                   key={label}
-                  className="block text-base font-bold mr-[10px] last:mr-0 hover:text-primary transition-colors"
+                  className="block text-sm font-bold mr-[16px] last:mr-0 hover:text-primary transition-colors"
                   href={value}
                   target="_blank"
                 >
@@ -89,25 +89,25 @@ export const Header = ({ info }: any) => {
             })}
           </div>
 
-          <div className="flex items-center ml-[auto] lg:ml-[20px] mr-[10px]">
+          <div className="flex items-center ml-[auto] lg:ml-[24px]">
             <a
               target="_blank"
               href={socialData.telegram.value}
-              className="relative inline-block icon telegram-icon w-[25px] h-[25px] mr-[10px] last:mr-0"
+              className="relative inline-block icon telegram-icon w-[16px] h-[16px] mr-[16px] last:mr-0"
             />
             <a
               target="_blank"
               href={socialData.github.value}
-              className="relative inline-block icon github-icon w-[25px] h-[25px] mr-[10px] last:mr-0"
+              className="relative inline-block icon github-icon w-[16px] h-[16px] mr-[16px] last:mr-0"
             />
             <a
               target="_blank"
               href={socialData.twitter.value}
-              className="relative inline-block icon twitter-icon w-[25px] h-[25px] mr-[10px] last:mr-0"
+              className="relative inline-block icon twitter-icon w-[16px] h-[16px] mr-[16px] last:mr-0"
             />
           </div>
 
-          <div className="lg:hidden">
+          <div className="lg:hidden ml-[10px]">
             <div className="menu" onClick={(e) => setShowMenu((v) => !v)}>
               <div className="menu w-4 h-[3px] bg-primary"></div>
               <div className="menu w-4 h-[3px] bg-primary mt-[3px]"></div>
