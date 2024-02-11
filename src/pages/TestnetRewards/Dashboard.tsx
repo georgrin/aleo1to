@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
-import NewPhaseRewardTable from "./components/NewRewardTable";
 
 interface Props {
   title: JSX.Element;
-  description: string;
+  description: JSX.Element;
   style?: string;
+  table: (address: string) => JSX.Element;
 }
 
-const Dashboard: React.FC<Props> = ({ title, description, style }) => {
+const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
   const [search, setSearch] = useState("");
   const [submited, setSubmited] = useState(false);
 
@@ -16,6 +16,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style }) => {
     e.preventDefault();
     setSubmited(true);
   };
+
   return (
     <div className={`p-6 font-medium flex flex-col ${style}`}>
       {title}
@@ -45,7 +46,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style }) => {
         </form>
       </div>
       {submited ? (
-        <NewPhaseRewardTable address={search} />
+        <>{table(search)}</>
       ) : (
         <div className="flex items-center flex-col mt-[50%]">
           <IconDatabase />

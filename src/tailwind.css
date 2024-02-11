@@ -150,6 +150,10 @@
         color: rgba(0, 255, 171, 1);
     }
 
+    .text-link {
+        color: rgba(0, 255, 240, 1)
+    }
+
     .shadow-primary {
         box-shadow: 0 0 4px 4px rgba(0, 117, 255, 0.25);
     }
