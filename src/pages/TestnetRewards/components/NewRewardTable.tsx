@@ -55,7 +55,10 @@ const NewPhaseRewardTable = ({ address }: Props) => {
         <div>
           <p className="mb-[8px]">Proving participation rewards</p>
           {PROVING_ROWS.map(({ name, value, main }) => (
-            <div className="flex justify-between bottom-line py-[8px]">
+            <div
+              className="flex justify-between bottom-line py-[8px]"
+              key={name}
+            >
               <p className={!main ? "text-default" : ""}>{name}</p>
               <p className={main ? "text-secondary" : ""}>{value}</p>
             </div>
@@ -63,7 +66,10 @@ const NewPhaseRewardTable = ({ address }: Props) => {
 
           <p className="mt-4 mb-[8px]">Validator phase bonus</p>
           {VALIDATOR_BONUS_ROWS.map(({ name, value, main }) => (
-            <div className="flex justify-between bottom-line py-[8px]">
+            <div
+              className="flex justify-between bottom-line py-[8px]"
+              key={name}
+            >
               <p className={!main ? "text-default" : ""}>{name}</p>
               <p className={main ? "text-secondary" : ""}>{value}</p>
             </div>

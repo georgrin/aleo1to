@@ -1,5 +1,5 @@
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { TokenResponse, getChallenge, getToken } from "../../../api/wallet";
 import {
   DecryptPermission,
@@ -29,25 +29,24 @@ export const useWalletSign = ({ address, action }: Props) => {
   const leoWallet = wallets.find((item) => item.adapter.name === "Leo Wallet");
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
 
-  // const handleAccountChange = () => {
-  //   console.log("changed");
-  // };
+  const handleAccountChange = () => {
+    connectWallet();
+    console.log("reconnected");
+  };
 
-  // useEffect(() => {
-  //   (leoWallet?.adapter as LeoWalletAdapter).on(
-  //     "readyStateChange",
-  //     handleAccountChange
-  //   );
-
-  //   console.log(leoWallet?.adapter);
-  //   // Removes event listener during component teardown
-  //   return () => {
-  //     (leoWallet?.adapter as LeoWalletAdapter).off(
-  //       "readyStateChange",
-  //       handleAccountChange
-  //     );
-  //   };
-  // }, [leoWallet]);
+  useEffect(() => {
+    (wallet?.adapter as LeoWalletAdapter).on(
+      "accountChange",
+      handleAccountChange
+    );
+    // Removes event listener during component teardown
+    return () => {
+      (wallet?.adapter as LeoWalletAdapter).off(
+        "accountChange",
+        handleAccountChange
+      );
+    };
+  }, [wallet, publicKey, leoWallet]);
 
   const sign = async () => {
     try {
