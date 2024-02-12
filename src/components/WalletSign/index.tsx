@@ -9,6 +9,10 @@ import NotFound from "./NotFound";
 import WalletDoesnMatch from "./WalletDoesnMatch";
 import { WalletSignStatus } from "../../model";
 import Connected from "./Connected";
+import Pending from "./PendingSign";
+import SuccessSign from "./SuccessSign";
+import ErrorSign from "./ErrorSign";
+import PendingSign from "./PendingSign";
 
 interface Prop {
   dataToSign: {
@@ -36,7 +40,15 @@ const WalletSign = ({ dataToSign }: Prop) => {
 
   const Content = () => {
     if (status === WalletSignStatus.SUCCESS)
-      return <PayoutSuccess handleClick={() => close()} />;
+      return <SuccessSign publicKey={publicKey as string} />;
+
+    if (status === WalletSignStatus.PENDING)
+      return <PendingSign publicKey={publicKey as string} />;
+
+    if (status === WalletSignStatus.ERROR)
+      return (
+        <ErrorSign resetStatus={resetStatus} publicKey={publicKey as string} />
+      );
 
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
       if (connected) {

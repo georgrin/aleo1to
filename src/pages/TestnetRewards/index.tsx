@@ -6,7 +6,7 @@ import OldRewardTable from "./components/OldRewardTable";
 const TestnetRewards: React.FC = () => {
   return (
     <div className="pt-[68px] sm:pt-[56px] overflow-x-hidden">
-      <div className="container py-3 grid lg:grid-cols-2 grid-cols-1 gap-5 fit">
+      <div className="container pt-3 grid lg:grid-cols-2 grid-cols-1 gap-5 fit">
         <Dashboard
           title={
             <div className="flex text-[32px] leading-[35px] font-orbiton">

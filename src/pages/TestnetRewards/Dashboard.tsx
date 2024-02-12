@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
+import IconNotFound from "../../components/icons/IconNoFound";
 
 interface Props {
   title: JSX.Element;
@@ -59,6 +60,17 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
           </div>
         </div>
       )}
+      {/* <div className="flex items-center flex-col flex-1 justify-center">
+        <IconNotFound />
+        <div className="mt-[8px] text-center">
+          <span>Sorry, there are no&nbsp;</span>
+          <span className="text-default">
+            rewards
+            <br /> available for address
+          </span>
+        </div>
+        <p className="text-xs mt-2">{search}</p>
+      </div> */}
     </div>
   );
 };
