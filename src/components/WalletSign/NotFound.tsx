@@ -3,7 +3,6 @@ import StatusBar from "./StatusBar";
 
 const NotFound = () => (
   <div className="text-xs">
-    <h3 className="w-full text-grey font-medium mt-6 mb-4">Wallet extension</h3>
     <div className="border border-primary rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4">
       <div className="flex gap-2 items-center">
         <IconLogoLeo />
