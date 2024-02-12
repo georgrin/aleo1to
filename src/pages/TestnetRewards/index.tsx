@@ -15,7 +15,7 @@ const TestnetRewards: React.FC = () => {
             </div>
           }
           description={
-            <div className="text-xs my-[8px] font-bold">
+            <div className="text-xs my-[8px]">
               <p>
                 The incentivized period of&nbsp;
                 <b>
@@ -45,7 +45,7 @@ const TestnetRewards: React.FC = () => {
             </h2>
           }
           description={
-            <div className="text-xs my-[8px] font-bold">
+            <div className="text-xs my-[8px] min-h-[128px]">
               <p>
                 <b>
                   Testnet 2 lasted from December 6, 2021, starting at 00:00 UTC,
