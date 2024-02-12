@@ -57,7 +57,7 @@ export const useWalletSign = ({ address, action }: Props) => {
 
       setSignStatus(WalletSignStatus.PENDING);
 
-      const signatureBytes = await (
+      const signatureBytes = await(
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
 

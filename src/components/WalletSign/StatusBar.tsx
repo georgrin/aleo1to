@@ -1,5 +1,5 @@
 interface Props {
-  message: string;
+  message: string | JSX.Element;
 }
 
 const StatusBar = ({ message }: Props) => (
