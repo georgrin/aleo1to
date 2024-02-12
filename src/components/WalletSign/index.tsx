@@ -70,7 +70,7 @@ const WalletSign = ({ dataToSign }: Prop) => {
   return (
     <div className="w-full mt-auto">
       {status !== WalletSignStatus.ERROR ? (
-        <div className="w-full p-0">
+        <div className="w-full p-0 mt-[70px]">
           <Content />
         </div>
       ) : (
