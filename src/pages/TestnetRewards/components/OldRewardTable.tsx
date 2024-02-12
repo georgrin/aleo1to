@@ -13,7 +13,7 @@ const OldRewardTable = ({ address }: Props) => {
 
   return (
     <>
-      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none">
+      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none text-xs">
         {address}
       </p>
       <div className="bg-default p-4 rounded rounded-t-none text-xs flex flex-col flex-1">
@@ -69,7 +69,7 @@ const OldRewardTable = ({ address }: Props) => {
             </div>
           </div>
           <div className="mt-auto">
-            <button type="submit" className="w-full btn font-bold mt-[70px]">
+            <button type="submit" className="w-full btn font-bold mt-2">
               Sign
             </button>
           </div>
