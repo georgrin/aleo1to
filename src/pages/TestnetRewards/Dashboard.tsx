@@ -48,7 +48,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
       {submited ? (
         <>{table(search)}</>
       ) : (
-        <div className="flex items-center flex-col mt-[50%]">
+        <div className="flex items-center flex-col flex-1 justify-center">
           <IconDatabase />
           <div className="mt-[8px] text-center">
             <span>Input your address&nbsp;</span>
