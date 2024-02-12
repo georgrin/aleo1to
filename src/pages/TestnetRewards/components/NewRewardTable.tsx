@@ -79,14 +79,12 @@ const NewPhaseRewardTable = ({ address }: Props) => {
           <p className="text-base">Total reward</p>
           <p className="gradient-main text-2xl">1213,888889</p>
         </div>
-        <div className="mt-[70px]">
-          <WalletSign
-            dataToSign={{
-              address: address,
-              action: async () => {},
-            }}
-          />
-        </div>
+        <WalletSign
+          dataToSign={{
+            address: address,
+            action: async () => {},
+          }}
+        />
       </div>
     </>
   );
