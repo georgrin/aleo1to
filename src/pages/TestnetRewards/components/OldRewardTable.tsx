@@ -68,8 +68,8 @@ const OldRewardTable = ({ address }: Props) => {
               />
             </div>
           </div>
-          <div className="mt-[70px]">
-            <button type="submit" className="w-full btn font-bold mt-auto">
+          <div className="mt-auto">
+            <button type="submit" className="w-full btn font-bold mt-[70px]">
               Sign
             </button>
           </div>
