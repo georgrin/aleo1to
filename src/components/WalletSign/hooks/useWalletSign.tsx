@@ -32,7 +32,7 @@ export const useWalletSign = ({ address, action }: Props) => {
   const handleAccountChange = useCallback(
     ({ publicKey }: { publicKey: string }) => {
       if (publicKey !== leoWallet?.adapter.publicKey) {
-        disconnect().then(() => connectWallet());
+        connectWallet();
       }
     },
     []
