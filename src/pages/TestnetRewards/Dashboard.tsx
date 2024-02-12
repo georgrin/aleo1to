@@ -21,7 +21,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
     <div className={`p-6 font-medium flex flex-col ${style}`}>
       {title}
       <div>{description}</div>
-      <div className="pt-4">
+      <div className="pt-2">
         <label
           htmlFor="testnet-address"
           className="block text-sm mb-[8px] text-default"

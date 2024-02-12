@@ -29,18 +29,23 @@ export const useWalletSign = ({ address, action }: Props) => {
   const leoWallet = wallets.find((item) => item.adapter.name === "Leo Wallet");
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
 
-  // const handleAccountChange = useCallback(() => {
-  //   // disconnect().then(() => connectWallet());
-  //   console.log("reconnected");
-  // }, [wallet]);
+  const handleAccountChange = useCallback(
+    ({ publicKey }: { publicKey: string }) => {
+      if (publicKey !== leoWallet?.adapter.publicKey) {
+        disconnect().then(() => connectWallet());
+      }
+    },
+    []
+  );
 
-  // useEffect(() => {
-  //   window.leoWallet?.on("accountChange", handleAccountChange);
-  //   // Removes event listener during component teardown
-  //   return () => {
-  //     window.leoWallet?.on("accountChange", handleAccountChange);
-  //   };
-  // }, [wallet, publicKey, leoWallet]);
+  useEffect(() => {
+    // @ts-ignore
+    window.leoWallet?.on("accountChange", handleAccountChange);
+    return () => {
+      // @ts-ignore
+      window.leoWallet?.on("accountChange", handleAccountChange);
+    };
+  }, []);
 
   const sign = async () => {
     try {
