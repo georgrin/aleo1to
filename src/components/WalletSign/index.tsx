@@ -1,15 +1,12 @@
 import { WalletReadyState } from "@demox-labs/aleo-wallet-adapter-base";
 import { TokenResponse } from "../../api/wallet";
 
-import { PayoutSuccess } from "../deprecatedWallet/PayoutSuccess";
-import { PayoutError } from "../deprecatedWallet/PayoutError";
 import { useWalletSign } from "./hooks/useWalletSign";
 import DisconnectedWallet from "./Disconnected";
 import NotFound from "./NotFound";
 import WalletDoesnMatch from "./WalletDoesnMatch";
 import { WalletSignStatus } from "../../model";
 import Connected from "./Connected";
-import Pending from "./PendingSign";
 import SuccessSign from "./SuccessSign";
 import ErrorSign from "./ErrorSign";
 import PendingSign from "./PendingSign";
@@ -86,7 +83,7 @@ const WalletSign = ({ dataToSign }: Prop) => {
           <Content />
         </div>
       ) : (
-        <PayoutError handleClick={resetStatus} />
+        <>error</>
       )}
     </div>
   );

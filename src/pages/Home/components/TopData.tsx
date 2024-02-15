@@ -3,15 +3,15 @@ interface EarningsMinersToggleProps {
   setIsEarnings: Function;
 }
 
-const activeButtonStyles = "rounded-md px-4 py-2 bg-aleo-cyan-300 text-white";
-const inactiveButtonStyles = "px-4 py-2 text-default";
+const activeButtonStyles = "rounded-md px-4 py-2 bg-[#0085FF] text-white";
+const inactiveButtonStyles = "px-4 py-2 text-grey";
 
 export const EarningsMinersToggle = ({
   isEarnings,
   setIsEarnings,
 }: EarningsMinersToggleProps) => {
   return (
-    <div className="mt-4 flex text-sm">
+    <div className="mt-4 flex text-sm ">
       <button
         onClick={() => setIsEarnings(true)}
         className={isEarnings ? activeButtonStyles : inactiveButtonStyles}
@@ -29,20 +29,11 @@ export const EarningsMinersToggle = ({
   );
 };
 
-interface DataContainerProps {
-  children: React.ReactNode;
-  width?: string;
-}
-
-const DataContainer = ({ children, width }: DataContainerProps) => {
-  return (
-    <div
-      className={`flex px-4 py-[10px] rounded-[4px] border border-greyBorder justify-between ${width}`}
-    >
-      {children}
-    </div>
-  );
-};
+const DataContainer = ({ children }: { children: JSX.Element }) => (
+  <div className="flex px-4 py-3 rounded-[4px] border-primary justify-between gap-x-14">
+    {children}
+  </div>
+);
 
 interface DataItemProps {
   name: string;
@@ -51,8 +42,8 @@ interface DataItemProps {
 
 const DataItem = ({ name, value }: DataItemProps) => {
   return (
-    <div className="flex flex-col text-[12px] gap-y-2 font-default font-semibold">
-      <p className="text-default">{name}</p>
+    <div className="flex flex-col text-xs font-default">
+      <p className="text-grey">{name}</p>
       <p className="text-white">{value}</p>
     </div>
   );
@@ -75,11 +66,18 @@ export const EarningsData = ({
 }: EarningsDataProps) => {
   return (
     <div className="flex gap-x-[10px] mt-4">
-      <DataContainer width="w-[272px]">
-        <DataItem name="Earnings" value={earnings} />
-        <DataItem name="Payouts" value={payout} />
-        <DataItem name="Fees" value={fees} />
-      </DataContainer>
+      <div className="relative">
+        <p className="text-xs text-grey px-1 absolute top-[-8px] left-[13px] bg-surface">
+          Alltime
+        </p>
+        <DataContainer>
+          <>
+            <DataItem name="Earnings" value={earnings} />
+            <DataItem name="Payouts" value={payout} />
+            <DataItem name="Fees" value={fees} />
+          </>
+        </DataContainer>
+      </div>
 
       <DataContainer>
         <DataItem name="Balance" value={balance} />
@@ -98,19 +96,20 @@ interface MachinesDataProps {
   reported: number;
 }
 
-export const MachinesData = ({ count, estimated, reported }: MachinesDataProps) => {
+export const MachinesData = ({
+  count,
+  estimated,
+  reported,
+}: MachinesDataProps) => {
   return (
     <div className="flex gap-x-[10px] mt-4">
-      <DataContainer width="w-[442px]">
-        <DataItem name="Count" value={count} />
-        <DataItem
-          name="Estimated speed, c/s"
-          value={`≈${estimated}`}
-        />
-        <DataItem name="Reported speed, c/s" value={`≈${reported}`} />
+      <DataContainer>
+        <>
+          <DataItem name="Count" value={count} />
+          <DataItem name="Estimated speed, c/s" value={`≈${estimated}`} />
+          <DataItem name="Reported speed, c/s" value={`≈${reported}`} />
+        </>
       </DataContainer>
     </div>
   );
 };
-
-

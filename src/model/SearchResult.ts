@@ -1,6 +1,6 @@
 export interface SearchResult {
   address: string;
-  data: ISearchAddressResponse | null;
+  data: any | null;
   interval?: any;
 }
 
@@ -26,15 +26,15 @@ export type Payouts = {
 };
 
 export type DaySummary = {
-  timestamp: string;
+  created_at: string;
   epoch_number: string;
-  pool_shares: number;
-  address_shares: number;
-  hashrate_estimated: number;
-  pool_earnings: number;
-  pool_fee: number;
-  address_earnings: number;
-  amount: number;
-  fee: number;
+  pool_shares: string;
+  address_shares: string;
+  hashrate_estimated: string;
+  pool_earnings: string;
+  pool_fee: string;
+  address_earnings: string;
+  amount: string;
+  fee: string;
   status: string;
 };
