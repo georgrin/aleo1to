@@ -6,8 +6,8 @@ import {
   EarningsData,
   EarningsMinersToggle,
   MachinesData,
-} from "../../components/TopData";
-import EarningsGrid from "../../components/earningsGrid/EarningsGrid";
+} from "./components/TopData";
+import EarningsGrid from "./components/EarningsGrid";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -51,7 +51,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   const [isEarnings, setIsEarnings] = useState(true);
 
   return (
-    <div className="px-3 pt-3 sm:px-6 sm:pt-6 group/search-result [&:nth-of-type(2n)]:bg-secondary-3  bg-surface border-[rgba(255,255,255,0.1)] border-t-[1px]">
+    <div className="px-3 pt-3 sm:px-6 sm:pt-6 group/search-result [&:nth-of-type(2n)]:bg-secondary-3 top-line bg-surface font-medium">
       <div className="flex justify-between items-center gap-4">
         <div className="md:w-[728px] flex justify-between flex-wrap px-4 py-1.5 gap-4 bg-primary-2 group-[:nth-of-type(2n)]/search-result:bg-secondary-2 outline-none rounded-[5px]">
           {AddressLine()}

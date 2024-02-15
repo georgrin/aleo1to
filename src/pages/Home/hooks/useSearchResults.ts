@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { Earnings, Payouts } from "../../../model";
-import { useSearchDateSummary } from "./useSearchDateSummary";
 
 export type CombinedData = {
   [date: string]: (Earnings | Payouts)[];
@@ -38,9 +37,9 @@ const useSearchResults = ({ earnings, payouts }: Props) => {
   const sortedCombinedData = useMemo(
     () =>
       Object.fromEntries(
-        Object.entries(combinedData).sort(
-          (a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime()
-        )
+        Object.entries(combinedData)
+          .sort((a, b) => new Date(a[0]).getTime() - new Date(b[0]).getTime())
+          .reverse()
       ),
     []
   );
