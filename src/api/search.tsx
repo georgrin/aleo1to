@@ -1,12 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
+import { Earnings, Payouts } from "../model";
 
-export interface ISearchAddressResponse {
-  balance: Balances;
-  balance_phase2: BalancesPhase2;
-  hashrate: Hashrate;
-  shares: Shares;
-  miners: Miner[];
-  payout: RequestPayout;
+export interface EarningsResponse {
+  earnings: Array<Earnings>;
+  general_info: {
+    earnings_total: number;
+    payouts_total: number;
+    fee_total: number;
+    balance: number;
+  };
 }
 
 export interface RequestPayout {
@@ -51,37 +53,6 @@ interface Cpu {
   model: string;
 }
 
-interface Shares {
-  in_pool: Inpool;
-  in_solo: Inpool;
-}
-
-interface Inpool {
-  valid: number;
-  invalid: number;
-  unchecked: number;
-}
-
-interface Hashrate {
-  stat: Stat;
-  estimated: Stat;
-}
-
-interface Stat {
-  in_pool: number;
-  in_solo: number;
-}
-
-interface Balances {
-  in_pool: BalanceOne;
-  solo: BalanceOne;
-}
-
-interface BalancesPhase2 {
-  in_pool: BalanceOne;
-  in_pool_incentivize: BalanceOne;
-}
-
 export interface BalanceOne {
   total: number;
   change_1h: number;
@@ -102,5 +73,10 @@ export interface BalancePhase2 {
 }
 
 export async function searchAddress(address: string) {
-  return axios.get<ISearchAddressResponse>(`/api/wallets/${address}`);
+  return Promise.all([
+    axios.get<EarningsResponse>(`/api/earnings/${address}`),
+    axios.get<Array<Payouts>>(`/api/payouts/${address}`),
+  ]).then((response) => {
+    return { ...response[0].data, payouts: response[1].data };
+  });
 }

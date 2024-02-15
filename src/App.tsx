@@ -45,7 +45,6 @@ function App() {
     searchAddress,
     searchResults,
     deleteSearchResult,
-    replaceSearchResult,
     currentRoute,
   } = useAppController();
 
@@ -74,7 +73,6 @@ function App() {
       <Home.SearchResults
         searchResults={searchResults}
         deleteSearchResult={deleteSearchResult}
-        replaceSearchResult={replaceSearchResult}
       />
       {joinPoolIsDown && joinPool}
     </div>
@@ -247,49 +245,16 @@ function useAppController() {
 
     async function updateSearchResult() {
       loadingBarRef.current?.continuousStart();
-      // TODO: try catch?
-      const { data } = await api.searchAddress(address);
-      try {
-        if (data) {
-          result.data = data;
-          loadingBarRef.current?.complete();
-          /**
-           * нужно сравнивать 
-            balance.in_pool.total
-            balance.solo.total
-            balance_phase2.in_pool_incentivize.total
-           */
-          if (
-            !result.data.miners.length &&
-            result.data.balance.in_pool.total <= 0 &&
-            result.data.balance.solo.total <= 0 &&
-            !result.data.balance_phase2.in_pool_incentivize.total &&
-            !result.data.payout.requested &&
-            !result.data.payout.done
-          ) {
-            setJoinPoolIsDown(false);
-            setJoinPoolCommand(
-              `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
-            );
-            deleteSearchResult(result);
-            return;
-          }
-          if (!result.interval) {
-            setJoinPoolIsDown(true);
-            setJoinPoolCommand(null);
-            result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
-          }
-          setSearchResults((results) => {
-            if (results.indexOf(result) < 0) {
-              return [result, ...results];
-            }
 
-            return [...results];
-          });
+      result.data = await api.searchAddress(address);
+
+      setSearchResults((results) => {
+        if (results.indexOf(result) < 0) {
+          return [result, ...results];
         }
-      } catch (error) {
-        console.log(error);
-      }
+
+        return [...results];
+      });
     }
   }
 
@@ -312,28 +277,6 @@ function useAppController() {
     });
   }
 
-  async function replaceSearchResult(address: string) {
-    const result = await getWalletData(address);
-    setSearchResults(
-      searchResults.map((item) => {
-        if (item.address === address) {
-          return { address: address, data: result };
-        } else return item;
-      })
-    );
-  }
-  async function getWalletData(address: string) {
-    try {
-      loadingBarRef.current?.continuousStart();
-      const { data } = await api.searchAddress(address);
-      loadingBarRef.current?.complete();
-      console.log("getWalletData", data);
-      return data;
-    } catch (error) {
-      console.log({ "getWalletData error": error });
-    }
-  }
-
   return {
     loadingBarRef,
     info,
@@ -345,7 +288,6 @@ function useAppController() {
     searchAddress,
     searchResults,
     deleteSearchResult,
-    replaceSearchResult,
     currentRoute,
   };
 }
