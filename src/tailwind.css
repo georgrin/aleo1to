@@ -5,14 +5,14 @@
 @layer base {
 }
 @layer components {
-    .btn {
-        @apply bg-aleo-cyan hover:bg-aleo-cyan-500 active:bg-aleo-cyan-600 rounded cursor-pointer p-3 text-black
-    }
-    
-    .container {
-        @apply mx-0 px-5 xl:mx-auto xl:px-0 max-w-7xl;
-    }
-    /* .container {
+  .btn {
+    @apply bg-aleo-cyan hover:bg-aleo-cyan-500 active:bg-aleo-cyan-600 rounded cursor-pointer p-3 text-black;
+  }
+
+  .container {
+    @apply mx-0 px-5 xl:mx-auto xl:px-0 max-w-[1200px];
+  }
+  /* .container {
         @apply max-w-[1200px];
         @apply mx-auto;
     }
@@ -23,192 +23,201 @@
             @apply px-5;
         }
     } */
-    .status-items {
-        overflow: hidden;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 10px;
+  .status-items {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
 
-        @media (max-width: 640px) {
-            grid-template-columns: 1fr;
-        }
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
     }
+  }
 
+  .icon {
+    @apply bg-contain;
+    @apply bg-no-repeat;
+    @apply bg-center;
+  }
 
+  .copy-grey-icon {
+    background-image: url("./assets/copy_grey.svg");
+  }
 
+  .copy-blue-icon {
+    background-image: url("./assets/copy_blue.svg");
+  }
 
-    .icon {
-        @apply bg-contain;
-        @apply bg-no-repeat;
-        @apply bg-center;
-    }
+  .copy-green-icon {
+    background-image: url("./assets/copy_green.svg");
+  }
 
-    .copy-grey-icon {
-        background-image: url("./assets/copy_grey.svg");
-    }
+  .logo-white-icon {
+    background-image: url("./assets/logo_white.svg");
+  }
 
-    .copy-blue-icon {
-        background-image: url("./assets/copy_blue.svg");
-    }
+  .logo-blue-white-icon {
+    background-image: url("./assets/logo_blue-white.svg");
+  }
 
-    .copy-green-icon {
-        background-image: url("./assets/copy_green.svg");
-    }
+  .logo-footer-icon {
+    background-image: url("./assets/logo_footer_white.svg");
+  }
 
-    .logo-white-icon {
-        background-image: url("./assets/logo_white.svg");
-    }
+  .lightning-icon {
+    background-image: url("./assets/lightning.svg");
+  }
 
-    .logo-blue-white-icon {
-        background-image: url("./assets/logo_blue-white.svg");
-    }
+  .lightning-2-icon {
+    background-image: url("./assets/lightning2.svg");
+  }
 
-    .logo-footer-icon {
-        background-image: url("./assets/logo_footer_white.svg");
-    }
+  .cancel-black-icon {
+    background-image: url("./assets/cancel_black_24dp 1.svg");
+  }
 
-    .lightning-icon {
-        background-image: url("./assets/lightning.svg");
-    }
+  .telegram-icon {
+    background-image: url("./assets/telegram.svg");
+  }
 
-    .lightning-2-icon {
-        background-image: url("./assets/lightning2.svg");
-    }
+  .github-icon {
+    background-image: url("./assets/github_black.svg");
+  }
+  .twitter-icon {
+    background-image: url("./assets/twitter.svg");
+  }
+  .gradient-bg {
+    background-image: url("./assets/testnet-bg.svg");
+  }
 
-    .cancel-black-icon {
-        background-image: url("./assets/cancel_black_24dp 1.svg");
-    }
-
-    .telegram-icon {
-        background-image: url("./assets/telegram.svg");
-    }
-
-    .github-icon {
-        background-image: url("./assets/github_black.svg");
-    }
-    .twitter-icon {
-        background-image: url("./assets/twitter.svg");
-    }
-    .gradient-bg {
-        background-image: url("./assets/testnet-bg.svg");
-    }
-
-    .fit {
-        min-height: calc(100vh - 108px);
-    }
+  .fit {
+    min-height: calc(100vh - 108px);
+  }
 }
 
 @layer utilities {
-    .btn-disabled {
-        @apply btn !bg-aleo-cyan-700 cursor-not-allowed
-    }
-    .btn-loading {
-        @apply btn !bg-aleo-cyan-700 cursor-progress
-    }
+  .btn-disabled {
+    @apply btn !bg-aleo-cyan-700 cursor-not-allowed;
+  }
+  .btn-loading {
+    @apply btn !bg-aleo-cyan-700 cursor-progress;
+  }
 
-    .bg-default {
-        background-color: rgba(17, 20, 24, 1);
-    }
+  .bg-default {
+    background-color: rgba(17, 20, 24, 1);
+  }
 
-    .bg-primary {
-        background-color: rgba(0, 117, 255, 1);
-    }
+  .bg-primary {
+    background-color: rgba(0, 117, 255, 1);
+  }
 
-    .bg-primary-2 {
-        background-color: rgba(0, 117, 255, 0.1);
-    }
+  .bg-primary-2 {
+    background-color: rgba(0, 117, 255, 0.1);
+  }
 
-    .bg-primary-3 {
-        background-color: rgba(0, 117, 255, 0.05);
-    }
+  .bg-primary-3 {
+    background-color: rgba(0, 117, 255, 0.05);
+  }
 
-    .bg-secondary {
-        background-color: rgba(0, 255, 171, 1);
-    }
+  .bg-secondary {
+    background-color: rgba(0, 255, 171, 1);
+  }
 
-    .bg-secondary-2 {
-        background-color: rgba(0, 255, 171, 0.1);
-    }
+  .bg-secondary-2 {
+    background-color: rgba(0, 255, 171, 0.1);
+  }
 
-    .bg-secondary-3 {
-        background-color: rgba(0, 255, 171, 0.05);
-    }
+  .bg-secondary-3 {
+    background-color: rgba(0, 255, 171, 0.05);
+  }
 
-    .bg-surface {
-        background-color: rgba(13, 15, 18, 1);
-    }
+  .bg-surface {
+    background-color: rgba(13, 15, 18, 1);
+  }
 
-    .text-default {
-        color: rgba(255, 255, 255, 0.5);
-    }
+  .text-default {
+    color: rgba(255, 255, 255, 0.5);
+  }
 
-    .text-primary {
-        color: rgba(0, 117, 255, 1);
-    }
+  .text-primary {
+    color: rgba(0, 117, 255, 1);
+  }
 
-    .text-secondary {
-        color: rgba(0, 255, 171, 1);
-    }
+  .text-secondary {
+    color: rgba(0, 255, 171, 1);
+  }
 
-    .text-link {
-        color: rgba(0, 255, 240, 1)
-    }
+  .text-link {
+    color: rgba(0, 255, 240, 1);
+  }
 
-    .shadow-primary {
-        box-shadow: 0 0 4px 4px rgba(0, 117, 255, 0.25);
-    }
+  .shadow-primary {
+    box-shadow: 0 0 4px 4px rgba(0, 117, 255, 0.25);
+  }
 
-    .top-line {
-        border-top: 1px solid rgb(55, 55, 55);
-    }
+  .top-line {
+    border-top: 1px solid rgb(55, 55, 55);
+  }
 
-    .bottom-line {
-        border-bottom: 1px solid rgb(55, 55, 55);
-    }
+  .bottom-line {
+    border-bottom: 1px solid rgb(55, 55, 55);
+  }
 
-    .font-default {
-        font-family: "Plus Jakarta Sans", sans-serif;
-    }
+  .font-default {
+    font-family: "Plus Jakarta Sans", sans-serif;
+  }
 
-    .font-secondary {
-        font-family: "Roboto Mono", sans-serif;
-    }
+  .font-secondary {
+    font-family: "Roboto Mono", sans-serif;
+  }
 
-    .font-thirdly {
-        font-family: "Space Grotesk", sans-serif;
-    }
+  .font-thirdly {
+    font-family: "Space Grotesk", sans-serif;
+  }
 
-    .font-orbiton {
-        font-family: "Orbitron", sans-serif;
-    }
+  .font-orbiton {
+    font-family: "Orbitron", sans-serif;
+  }
 
-    .border-primary {
-        border: 1px solid rgba(50, 54, 59, 1)
-    }
+  .border-primary {
+    border: 1px solid rgba(50, 54, 59, 1);
+  }
 
-    .gradient-main {
-        background: linear-gradient(135deg, rgba(88, 175, 255, 1), rgba(142, 88, 255, 1), rgba(0, 255, 240, 1));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+  .gradient-main {
+    background: linear-gradient(
+      135deg,
+      rgba(88, 175, 255, 1),
+      rgba(142, 88, 255, 1),
+      rgba(0, 255, 240, 1)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-    .loader {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        display: inline-block;
-        border-top: 2px solid #FFF;
-        border-right: 2px solid transparent;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
-    }
+  .loader {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 2px solid #fff;
+    border-right: 2px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
 
-    @keyframes rotation {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    } 
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .earnings-grid {
+    grid-template-columns:
+      160px 80px 100px 110px 130px 110px 90px 130px
+      100px 70px 90px;
+    justify-content: space-between;
+  }
 }
