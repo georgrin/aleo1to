@@ -1,19 +1,10 @@
-import { useState } from "react";
-import DayGridItem from "./DayGridItem";
-import useSearchResults from "../hooks/useSearchResults";
-import { DaySummary, Earnings, Payouts } from "../../../model";
-import { useSearchDateSummary } from "../hooks/useSearchDateSummary";
-import { usePagination } from "../hooks/usePagination";
-import Pagination from "../../../components/Pagination";
-
-export type DayData = (Earnings | Payouts)[];
-
-export const isEarnings = (item: Earnings | Payouts): item is Earnings =>
-  "epoch_number" in item;
-
-export interface VisibilityState {
-  [date: string]: boolean;
-}
+import React, { useState } from "react";
+import DayGridItem from "./DayItem";
+import useSearchResults from "../../hooks/useSearchResults";
+import { DaySummary, Earnings, Payouts } from "../../../../model";
+import { useSearchDateSummary } from "../../hooks/useSearchDateSummary";
+import { usePagination } from "../../hooks/usePagination";
+import Pagination from "../../../../components/Pagination";
 
 interface Props {
   earnings: Array<Earnings>;
@@ -44,11 +35,11 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
   const { sortedCombinedData } = useSearchResults({ earnings, payouts });
   const dates = Object.keys(sortedCombinedData);
   const { pageData, jumpToPage, currentPage, totalPages } = usePagination({
-    pageSize: 3,
+    pageSize: 14,
     data: dates,
   });
 
-  const initialVisibility: VisibilityState = dates.reduce<VisibilityState>(
+  const initialVisibility = dates.reduce<{ [date: string]: boolean }>(
     (acc, date, index) => {
       acc[date] = index === 0;
       return acc;
@@ -56,8 +47,7 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
     {}
   );
 
-  const [visibility, setVisibility] =
-    useState<VisibilityState>(initialVisibility);
+  const [visibility, setVisibility] = useState(initialVisibility);
 
   const toggleVisibility = (date: string) => {
     setVisibility((prev) => ({ ...prev, [date]: !prev[date] }));
@@ -90,18 +80,15 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
       {pageData.map((date) => {
         const { summary } = useSearchDateSummary(sortedCombinedData[date]);
         return (
-          <div
-            key={date}
-            onClick={() => toggleVisibility(date)}
-            className="cursor-pointer"
-          >
+          <React.Fragment key={date}>
             <DayGridItem
               date={date}
               items={sortedCombinedData[date]}
               isVisible={visibility[date]}
               summary={summary}
+              toggleVisibility={toggleVisibility}
             />
-          </div>
+          </React.Fragment>
         );
       })}
       <div className="grid grid-cols-3 justify-between top-line text-xs px-6 py-2 text-grey">

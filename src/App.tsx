@@ -246,15 +246,33 @@ function useAppController() {
     async function updateSearchResult() {
       loadingBarRef.current?.continuousStart();
 
-      result.data = await api.searchAddress(address);
+      try {
+        result.data = await api.searchAddress(address);
 
-      setSearchResults((results) => {
-        if (results.indexOf(result) < 0) {
-          return [result, ...results];
+        loadingBarRef.current?.complete();
+
+        if (!result.interval) {
+          setJoinPoolIsDown(true);
+          setJoinPoolCommand(null);
+          result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
         }
 
-        return [...results];
-      });
+        setSearchResults((results) => {
+          if (results.indexOf(result) < 0) {
+            return [result, ...results];
+          }
+
+          return [...results];
+        });
+      } catch {
+        setJoinPoolIsDown(false);
+        setJoinPoolCommand(
+          `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
+        );
+        loadingBarRef.current?.complete();
+
+        deleteSearchResult(result);
+      }
     }
   }
 

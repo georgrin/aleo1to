@@ -1,15 +1,17 @@
-import { useMemo } from "react";
-import { adjustNumber, getNumberWithCommas } from "../../../helpers/numbers";
+import { adjustNumber, numberFormat as n } from "../../../helpers/numbers";
 import { formatTimestampToDate } from "../../../helpers/time";
 import { Earnings, Payouts } from "../../../model";
 
 type DayData = (Earnings | Payouts)[];
-
-function isEarnings(item: Payouts | Earnings): item is Earnings {
-  return (item as Earnings).epoch_number !== undefined;
-}
-function isPayouts(item: Payouts | Earnings): item is Payouts {
-  return (item as Payouts).amount !== undefined;
+export const isEarnings = (item: Earnings | Payouts): item is Earnings =>
+  "epoch_number" in item;
+export const isPayouts = (item: Earnings | Payouts): item is Payouts =>
+  "txid" in item;
+export enum StatusMap {
+  PENDING = "Pending",
+  CREATED = "Created",
+  SENT = "Sent",
+  DONE = "Done",
 }
 function getEpochDiapason(earnings: DayData): string {
   const epochs = earnings.filter(isEarnings).map((item) => item.epoch_number);
@@ -31,7 +33,7 @@ function sumField(
   return adjustNumber(
     // @ts-ignore
     dataArray.reduce((acc, item) => acc + (Number(item[fieldName]) || 0), 0),
-    2
+    6
   );
 }
 
@@ -52,7 +54,7 @@ function findSmallestStatus(dataArray: DayData): string {
     (key) => statusOrder[key as Payouts["status"]] === smallestValue
   );
 
-  return smallestStatus || "DONE";
+  return StatusMap[smallestStatus as keyof typeof StatusMap] || "-";
 }
 
 function averageField(
@@ -81,18 +83,16 @@ export const useSearchDateSummary = (dateItems: (Earnings | Payouts)[]) => {
   const summary = {
     created_at: formatTimestampToDate(dateItems[0].created_at),
     epoch_number: getEpochDiapason(dateItems as Earnings[]),
-    pool_shares: getNumberWithCommas(sumField(dateItems, "pool_shares")),
-    address_shares: getNumberWithCommas(sumField(dateItems, "address_shares")),
-    hashrate_estimated: `≈ ${getNumberWithCommas(
-      averageField(dateItems, "hashrate_estimated", 2)
-    )}`,
-    pool_earnings: getNumberWithCommas(sumField(dateItems, "pool_earnings")),
-    pool_fee: `≈ ${Number(averageField(dateItems, "pool_fee", 2))} %`,
-    address_earnings: getNumberWithCommas(
-      sumField(dateItems, "address_earnings")
+    pool_shares: n(sumField(dateItems, "pool_shares")),
+    address_shares: n(sumField(dateItems, "address_shares")),
+    hashrate_estimated: n(
+      Math.round(averageField(dateItems, "hashrate_estimated", 2) / 1000) * 1000
     ),
-    amount: getNumberWithCommas(sumField(dateItems, "amount")),
-    fee: getNumberWithCommas(sumField(dateItems, "fee")),
+    pool_earnings: n(sumField(dateItems, "pool_earnings")),
+    pool_fee: `≈ ${Number(averageField(dateItems, "pool_fee", 2) * 100)} %`,
+    address_earnings: n(sumField(dateItems, "address_earnings")),
+    amount: n(sumField(dateItems, "amount")),
+    fee: n(sumField(dateItems, "fee")),
     status: findSmallestStatus(dateItems),
   };
 

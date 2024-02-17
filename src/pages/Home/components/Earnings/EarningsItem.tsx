@@ -1,6 +1,6 @@
-import { adjustNumber, getNumberWithCommas } from "../../../helpers/numbers";
-import { formatTimestampToTime } from "../../../helpers/time";
-import { Earnings } from "../../../model";
+import { adjustNumber, numberFormat as n } from "../../../../helpers/numbers";
+import { formatTimestampToTime } from "../../../../helpers/time";
+import { Earnings } from "../../../../model";
 
 const EarningsGridItem = ({
   epoch_number,
@@ -15,13 +15,13 @@ const EarningsGridItem = ({
   <div className="grid earnings-grid w-full text-white/[0.6] py-2 px-6 text-xs bg-surface">
     <p className="pl-5 text-white">{formatTimestampToTime(created_at)}</p>
     <p className="text-white">{epoch_number || "-"}</p>
-    <p>{getNumberWithCommas(pool_shares) || "-"}</p>
-    <p>{getNumberWithCommas(address_shares) || "-"}</p>
-    <p>{getNumberWithCommas(hashrate_estimated) || "-"}</p>
-    <p>{getNumberWithCommas(adjustNumber(pool_earnings || 0, 2))}</p>
-    <p>{adjustNumber(pool_fee, 2)} % </p>
+    <p>{n(pool_shares) || "-"}</p>
+    <p>{n(address_shares) || "-"}</p>
+    <p>{n(hashrate_estimated) || "-"}</p>
+    <p>{n(adjustNumber(pool_earnings || 0, 6))}</p>
+    <p>{Number(pool_fee * 100)} % </p>
     <p className="text-[#00FFAB]">
-      {getNumberWithCommas(adjustNumber(address_earnings || 0, 2))}
+      {n(adjustNumber(address_earnings || 0, 2))}
     </p>
     {Array(3)
       .fill("_")
