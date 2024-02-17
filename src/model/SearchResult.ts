@@ -1,6 +1,22 @@
 export interface SearchResult {
   address: string;
-  data: any | null;
+  data: {
+    earnings: Earnings[];
+    general_info: {
+      earnings_total: number;
+      payouts_total: number;
+      fee_total: number;
+      balance: number;
+    };
+    machines: {
+      machines: Machines[];
+      general_info: {
+        active: number;
+        total: number;
+      };
+    };
+    payouts: Payouts[];
+  } | null;
   interval?: any;
 }
 
@@ -37,4 +53,34 @@ export type DaySummary = {
   amount: string;
   fee: string;
   status: string;
+};
+
+export type Machines = {
+  id: number;
+  params: {
+    threads: number;
+    threads_in_pool: number;
+    version: string;
+    cuda_version: string;
+    solo: boolean;
+  };
+  ip: string;
+  caption: string;
+  hardware: {
+    gpu: [
+      {
+        model: string;
+      }
+    ];
+    cpu: [
+      {
+        model: string;
+        cores: number;
+      }
+    ];
+  };
+  hardware_id: string;
+  hostname: string;
+  hashrate: number;
+  hashrate_estimated: number;
 };

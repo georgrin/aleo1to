@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
 import IconNotFound from "../../components/icons/IconNoFound";
+import { testnetCheck } from "../../api/testnet";
 
 interface Props {
   title: JSX.Element;
@@ -13,9 +14,13 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
   const [search, setSearch] = useState("");
   const [submited, setSubmited] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmited(true);
+    try {
+      const response = await testnetCheck(search);
+    } catch {
+      //err
+    }
   };
 
   return (

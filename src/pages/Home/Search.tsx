@@ -24,7 +24,6 @@ export const Search = ({ search }: any) => {
 
   return (
     <div className="container bg-surface mt-1 py-3 md:py-6 px-2 md:px-6">
-      <p className="text-grey mb-4">Search for address (addresses)</p>
       <div className="flex flex-col sm:flex-row">
         <div className="w-full relative">
           {SearchInputIcon()}

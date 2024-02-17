@@ -10,7 +10,7 @@
   }
 
   .container {
-    @apply mx-0 px-5 xl:mx-auto xl:px-0 max-w-[1200px];
+    @apply mx-0 px-5 xl:mx-auto xl:px-0 max-w-7xl;
   }
   /* .container {
         @apply max-w-[1200px];
@@ -217,7 +217,7 @@
   .earnings-grid {
     grid-template-columns:
       160px 80px 100px 110px 130px 110px 90px 130px
-      100px 70px 90px;
+      110px 90px 90px;
     justify-content: space-between;
   }
 }

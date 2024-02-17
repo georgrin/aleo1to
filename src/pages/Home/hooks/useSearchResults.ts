@@ -27,10 +27,12 @@ const useSearchResults = ({ earnings, payouts }: Props) => {
 
   // Sort each date array within the combinedData object by timestamp in ascending order
   Object.values(combinedData).forEach((data: (Payouts | Earnings)[]) =>
-    data.sort(
-      (a, b) =>
-        new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-    )
+    data
+      .sort(
+        (a, b) =>
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+      )
+      .reverse()
   );
 
   // Sort the combinedData object by date in ascending order
