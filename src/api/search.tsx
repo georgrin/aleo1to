@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Earnings, Payouts } from "../model";
+import { Earnings, Machines, Payouts, SearchResult } from "../model";
 
 export interface EarningsResponse {
   earnings: Array<Earnings>;
@@ -8,6 +8,14 @@ export interface EarningsResponse {
     payouts_total: number;
     fee_total: number;
     balance: number;
+  };
+}
+
+export interface MachinesResponse {
+  machines: Array<Machines>;
+  general_info: {
+    active: number;
+    total: number;
   };
 }
 
@@ -76,7 +84,12 @@ export async function searchAddress(address: string) {
   return Promise.all([
     axios.get<EarningsResponse>(`/api/earnings/${address}`),
     axios.get<Array<Payouts>>(`/api/payouts/${address}`),
+    axios.get<MachinesResponse>(`/api/machines/${address}`),
   ]).then((response) => {
-    return { ...response[0].data, payouts: response[1].data };
+    return {
+      ...response[0].data,
+      payouts: response[1].data,
+      machines: { ...response[2].data },
+    };
   });
 }

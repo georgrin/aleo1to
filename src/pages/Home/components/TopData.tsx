@@ -3,13 +3,13 @@ interface EarningsMinersToggleProps {
   setIsEarnings: Function;
 }
 
-const activeButtonStyles = "rounded-md px-4 py-2 bg-[#0085FF] text-white";
-const inactiveButtonStyles = "px-4 py-2 text-grey";
-
 export const EarningsMinersToggle = ({
   isEarnings,
   setIsEarnings,
 }: EarningsMinersToggleProps) => {
+  const activeButtonStyles = "rounded-md px-4 py-2 bg-[#0085FF] text-white";
+  const inactiveButtonStyles = "px-4 py-2 text-grey";
+
   return (
     <div className="mt-4 flex text-sm ">
       <button
@@ -92,8 +92,8 @@ export const EarningsData = ({
 
 interface MachinesDataProps {
   count: number;
-  estimated: number;
-  reported: number;
+  estimated: string;
+  reported: string;
 }
 
 export const MachinesData = ({

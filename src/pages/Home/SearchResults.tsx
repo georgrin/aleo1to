@@ -7,7 +7,9 @@ import {
   EarningsMinersToggle,
   MachinesData,
 } from "./components/TopData";
-import EarningsGrid from "./components/EarningsGrid";
+import EarningsGrid from "./components/Earnings/EarningsGrid";
+import { numberFormat as n } from "../../helpers/numbers";
+import MachinesGrid from "./components/MachinesGrid";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -45,7 +47,7 @@ interface SearchResultProps {
 }
 function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   const { address, data } = searchResult;
-  const { earnings, general_info, payouts } = data;
+  const { earnings, general_info, payouts, machines } = data!!;
 
   const [showCopied, setShowCopied] = useState(false);
   const [isEarnings, setIsEarnings] = useState(true);
@@ -65,17 +67,36 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         setIsEarnings={setIsEarnings}
       />
       {isEarnings ? (
-        <EarningsData
-          earnings={general_info.earnings_total}
-          payout={general_info.payouts_total}
-          fees={general_info.fee_total}
-          balance={general_info.balance}
-          autoPayout={80}
-        />
+        <>
+          <EarningsData
+            earnings={general_info.earnings_total}
+            payout={general_info.payouts_total}
+            fees={general_info.fee_total}
+            balance={general_info.balance}
+            autoPayout={80}
+          />
+          <EarningsGrid earnings={earnings} payouts={payouts} />
+        </>
       ) : (
-        <MachinesData count={1450} estimated={125000} reported={125000} />
+        <>
+          <MachinesData
+            count={machines.general_info.total}
+            estimated={n(
+              machines.machines.reduce(
+                (acc, curr) => Number(acc) + Number(curr.hashrate_estimated),
+                0
+              )
+            )}
+            reported={n(
+              machines.machines.reduce(
+                (acc, curr) => Number(acc) + Number(curr.hashrate),
+                0
+              )
+            )}
+          />
+          <MachinesGrid machines={machines.machines} />
+        </>
       )}
-      <EarningsGrid earnings={earnings} payouts={payouts} />
     </div>
   );
 

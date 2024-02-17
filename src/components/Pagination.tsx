@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 interface PaginationProps {
   totalPages: number;
@@ -35,12 +36,16 @@ const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className="m-auto flex gap-2">
+    <div className="m-auto flex items-center gap-2">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
+        className="mr-1"
       >
-        Prev
+        <IoIosArrowBack
+          size={16}
+          color={currentPage === 1 ? "grey" : "white"}
+        />
       </button>
 
       {start > 1 && <button onClick={() => onPageChange(1)}>1</button>}
@@ -61,8 +66,12 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
+        className="ml-1"
       >
-        Next
+        <IoIosArrowForward
+          size={16}
+          color={currentPage === totalPages ? "grey" : "white"}
+        />
       </button>
     </div>
   );
