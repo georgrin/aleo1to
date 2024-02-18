@@ -21,7 +21,7 @@ const EarningsGridItem = ({
     <p>{n(adjustNumber(pool_earnings || 0, 6))}</p>
     <p>{Number(pool_fee * 100)} % </p>
     <p className="text-[#00FFAB]">
-      {n(adjustNumber(address_earnings || 0, 2))}
+      {n(adjustNumber(address_earnings || 0, 6))}
     </p>
     {Array(3)
       .fill("_")
