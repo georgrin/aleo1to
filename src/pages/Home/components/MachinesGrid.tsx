@@ -61,7 +61,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   <IconGPU />
                   &nbsp;GPU:&nbsp;
                 </span>
-                &nbsp;x
+                &nbsp;x&nbsp;
                 {hardware.gpu.length}&nbsp;
                 {hardware.gpu[0].model}
               </div>
