@@ -22,16 +22,15 @@ const PayoutsGridItem = ({
     <p>{n(adjustNumber(fee || 0, 6))}</p>
     <p className={status === "PENDING" ? "text-[#F7A328]" : ""}>
       {StatusMap[status as keyof typeof StatusMap]}
-      {status === "SENT" ||
-        (status === "DONE" && (
-          <a
-            target="_blank"
-            href={`https://explorer.aleo.org/transaction/${txid}`}
-            className="text-grey cursor-pointer"
-          >
-            &nbsp;(tx)
-          </a>
-        ))}
+      {(status === "SENT" || status === "DONE") && (
+        <a
+          target="_blank"
+          href={`https://explorer.aleo.org/transaction/${txid}`}
+          className="text-grey cursor-pointer"
+        >
+          &nbsp;(tx)
+        </a>
+      )}
     </p>
   </div>
 );
