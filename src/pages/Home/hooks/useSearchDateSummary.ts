@@ -89,7 +89,7 @@ export const useSearchDateSummary = (dateItems: (Earnings | Payouts)[]) => {
       Math.round(averageField(dateItems, "hashrate_estimated", 2) / 1000) * 1000
     ),
     pool_earnings: n(sumField(dateItems, "pool_earnings")),
-    pool_fee: `≈ ${Number(averageField(dateItems, "pool_fee", 2) * 100)} %`,
+    pool_fee: `${Number(averageField(dateItems, "pool_fee", 2) * 100)} %`,
     address_earnings: n(sumField(dateItems, "address_earnings")),
     amount: n(sumField(dateItems, "amount")),
     fee: n(sumField(dateItems, "fee")),

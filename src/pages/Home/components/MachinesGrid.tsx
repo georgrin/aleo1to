@@ -13,21 +13,21 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
 
   return (
     <div className="font-default mx-[-24px] mt-[20px]">
-      <div className="grid grid-cols-9 top-line text-grey py-2 px-6 text-xs">
+      <div className="grid grid-cols-9 items-center top-line text-grey py-2 px-6 text-xs">
         <p>IP</p>
         <p>Hostname</p>
         <p className="col-span-3">Hardware</p>
-        <div className="flex gap-1">
-          Cuda<p className="text-[10px] mt-[-8px]">version</p>
+        <div>
+          Cuda<p>version</p>
         </div>
-        <div className="flex gap-1">
-          Prover<p className="text-[10px] mt-[-8px]">version</p>
+        <div>
+          Prover<p>version</p>
         </div>
-        <div className="flex gap-1">
-          Estimated<p className="text-[10px] mt-[-8px]">speed, c/s</p>
+        <div>
+          Estimated<p>speed, c/s</p>
         </div>
-        <div className="flex gap-1">
-          Reported<p className="text-[10px] mt-[-8px]">speed, c/s</p>
+        <div>
+          Reported<p>speed, c/s</p>
         </div>
       </div>
       {pageData.map(
@@ -50,7 +50,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   <IconCPU />
                   &nbsp;CPU:&nbsp;
                 </span>
-                {hardware.cpu[0].model}
+                {hardware.cpu[0].model}&nbsp;
                 <span className="text-grey">
                   ({hardware.cpu[0].cores}&nbsp;
                   {hardware.cpu[0].cores > 1 ? "cores" : "core"})
@@ -61,8 +61,8 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   <IconGPU />
                   &nbsp;GPU:&nbsp;
                 </span>
-                x&nbsp;
-                {hardware.gpu.length}
+                &nbsp;x
+                {hardware.gpu.length}&nbsp;
                 {hardware.gpu[0].model}
               </div>
             </div>

@@ -42,10 +42,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         className="mr-1"
       >
-        <IoIosArrowBack
-          size={16}
-          color={currentPage === 1 ? "grey" : "white"}
-        />
+        <IoIosArrowBack size={16} color={currentPage <= 1 ? "grey" : "white"} />
       </button>
 
       {start > 1 && <button onClick={() => onPageChange(1)}>1</button>}
@@ -70,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       >
         <IoIosArrowForward
           size={16}
-          color={currentPage === totalPages ? "grey" : "white"}
+          color={currentPage >= totalPages ? "grey" : "white"}
         />
       </button>
     </div>
