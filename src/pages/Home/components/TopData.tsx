@@ -106,8 +106,8 @@ export const MachinesData = ({
       <DataContainer>
         <>
           <DataItem name="Count" value={count} />
-          <DataItem name="Estimated speed, c/s" value={`≈${estimated}`} />
-          <DataItem name="Reported speed, c/s" value={`≈${reported}`} />
+          <DataItem name="Estimated speed, c/s" value={estimated} />
+          <DataItem name="Reported speed, c/s" value={reported} />
         </>
       </DataContainer>
     </div>

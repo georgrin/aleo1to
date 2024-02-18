@@ -20,7 +20,7 @@ export const ROWS_ORDER: Array<{
   { fieldName: "pool_shares", title: "Total shares" },
   { fieldName: "address_shares", title: "Address shares" },
   { fieldName: "hashrate_estimated", title: "Average speed" },
-  { fieldName: "pool_earnings", title: "Pool seward" },
+  { fieldName: "pool_earnings", title: "Pool reward" },
   { fieldName: "pool_fee", title: "Pool fee" },
   {
     fieldName: "address_earnings",

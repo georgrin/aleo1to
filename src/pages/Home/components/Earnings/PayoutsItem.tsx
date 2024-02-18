@@ -16,6 +16,7 @@ const PayoutsGridItem = ({ amount, fee, status, created_at }: Payouts) => (
     <p>{n(adjustNumber(fee || 0, 6))}</p>
     <p className={status === "PENDING" ? "text-[#F7A328]" : ""}>
       {StatusMap[status as keyof typeof StatusMap]}
+      <span className="text-grey">(tx)</span>
     </p>
   </div>
 );
