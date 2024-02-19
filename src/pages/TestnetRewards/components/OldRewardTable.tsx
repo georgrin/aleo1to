@@ -5,7 +5,9 @@ import { IconCheckSmall } from "../../../components/icons/IconCheckSmall";
 import SuccessSign from "../../../components/WalletSign/SuccessSign";
 import { errorMsgMapping } from "../../../components/WalletSign/hooks/useWalletSign";
 import PendingSign from "../../../components/WalletSign/PendingSign";
-import ErrorSign from "../../../components/WalletSign/ErrorSign";
+import StatusBar from "../../../components/WalletSign/StatusBar";
+import IconRetry from "../../../components/icons/IconRetry";
+import RequestedSign from "../../../components/WalletSign/RequestedSign";
 
 interface Props {
   address: string;
@@ -49,61 +51,64 @@ const OldRewardTable = ({ address, data }: Props) => {
           <p className="text-base">Snapshot reward</p>
           <p className="gradient-main text-2xl">{data.snapshot_reward}</p>
         </div>
-        <p className="text-default">
-          Due to the obsolescence of the Testnet 2 address format, you need to
-          provide a Mainnet address (the same as used in Testnet 3) and verify
-          that you own the private key for your Testnet 2 address. To do this,
-          you must sign a message containing your Mainnet address using the
-          private key from your Testnet 2 address. This can be done using the
-          WASM tool from Aleo or our tool. Please&nbsp;
-          <a
-            href="https://docs.aleo1.to/rewards/testnet-2-rewards"
-            target="_blank"
-            className="text-link cursor-pointer"
-          >
-            read this for guidance
-          </a>
-          &nbsp;on how to proceed. Afterward, paste the signed message into the{" "}
-          <b>Signature</b> input field. Ensure that you enter the Mainnet
-          address correctly, as this is the address to which your rewards will
-          be sent.
-        </p>
+        {data.status === TestnetStatus.READY && (
+          <p className="text-default">
+            Due to the obsolescence of the Testnet 2 address format, you need to
+            provide a Mainnet address (the same as used in Testnet 3) and verify
+            that you own the private key for your Testnet 2 address. To do this,
+            you must sign a message containing your Mainnet address using the
+            private key from your Testnet 2 address. This can be done using the
+            WASM tool from Aleo or our tool. Please&nbsp;
+            <a
+              href="https://docs.aleo1.to/rewards/testnet-2-rewards"
+              target="_blank"
+              className="text-link cursor-pointer"
+            >
+              read this for guidance
+            </a>
+            &nbsp;on how to proceed. Afterward, paste the signed message into
+            the <b>Signature</b> input field. Ensure that you enter the Mainnet
+            address correctly, as this is the address to which your rewards will
+            be sent.
+          </p>
+        )}
         <form className="flex flex-col h-full" onSubmit={onSubmit}>
-          <div className="flex flex-col gap-4 mt-3">
-            <div>
-              <label
-                htmlFor="mainnet-address"
-                className="block text-sm mb-[8px] text-default"
-              >
-                Mainnet address
-              </label>
-              <input
-                type="text"
-                id="mainnet-address"
-                value={mainnetAddress}
-                onChange={(e) => setMainnetAddress(e.target.value)}
-                placeholder="Mainnet address"
-                className="flex-1 px-4 py-4 w-full leading-[18px] rounded outline-none bg-default border-primary"
-              />
+          {data.status === TestnetStatus.READY && (
+            <div className="flex flex-col gap-4 mt-3">
+              <div>
+                <label
+                  htmlFor="mainnet-address"
+                  className="block text-sm mb-[8px] text-default"
+                >
+                  Mainnet address
+                </label>
+                <input
+                  type="text"
+                  id="mainnet-address"
+                  value={mainnetAddress}
+                  onChange={(e) => setMainnetAddress(e.target.value)}
+                  placeholder="Mainnet address"
+                  className="flex-1 px-4 py-4 w-full leading-[18px] rounded outline-none bg-default border-primary"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="sign"
+                  className="block text-sm mb-[8px] text-default"
+                >
+                  Signature
+                </label>
+                <input
+                  type="text"
+                  id="sign"
+                  value={sign}
+                  onChange={(e) => setSign(e.target.value)}
+                  placeholder="Signature"
+                  className="flex-1 px-4 py-4 w-full leading-[18px] rounded outline-none bg-default border-primary"
+                />
+              </div>
             </div>
-            <div>
-              <label
-                htmlFor="sign"
-                className="block text-sm mb-[8px] text-default"
-              >
-                Signature
-              </label>
-              <input
-                type="text"
-                id="sign"
-                value={sign}
-                onChange={(e) => setSign(e.target.value)}
-                placeholder="Signature"
-                className="flex-1 px-4 py-4 w-full leading-[18px] rounded outline-none bg-default border-primary"
-              />
-            </div>
-          </div>
-
+          )}
           <div className="mt-auto">
             {data.status === TestnetStatus.REQUESTED && (
               <div className="text-xs">
@@ -119,15 +124,25 @@ const OldRewardTable = ({ address, data }: Props) => {
             )}
             {data.status === TestnetStatus.READY && (
               <div className="mt-2">
-                {isLoading && <PendingSign publicKey={address} />}
+                {isLoading && (
+                  <StatusBar message={<span className="loader"></span>} />
+                )}
                 {errorMsg && (
-                  <ErrorSign
-                    resetStatus={tryAgain}
-                    publicKey={address}
-                    errorMsg={errorMsg}
+                  <StatusBar
+                    message={
+                      <div className="flex gap-2">
+                        <span className="text-red-500">Error: {errorMsg}</span>
+                        <button onClick={tryAgain}>
+                          <IconRetry />
+                        </button>
+                        <button onClick={tryAgain} className="underline">
+                          Try again
+                        </button>
+                      </div>
+                    }
                   />
                 )}
-                {successSign && <SuccessSign publicKey={address} />}
+                {successSign && <RequestedSign />}
                 {!isLoading && !errorMsg && !successSign && (
                   <button type="submit" className="w-full btn font-bold">
                     Claim
