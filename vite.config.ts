@@ -8,6 +8,7 @@ export default ({ mode }) => {
     plugins: [react()],
     server: {
       proxy: {
+        "/": "/",
         "/api": {
           target: process.env.VITE_API_URL,
           changeOrigin: true,
@@ -21,4 +22,3 @@ export default ({ mode }) => {
     },
   });
 };
-
