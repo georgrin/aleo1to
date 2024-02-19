@@ -1,6 +1,8 @@
 {
   "routes": [
-    { "src": "/", "dest": "/" },
-    { "src": "/testnet-rewards", "dest": "/" }
+    {
+      "src": "/[^.]+",
+      "dest": "/"
+    }
   ]
 }
