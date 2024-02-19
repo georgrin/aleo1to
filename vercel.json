@@ -1,5 +1,6 @@
 {
-  "rewrites":  [
-    {"source": "/testnet-rewards", "destination": "/"}
+  "routes": [
+    { "src": "/", "dest": "/" },
+    { "src": "/testnet-rewards", "dest": "/" }
   ]
 }
