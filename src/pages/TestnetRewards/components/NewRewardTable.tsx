@@ -2,7 +2,6 @@ import { testnet3Payout } from "../../../api/testnet";
 import WalletSign from "../../../components/WalletSign";
 import RequestedSign from "../../../components/WalletSign/RequestedSign";
 import SuccessSign from "../../../components/WalletSign/SuccessSign";
-import { IconCheckSmall } from "../../../components/icons/IconCheckSmall";
 import { Testnet3, TestnetStatus } from "../../../model/Testnet";
 
 const PROVING_ROWS = [
@@ -112,7 +111,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
         )}
         {data.status === TestnetStatus.SENT && (
           <div className="mt-auto">
-            <SuccessSign publicKey={address} />
+            <SuccessSign txid={data.txid} />
           </div>
         )}
       </div>

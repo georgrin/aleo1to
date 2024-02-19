@@ -9,6 +9,7 @@ import Connected from "./Connected";
 import SuccessSign from "./SuccessSign";
 import ErrorSign from "./ErrorSign";
 import PendingSign from "./PendingSign";
+import RequestedSign from "./RequestedSign";
 
 interface Prop {
   dataToSign: {
@@ -36,8 +37,7 @@ const WalletSign = ({ dataToSign }: Prop) => {
   });
 
   const Content = () => {
-    if (status === WalletSignStatus.SUCCESS)
-      return <SuccessSign publicKey={publicKey as string} />;
+    if (status === WalletSignStatus.SUCCESS) return <RequestedSign />;
 
     if (status === WalletSignStatus.PENDING)
       return <PendingSign publicKey={publicKey as string} />;

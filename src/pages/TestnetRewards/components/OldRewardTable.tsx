@@ -151,7 +151,7 @@ const OldRewardTable = ({ address, data }: Props) => {
               </div>
             )}
             {data.status === TestnetStatus.SENT && (
-              <SuccessSign publicKey={address} />
+              <SuccessSign txid={data.txid} />
             )}
           </div>
         </form>
