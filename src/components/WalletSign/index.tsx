@@ -1,5 +1,4 @@
 import { WalletReadyState } from "@demox-labs/aleo-wallet-adapter-base";
-import { TokenResponse } from "../../api/wallet";
 
 import { useWalletSign } from "./hooks/useWalletSign";
 import DisconnectedWallet from "./Disconnected";
