@@ -1,6 +1,0 @@
-{
-    "rewrites": [
-        { "source": "/api/:path*", "destination": "https://api.aleo1.to/v1/:path*" },
-        { "source": "/(.*)", "destination": "/" }
-    ]
-}

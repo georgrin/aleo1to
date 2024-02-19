@@ -132,6 +132,7 @@ function useAppController() {
 
   const [currentRoute, setCurrentRoute] = useState(window.location.pathname);
 
+  console.log(window);
   //simple router
   useEffect(() => {
     const onLocationChange = () => setCurrentRoute(window.location.pathname);
