@@ -14,7 +14,7 @@ import PendingSign from "./PendingSign";
 interface Prop {
   dataToSign: {
     address: string;
-    action: (token: TokenResponse) => void;
+    action: (address: string, signature: string) => void;
   };
 }
 
@@ -31,6 +31,7 @@ const WalletSign = ({ dataToSign }: Prop) => {
     disconnect,
     publicKey,
     disconnectedWalletMsg,
+    errorMsg,
   } = useWalletSign({
     ...dataToSign,
   });
@@ -44,7 +45,11 @@ const WalletSign = ({ dataToSign }: Prop) => {
 
     if (status === WalletSignStatus.ERROR)
       return (
-        <ErrorSign resetStatus={resetStatus} publicKey={publicKey as string} />
+        <ErrorSign
+          resetStatus={resetStatus}
+          publicKey={publicKey as string}
+          errorMsg={errorMsg}
+        />
       );
 
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
@@ -78,13 +83,9 @@ const WalletSign = ({ dataToSign }: Prop) => {
 
   return (
     <div className="w-full mt-auto">
-      {status !== WalletSignStatus.ERROR ? (
-        <div className="w-full p-0 mt-2">
-          <Content />
-        </div>
-      ) : (
-        <>error</>
-      )}
+      <div className="w-full p-0 mt-2">
+        <Content />
+      </div>
     </div>
   );
 };

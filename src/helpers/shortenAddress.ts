@@ -1,4 +1,5 @@
 const shortenAddress = (address: string) => {
+  if (!address) return;
   const startLength = 13;
   const endLength = 17;
 

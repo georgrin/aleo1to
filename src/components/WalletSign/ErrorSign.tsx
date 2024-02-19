@@ -5,9 +5,11 @@ import StatusBar from "./StatusBar";
 
 const ErrorSign = ({
   publicKey,
+  errorMsg,
   resetStatus,
 }: {
   publicKey: string;
+  errorMsg: string;
   resetStatus: () => void;
 }) => (
   <div className="text-xs">
@@ -20,7 +22,7 @@ const ErrorSign = ({
     <StatusBar
       message={
         <div className="flex gap-2">
-          <span className="text-red-500">Error: some error</span>
+          <span className="text-red-500">Error: {errorMsg}</span>
           <button onClick={resetStatus}>
             <IconRetry />
           </button>

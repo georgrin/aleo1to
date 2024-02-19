@@ -1,26 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
 import IconNotFound from "../../components/icons/IconNoFound";
-import { testnetCheck } from "../../api/testnet";
+import { Testnet2, Testnet3 } from "../../model/Testnet";
 
 interface Props {
   title: JSX.Element;
   description: JSX.Element;
   style?: string;
-  table: (address: string) => JSX.Element;
+  version: number;
+  checkFunc: (search: string) => Promise<Testnet3 | Testnet2>;
+  table: (address: string, data: Testnet3 | Testnet2) => JSX.Element;
 }
 
-const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
+const Dashboard: React.FC<Props> = ({
+  title,
+  description,
+  style,
+  table,
+  checkFunc,
+  version,
+}) => {
   const [search, setSearch] = useState("");
+  const [requestedAddress, setRequestedAddress] = useState("");
+  const [data, setData] = useState<Testnet3 | Testnet2 | null>();
   const [submited, setSubmited] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    clear();
+    setRequestedAddress(search);
     try {
-      const response = await testnetCheck(search);
+      setLoading(true);
+      const response = await checkFunc(search);
+      setData(response);
     } catch {
-      //err
+    } finally {
+      setSubmited(true);
+      setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [data]);
+
+  const clear = () => {
+    setData(null);
+    setSubmited(false);
   };
 
   return (
@@ -32,7 +59,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
           htmlFor="testnet-address"
           className="block text-sm mb-[8px] text-default"
         >
-          Testnet 2 address
+          Testnet {version} address
         </label>
         <form
           className="flex items-center rounded space-x-2 text-xs"
@@ -43,7 +70,7 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
             id="testnet-address"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Testnet 2 address"
+            placeholder={`Testnet ${version} address`}
             className="flex-1 px-4 py-2 leading-[18px] rounded outline-none bg-default border-primary"
           />
           <button className="px-4 py-2.5 rounded bg-primary-2 hover:shadow-primary font-bold">
@@ -51,9 +78,14 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
           </button>
         </form>
       </div>
-      {submited ? (
-        <>{table(search)}</>
-      ) : (
+
+      {loading && (
+        <div className="flex items-center flex-col flex-1 justify-center">
+          <span className="loader-big"></span>
+        </div>
+      )}
+
+      {!submited && !loading && (
         <div className="flex items-center flex-col flex-1 justify-center">
           <IconDatabase />
           <div className="mt-[8px] text-center">
@@ -65,17 +97,22 @@ const Dashboard: React.FC<Props> = ({ title, description, style, table }) => {
           </div>
         </div>
       )}
-      {/* <div className="flex items-center flex-col flex-1 justify-center">
-        <IconNotFound />
-        <div className="mt-[8px] text-center">
-          <span>Sorry, there are no&nbsp;</span>
-          <span className="text-default">
-            rewards
-            <br /> available for address
-          </span>
+
+      {submited && !data && (
+        <div className="flex items-center flex-col flex-1 justify-center">
+          <IconNotFound />
+          <div className="mt-[8px] text-center">
+            <span>Sorry, there are no&nbsp;</span>
+            <span className="text-default">
+              rewards
+              <br /> available for address
+            </span>
+          </div>
+          <p className="text-xs mt-2">{requestedAddress}</p>
         </div>
-        <p className="text-xs mt-2">{search}</p>
-      </div> */}
+      )}
+
+      {data && <>{table(requestedAddress, data)}</>}
     </div>
   );
 };
