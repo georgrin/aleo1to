@@ -73,7 +73,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             payout={general_info.payouts_total}
             fees={general_info.fee_total}
             balance={general_info.balance}
-            autoPayout={80}
+            autoPayout={general_info.auto_payout}
           />
           <EarningsGrid earnings={earnings} payouts={payouts} />
         </>

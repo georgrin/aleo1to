@@ -54,7 +54,7 @@ interface EarningsDataProps {
   payout: number;
   fees: number;
   balance: number;
-  autoPayout: number;
+  autoPayout: string;
 }
 
 export const EarningsData = ({
