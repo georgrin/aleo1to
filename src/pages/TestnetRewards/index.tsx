@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Dashboard from "./Dashboard";
 import NewPhaseRewardTable from "./components/NewRewardTable";
 import OldRewardTable from "./components/OldRewardTable";
+import { testnet2Check, testnet3Check } from "../../api/testnet";
+import { Testnet2, Testnet3 } from "../../model/Testnet";
 
 const TestnetRewards: React.FC = () => {
   return (
@@ -36,7 +38,11 @@ const TestnetRewards: React.FC = () => {
             </div>
           }
           style="gradient-bg bg-cover"
-          table={(address: string) => <NewPhaseRewardTable address={address} />}
+          table={(address, data) => (
+            <NewPhaseRewardTable address={address} data={data as Testnet3} />
+          )}
+          version={3}
+          checkFunc={testnet3Check}
         />
         <Dashboard
           title={
@@ -61,6 +67,7 @@ const TestnetRewards: React.FC = () => {
                 <a
                   href="https://1to.sh"
                   className="text-link underline cursor-pointer"
+                  target="_blank"
                 >
                   1to.sh
                 </a>
@@ -72,7 +79,11 @@ const TestnetRewards: React.FC = () => {
             </div>
           }
           style="bg-surface"
-          table={(address: string) => <OldRewardTable address={address} />}
+          table={(address, data) => (
+            <OldRewardTable address={address} data={data as Testnet2} />
+          )}
+          version={2}
+          checkFunc={testnet2Check}
         />
       </div>
     </div>

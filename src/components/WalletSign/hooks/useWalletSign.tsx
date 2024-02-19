@@ -1,6 +1,5 @@
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TokenResponse, getChallenge, getToken } from "../../../api/wallet";
 import {
   DecryptPermission,
   WalletAdapterNetwork,
@@ -8,11 +7,27 @@ import {
 } from "@demox-labs/aleo-wallet-adapter-base";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletSignStatus } from "../../../model";
+import { getChallenge } from "../../../api/testnet";
 
 interface Props {
   address: string;
-  action: (token: TokenResponse) => void;
+  action: (address: string, signature: string) => void;
 }
+
+export const errorMsgMapping = (code: number) => {
+  switch (code) {
+    case 401:
+      return "Signature is invalid";
+    case 404:
+      return "Signature is invalid";
+    case 409:
+      return "Signature is invalid";
+    case 500:
+      return "Signature is invalid";
+    default:
+      return "Unexpected error";
+  }
+};
 
 export const useWalletSign = ({ address, action }: Props) => {
   const {
@@ -28,6 +43,7 @@ export const useWalletSign = ({ address, action }: Props) => {
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const leoWallet = wallets.find((item) => item.adapter.name === "Leo Wallet");
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleAccountChange = useCallback(
     ({ publicKey }: { publicKey: string }) => {
@@ -57,23 +73,18 @@ export const useWalletSign = ({ address, action }: Props) => {
 
       setSignStatus(WalletSignStatus.PENDING);
 
-      const signatureBytes = await(
+      const signatureBytes = await (
         wallet?.adapter as LeoWalletAdapter
       ).signMessage(bytes);
 
       const signature = new TextDecoder().decode(signatureBytes);
-      const requestData = {
-        signature: signature,
-      };
-      const tokenResponse = await getToken(address, requestData);
 
-      await action(tokenResponse);
+      await action(address, signature);
 
       setSignStatus(WalletSignStatus.SUCCESS);
-    } catch (error) {
-      if ((error as Error).message !== "Permission Not Granted")
-        setSignStatus(WalletSignStatus.ERROR);
-      console.log("sign error", { error: error });
+    } catch (error: any) {
+      setSignStatus(WalletSignStatus.ERROR);
+      setErrorMsg(errorMsgMapping(error.request.status));
     }
   };
 
@@ -108,6 +119,7 @@ export const useWalletSign = ({ address, action }: Props) => {
     addressMatch: address === base58,
     status: signStatus,
     publicKey,
+    errorMsg,
     resetStatus: () => setSignStatus(WalletSignStatus.DEFAULT),
   };
 };
