@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Earnings, Machines, Payouts, SearchResult } from "../model";
+import { Earnings, Machines, Payouts } from "../model";
 
 export interface EarningsResponse {
   earnings: Array<Earnings>;
@@ -8,6 +8,7 @@ export interface EarningsResponse {
     payouts_total: number;
     fee_total: number;
     balance: number;
+    auto_payout: string;
   };
 }
 

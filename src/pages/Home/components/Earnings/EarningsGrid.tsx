@@ -71,7 +71,7 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
         <p className="col-span-2"></p>
       </div>
       <div className="grid earnings-grid top-line text-grey py-2 px-6 text-xs">
-        <p className="">Timestamp</p>
+        <p className="">Timestamp (UTC)</p>
         {ROWS_ORDER.map((row) => (
           <p key={row.title}>{row.title}</p>
         ))}
