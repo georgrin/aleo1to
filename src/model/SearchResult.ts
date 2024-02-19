@@ -1,3 +1,5 @@
+import { MachinesResponse } from "../api";
+
 export interface SearchResult {
   address: string;
   data: {
@@ -7,16 +9,9 @@ export interface SearchResult {
       payouts_total: number;
       fee_total: number;
       balance: number;
+      auto_payout: string;
     };
-    machines: {
-      machines: Machines[];
-      general_info: {
-        active: number;
-        total: number;
-        total_estimated_hashrate: number;
-        total_reported_hashrate: number;
-      };
-    };
+    machines: MachinesResponse;
     payouts: Payouts[];
   } | null;
   interval?: any;
