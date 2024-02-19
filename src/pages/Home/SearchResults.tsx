@@ -81,18 +81,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         <>
           <MachinesData
             count={machines.general_info.total}
-            estimated={n(
-              machines.machines.reduce(
-                (acc, curr) => Number(acc) + Number(curr.hashrate_estimated),
-                0
-              )
-            )}
-            reported={n(
-              machines.machines.reduce(
-                (acc, curr) => Number(acc) + Number(curr.hashrate),
-                0
-              )
-            )}
+            estimated={n(machines.general_info.total_estimated_hashrate)}
+            reported={n(machines.general_info.total_reported_hashrate)}
           />
           <MachinesGrid machines={machines.machines} />
         </>

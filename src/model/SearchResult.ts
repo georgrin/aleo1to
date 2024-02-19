@@ -13,6 +13,8 @@ export interface SearchResult {
       general_info: {
         active: number;
         total: number;
+        total_estimated_hashrate: number;
+        total_reported_hashrate: number;
       };
     };
     payouts: Payouts[];
