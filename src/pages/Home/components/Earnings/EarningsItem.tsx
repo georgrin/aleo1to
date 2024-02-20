@@ -19,7 +19,7 @@ const EarningsGridItem = ({
     <p>{n(address_shares) || "-"}</p>
     <p>{n(hashrate_estimated) || "-"}</p>
     <p>{n(adjustNumber(pool_earnings || 0, 6))}</p>
-    <p>{Number(pool_fee * 100)} % </p>
+    <p>{adjustNumber(Number(pool_fee * 100), 0)} % </p>
     <p className="text-[#00FFAB]">
       {n(adjustNumber(address_earnings || 0, 6))}
     </p>
