@@ -67,7 +67,7 @@ function averageField(
   if (filteredEarnings.length === 0) {
     return 0;
   }
-
+  
   const sum = filteredEarnings.reduce((acc, curr) => {
     const value = Number(curr[fieldName]);
     return acc + value;
@@ -89,7 +89,7 @@ export const useSearchDateSummary = (dateItems: (Earnings | Payouts)[]) => {
       Math.round(averageField(dateItems, "hashrate_estimated", 2) / 1000) * 1000
     ),
     pool_earnings: n(sumField(dateItems, "pool_earnings")),
-    pool_fee: `${Number(averageField(dateItems, "pool_fee", 2) * 100)} %`,
+    pool_fee: `${adjustNumber(Number(averageField(dateItems, "pool_fee", 4) * 100), 2)} %`,
     address_earnings: n(sumField(dateItems, "address_earnings")),
     amount: n(sumField(dateItems, "amount")),
     fee: n(sumField(dateItems, "fee")),
