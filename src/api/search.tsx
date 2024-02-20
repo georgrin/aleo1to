@@ -84,10 +84,11 @@ export interface BalancePhase2 {
 }
 
 export async function searchAddress(address: string) {
+  const lowerAddress = address.toLowerCase()
   return Promise.all([
-    axios.get<EarningsResponse>(`/api/earnings/${address}`),
-    axios.get<Array<Payouts>>(`/api/payouts/${address}`),
-    axios.get<MachinesResponse>(`/api/machines/${address}`),
+    axios.get<EarningsResponse>(`/api/earnings/${lowerAddress}`),
+    axios.get<Array<Payouts>>(`/api/payouts/${lowerAddress}`),
+    axios.get<MachinesResponse>(`/api/machines/${lowerAddress}`),
   ]).then((response) => {
     return {
       ...response[0].data,
