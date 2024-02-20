@@ -220,17 +220,19 @@ function useAppController() {
   }
 
   function searchAddress(address: string) {
-    if (searchAddresses.includes(address)) {
+    const lowerAddress = address.toLowerCase()
+
+    if (searchAddresses.includes(lowerAddress)) {
       setJoinPoolIsDown(true);
       setJoinPoolCommand(null);
       loadingBarRef.current?.continuousStart();
       loadingBarRef.current?.complete();
       return;
     }
-    searchAddresses.unshift(address);
+    searchAddresses.unshift(lowerAddress);
     saveSearchAddresses();
 
-    _searchAddress(address);
+    _searchAddress(lowerAddress);
   }
 
   async function _searchAddress(address: string) {
