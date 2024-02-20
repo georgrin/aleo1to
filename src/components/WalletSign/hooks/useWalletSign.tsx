@@ -46,8 +46,9 @@ export const useWalletSign = ({ address, action }: Props) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleAccountChange = useCallback(
-    ({ publicKey }: { publicKey: string }) => {
+    async ({ publicKey }: { publicKey: string }) => {
       if (publicKey !== leoWallet?.adapter.publicKey) {
+        await disconnect();
         connectWallet();
       }
     },
