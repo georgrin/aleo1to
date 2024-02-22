@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../utils/navigate";
 import { Route } from "../../model";
 
-export const Header = ({ info }: any) => {
+export const Header = () => {
   const linksData = [
     {
       label: "Join",

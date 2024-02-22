@@ -46,11 +46,13 @@ interface SearchResultProps {
   deleteSearchResult: Function;
 }
 function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
-  const { address, data } = searchResult;
-  const { earnings, general_info, payouts, machines } = data!!;
-
   const [showCopied, setShowCopied] = useState(false);
   const [isEarnings, setIsEarnings] = useState(true);
+
+  if (!searchResult.data) return null;
+
+  const { address, data } = searchResult;
+  const { earnings, general_info, payouts, machines } = data;
 
   return (
     <div className="px-3 pt-3 sm:px-6 sm:pt-6 group/search-result top-line bg-surface font-medium">
