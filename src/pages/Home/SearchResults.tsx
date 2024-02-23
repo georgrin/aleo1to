@@ -21,9 +21,9 @@ export const SearchResults = ({
 }: SearchResultsProps) => {
   return (
     <div className="container font-secondary relative overflow-hidden">
-      {searchResults.map((result) => (
+      {searchResults.map((result, index) => (
         <SearchResult
-          key={result.address}
+          key={result.address + index}
           searchResult={result}
           deleteSearchResult={deleteSearchResult}
         />

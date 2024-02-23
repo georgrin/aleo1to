@@ -45,23 +45,22 @@ const useSearch = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // useEffect(() => {
-  //   if (addressFromGet) {
-  //     searchAddress(addressFromGet);
-  //   }
-  // }, [addressFromGet]);
-
   useEffect(() => {
     if (addressFromGet) {
-      const index = searchResults.findIndex(
-        (result) => result.address === addressFromGet
-      );
-      if (index >= 0) {
-        const data = searchResults[index];
-        searchResults.splice(index, 0);
-        searchResults.unshift(data);
-      } else {
-        searchAddress(addressFromGet);
+      if (searchAddresses.length === searchResults.length) {
+        if (searchAddresses.includes(addressFromGet)) {
+          const index = searchResults.findIndex(
+            (result) => result.address === addressFromGet
+          );
+          if (index >= 1) {
+            const data = searchResults[index];
+            searchResults.splice(index, 1);
+            searchResults.unshift(data);
+            setSearchResults([...searchResults]);
+          }
+        } else {
+          searchAddress(addressFromGet);
+        }
       }
     }
   }, [searchResults, addressFromGet]);
@@ -130,6 +129,9 @@ const useSearch = () => {
 
   function searchAddress(address: string) {
     const lowerAddress = address.toLowerCase();
+    if (searchResults.find((result) => result.address === address)) {
+      return;
+    }
 
     if (searchAddresses.includes(lowerAddress)) {
       setJoinPoolIsDown(true);
