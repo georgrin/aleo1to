@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import Dashboard from "./Dashboard";
 import NewPhaseRewardTable from "./components/NewRewardTable";
 import OldRewardTable from "./components/OldRewardTable";
 import { testnet2Check, testnet3Check } from "../../api/testnet";
 import { Testnet2, Testnet3 } from "../../model/Testnet";
+import { useCookies } from "react-cookie";
+
+enum Testnet {
+  Testnet2 = "testnet2Rewards",
+  Testnet3 = "testnet3Rewards",
+}
 
 const TestnetRewards: React.FC = () => {
+  const [cookies, setCookie] = useCookies([Testnet.Testnet2, Testnet.Testnet3]);
+
+  const saveTestnetSearch = (cookieName: Testnet, searchString: string) => {
+    setCookie(cookieName, searchString);
+  };
+
   return (
     <div className="pt-[68px] sm:pt-[56px] overflow-x-hidden">
       <div className="container pt-3 grid lg:grid-cols-2 grid-cols-1 gap-5 fit">
@@ -43,6 +55,10 @@ const TestnetRewards: React.FC = () => {
           )}
           version={3}
           checkFunc={testnet3Check}
+          defaultAddress={cookies[Testnet.Testnet3]}
+          saveAddress={(address) =>
+            saveTestnetSearch(Testnet.Testnet3, address)
+          }
         />
         <Dashboard
           title={
@@ -84,6 +100,10 @@ const TestnetRewards: React.FC = () => {
           )}
           version={2}
           checkFunc={testnet2Check}
+          defaultAddress={cookies[Testnet.Testnet2]}
+          saveAddress={(address) =>
+            saveTestnetSearch(Testnet.Testnet2, address)
+          }
         />
       </div>
     </div>
