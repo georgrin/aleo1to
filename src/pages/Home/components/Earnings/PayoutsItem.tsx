@@ -10,8 +10,10 @@ const PayoutsGridItem = ({
   created_at,
   txid,
 }: Payouts) => (
-  <div className="grid earnings-grid w-full text-white py-2 px-6 text-xs bg-[#00FFAB]/[0.05]">
-    <p className="pl-5">{formatTimestampToTime(created_at)}</p>
+  <div className="grid earnings-grid w-full text-white py-2 px-6 text-xs bg-[#00FFAB]/[0.05] min-w-min">
+    <p className="pl-5 w-160px sticky left-0 z-1 border-r-[1px] border-white/[0.2] mr-4 my-[-8px] py-2 bg-[rgb(18,27,26)]">
+      {formatTimestampToTime(created_at)}
+    </p>
     {Array(6)
       .fill("_")
       .map((_, index) => (

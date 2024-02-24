@@ -10,6 +10,7 @@ import {
 import EarningsGrid from "./components/Earnings/EarningsGrid";
 import { numberFormat as n } from "../../helpers/numbers";
 import MachinesGrid from "./components/MachinesGrid";
+import { setExtra } from "@sentry/react";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];

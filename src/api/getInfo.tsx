@@ -42,9 +42,23 @@ export interface IGetHistoryInfoResponse {
 }
 
 export async function getInfo() {
-  return await axios.get<IGetInfoResponse>(`/api/info`).then((request) => request.data);
+  return await axios.get<IGetInfoResponse>(`/api/info`).then((request) => {
+    if (typeof request.data === "string") {
+      throw new Error("Error fetching data");
+    } else {
+      return request.data;
+    }
+  });
 }
 
 export async function getHistoryInfo() {
-  return await axios.get<IGetHistoryInfoResponse[]>(`api/history/info`).then((request) => request.data);
+  return await axios
+    .get<IGetHistoryInfoResponse[]>(`api/history/info`)
+    .then((request) => {
+      if (typeof request.data === "string") {
+        throw new Error("Error fetching data");
+      } else {
+        return request.data;
+      }
+    });
 }

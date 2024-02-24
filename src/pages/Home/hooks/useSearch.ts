@@ -3,6 +3,8 @@ import * as api from "../../../api";
 import { LoadingBarRef } from "react-top-loading-bar";
 import { useCookies } from "react-cookie";
 import { SearchResult } from "../../../model";
+import { useSnackbar } from "../../../router/layouts/SnackbarProvider";
+import shortenAddress from "../../../helpers/shortenAddress";
 
 const UPDATE_INTERVAL = 1000 * 60 * 5; // 5 minutes;
 
@@ -12,6 +14,7 @@ const useSearch = () => {
     api.IGetHistoryInfoResponse[] | null
   >(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const { showSnackbar } = useSnackbar();
 
   const [joinPoolIsDown, setJoinPoolIsDown] = useState(true);
   const [joinPoolCommand, setJoinPoolCommand] = useState<null | string>(null);
@@ -80,51 +83,63 @@ const useSearch = () => {
   }
 
   async function updateInfo() {
-    setInfo(await api.getInfo());
+    api
+      .getInfo()
+      .then((data) => {
+        setInfo(data);
+      })
+      .catch(() => {
+        showSnackbar("Error fetching data, try to refresh the page");
+      });
   }
 
   async function updateHistoryInfo() {
     loadingBarRef.current?.continuousStart();
-    const info = await api.getHistoryInfo();
-
-    let aggregatedInfo: api.IGetHistoryInfoResponse[] = [];
-    let count = 0;
-    info.forEach((item, i) => {
-      const date = new Date(item.date);
-      const day = `${date.getMonth() + 1}-${date.getDate()}`;
-      const last = aggregatedInfo[aggregatedInfo.length - 1];
-      ++count;
-      if (last) {
-        const lastDate = new Date(last.date);
-        const lastDay = `${lastDate.getMonth() + 1}-${lastDate.getDate()}`;
-        if (lastDay !== day || i === info.length - 1) {
-          Object.keys(last).forEach((k) => {
-            if (k === "date") {
-              return;
+    api
+      .getHistoryInfo()
+      .then((info) => {
+        let aggregatedInfo: api.IGetHistoryInfoResponse[] = [];
+        let count = 0;
+        info.forEach((item, i) => {
+          const date = new Date(item.date);
+          const day = `${date.getMonth() + 1}-${date.getDate()}`;
+          const last = aggregatedInfo[aggregatedInfo.length - 1];
+          ++count;
+          if (last) {
+            const lastDate = new Date(last.date);
+            const lastDay = `${lastDate.getMonth() + 1}-${lastDate.getDate()}`;
+            if (lastDay !== day || i === info.length - 1) {
+              Object.keys(last).forEach((k) => {
+                if (k === "date") {
+                  return;
+                }
+                // @ts-ignore
+                last[k] /= count;
+              });
+              count = 0;
+              if (i !== info.length - 1) {
+                aggregatedInfo.push({ ...item });
+              }
+            } else {
+              Object.keys(last).forEach((k) => {
+                if (k === "date") {
+                  return;
+                }
+                // TODO: Add type
+                // @ts-ignore
+                last[k] += item[k];
+              });
             }
-            // @ts-ignore
-            last[k] /= count;
-          });
-          count = 0;
-          if (i !== info.length - 1) {
+          } else {
             aggregatedInfo.push({ ...item });
           }
-        } else {
-          Object.keys(last).forEach((k) => {
-            if (k === "date") {
-              return;
-            }
-            // TODO: Add type
-            // @ts-ignore
-            last[k] += item[k];
-          });
-        }
-      } else {
-        aggregatedInfo.push({ ...item });
-      }
-    });
-    setHistoryInfo(aggregatedInfo);
-    loadingBarRef.current?.complete();
+        });
+        setHistoryInfo(aggregatedInfo);
+        loadingBarRef.current?.complete();
+      })
+      .catch(() => {
+        showSnackbar("Error fetching data, try to refresh the page");
+      });
   }
 
   function searchAddress(address: string) {
@@ -150,42 +165,59 @@ const useSearch = () => {
     if (searchResults.find((result) => result.address === address)) {
       return;
     }
-    const result: SearchResult = {
-      address,
-      data: null,
-    };
     await updateSearchResult();
 
     async function updateSearchResult() {
       loadingBarRef.current?.continuousStart();
 
-      try {
-        result.data = await api.searchAddress(address);
+      api
+        .searchAddress(address)
+        .then((data) => {
+          const result: SearchResult = {
+            address,
+            data: data,
+          };
 
-        loadingBarRef.current?.complete();
-
-        if (!result.interval) {
-          setJoinPoolIsDown(true);
-          setJoinPoolCommand(null);
-          result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
-        }
-
-        setSearchResults((results) => {
-          if (results.indexOf(result) < 0) {
-            return [result, ...results];
+          if (!result.interval) {
+            setJoinPoolIsDown(true);
+            setJoinPoolCommand(null);
+            result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
           }
 
-          return [...results];
-        });
-      } catch {
-        setJoinPoolIsDown(false);
-        setJoinPoolCommand(
-          `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
-        );
-        loadingBarRef.current?.complete();
+          setSearchResults((results) => {
+            if (results.indexOf(result) < 0) {
+              return [result, ...results];
+            }
 
-        deleteSearchResult(result);
-      }
+            return [...results];
+          });
+        })
+        .catch((error) => {
+          if (error?.response?.status === 500) {
+            setJoinPoolIsDown(false);
+            setJoinPoolCommand(
+              `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
+            );
+            loadingBarRef.current?.complete();
+
+            deleteSearchResult({ address, data: null });
+            return;
+          }
+
+          showSnackbar(
+            `Error getting ${shortenAddress(address)}, try again later`
+          );
+          const index = searchAddresses.findIndex(
+            (address) => address === address
+          );
+          if (index >= 0) {
+            searchAddresses.splice(index, 1);
+            saveSearchAddresses();
+          }
+        })
+        .finally(() => {
+          loadingBarRef.current?.complete();
+        });
     }
   }
 

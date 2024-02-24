@@ -177,9 +177,14 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           value: formatNumber(Math.round(info.balance)),
         })}
         {renderItem({
-          id: "hashrate_pool_estimated",
-          title: "Pool Hashrate",
-          value: `${formatNumber(info.hashrate.pool.estimated)} c/s`,
+          id: "pool_fee",
+          title: "Pool Fee",
+          value: `${formatNumber(Number(info.pool_fee) * 100)} %`,
+        })}
+        {renderItem({
+          id: "current_epoch",
+          title: "Epoch",
+          value: `${formatNumber(info.current_epoch)}`,
         })}
         {renderItem({
           id: "hashrate_solo_estimated",

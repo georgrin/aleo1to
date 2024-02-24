@@ -16,6 +16,7 @@ import { Header } from "./router/layouts/Header";
 import { Footer } from "./router/layouts/Footer";
 import TestnetRewards from "./pages/TestnetRewards";
 import { Route } from "./model";
+import { SnackbarProvider } from "./router/layouts/SnackbarProvider";
 
 Modal.setAppElement("#modals");
 
@@ -51,7 +52,9 @@ function App() {
         decryptPermission={DecryptPermission.UponRequest}
         network={WalletAdapterNetwork.Testnet}
       >
-        <WalletModalProvider>{renderComponent()}</WalletModalProvider>
+        <WalletModalProvider>
+          <SnackbarProvider>{renderComponent()}</SnackbarProvider>
+        </WalletModalProvider>
       </WalletProvider>
       <Footer />
     </>
