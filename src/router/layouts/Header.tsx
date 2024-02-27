@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../utils/navigate";
 import { Route } from "../../model";
 
-export const Header = ({ info }: any) => {
+export const Header = () => {
   const linksData = [
     {
       label: "Join",
@@ -11,10 +11,6 @@ export const Header = ({ info }: any) => {
     {
       label: "PPLNS",
       value: "https://docs.aleo1.to/rewards/pool-rewards",
-    },
-    {
-      label: "Solo",
-      value: "https://docs.aleo1.to/rewards/solo-rewards",
     },
     {
       label: "Team",
@@ -130,6 +126,13 @@ export const Header = ({ info }: any) => {
                   </a>
                 );
               })}
+              <a
+                className="block text-sm font-orbiton font-bold mr-[16px] last:mr-0 hover:text-primary transition-colors gradient-main"
+                href={Route.REWARDS}
+                onClick={(e) => navigate(e, Route.REWARDS)}
+              >
+                Testnet Rewards
+              </a>
             </div>
           </div>
         </div>

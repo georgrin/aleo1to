@@ -62,36 +62,40 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
   };
 
   return (
-    <div className="font-default mx-[-24px]">
-      <div className="px-6 grid earnings-grid text-xs py-2 top-line mt-[20px]">
-        <p></p>
-        <p>Earnings</p>
-        <p className="col-span-6"></p>
-        <p>Payouts</p>
-        <p className="col-span-2"></p>
+    <>
+      <div className="font-default sm:mx-[-24px] mx-[-10px] overflow-x-auto overflow-y-hidden">
+        <div className="px-6 grid earnings-grid text-xs py-2 top-line mt-[20px] min-w-min">
+          <p></p>
+          <p>Earnings</p>
+          <p className="col-span-6"></p>
+          <p>Payouts</p>
+          <p className="col-span-2"></p>
+        </div>
+        <div className="grid earnings-grid top-line text-grey py-2 px-6 text-xs min-w-min">
+          <p className="w-160px sticky left-0 z-1 border-r-[1px] border-white/[0.2] mr-4 my-[-8px] py-2 bg-surface ">
+            Timestamp (UTC)
+          </p>
+          {ROWS_ORDER.map((row) => (
+            <p key={row.title}>{row.title}</p>
+          ))}
+          <p>Status</p>
+        </div>
+        {pageData.map((date) => {
+          const { summary } = useSearchDateSummary(sortedCombinedData[date]);
+          return (
+            <div key={date}>
+              <DayGridItem
+                date={date}
+                items={sortedCombinedData[date]}
+                isVisible={visibility[date]}
+                summary={summary}
+                toggleVisibility={toggleVisibility}
+              />
+            </div>
+          );
+        })}
       </div>
-      <div className="grid earnings-grid top-line text-grey py-2 px-6 text-xs">
-        <p className="">Timestamp (UTC)</p>
-        {ROWS_ORDER.map((row) => (
-          <p key={row.title}>{row.title}</p>
-        ))}
-        <p>Status</p>
-      </div>
-      {pageData.map((date) => {
-        const { summary } = useSearchDateSummary(sortedCombinedData[date]);
-        return (
-          <React.Fragment key={date}>
-            <DayGridItem
-              date={date}
-              items={sortedCombinedData[date]}
-              isVisible={visibility[date]}
-              summary={summary}
-              toggleVisibility={toggleVisibility}
-            />
-          </React.Fragment>
-        );
-      })}
-      <div className="grid grid-cols-3 justify-between top-line text-xs px-6 py-2 text-grey">
+      <div className="grid grid-cols-3 justify-between top-line sm:mx-[-24px] mx-[-10px] text-xs px-6 py-2 text-grey">
         <div className="flex gap-4">
           <p onClick={handleExpand} className="cursor-pointer">
             Expand All
@@ -107,7 +111,7 @@ const EarningsGrid = ({ earnings, payouts }: Props) => {
         />
         <p></p>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -23,13 +23,15 @@ export const Search = ({ search }: any) => {
   const [address, setAddress] = useState<string>("");
 
   return (
-    <div className="container bg-surface mt-1 py-3 md:py-6 px-2 md:px-6">
-      <div className="flex flex-col sm:flex-row">
-        <div className="w-full relative">
-          {SearchInputIcon()}
-          {SearchInput()}
+    <div className="container">
+      <div className="bg-surface mt-1 py-3 md:py-6 px-2 md:px-6">
+        <div className="flex flex-col sm:flex-row">
+          <div className="w-full relative">
+            {SearchInputIcon()}
+            {SearchInput()}
+          </div>
+          <SearchButton address={address} search={search} />
         </div>
-        <SearchButton address={address} search={search} />
       </div>
     </div>
   );

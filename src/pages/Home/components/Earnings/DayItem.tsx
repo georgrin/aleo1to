@@ -21,8 +21,8 @@ const DayGridItem = ({
   date,
 }: Props) => (
   <div className="flex flex-col">
-    <div className="grid earnings-grid w-full text-white py-2 px-6 text-xs bg-default font-default">
-      <div className="flex items-center gap-1">
+    <div className="grid earnings-grid w-full text-white py-2 px-6 text-xs bg-default font-default min-w-min">
+      <div className="flex items-center gap-1 w-160px sticky left-0 z-1 bg-default border-r-[1px] border-white/[0.2] mr-4 my-[-8px] py-2">
         {isVisible ? (
           <IoIosArrowUp
             className="text-[#6C7683] cursor-pointer"
@@ -49,7 +49,7 @@ const DayGridItem = ({
         {summary.status}
       </p>
     </div>
-    <div className={`${isVisible ? "h-auto" : "h-0"} overflow-hidden`}>
+    <div className={`${isVisible ? "h-auto block" : "h-0 hidden"}`}>
       {items.map((item, index) => (
         <div key={index}>
           {isEarnings(item) ? (

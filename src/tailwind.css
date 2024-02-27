@@ -231,4 +231,9 @@
       110px 90px 90px;
     justify-content: space-between;
   }
+
+  .machine-grid {
+    grid-template-columns: repeat(11, minmax(100px, 1fr));
+    justify-content: space-between;
+  }
 }

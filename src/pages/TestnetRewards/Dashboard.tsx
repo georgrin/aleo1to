@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
 import IconNotFound from "../../components/icons/IconNoFound";
 import { Testnet2, Testnet3 } from "../../model/Testnet";
+import { useCookies } from "react-cookie";
 
 interface Props {
   title: JSX.Element;
@@ -10,6 +11,8 @@ interface Props {
   version: number;
   checkFunc: (search: string) => Promise<Testnet3 | Testnet2>;
   table: (address: string, data: Testnet3 | Testnet2) => JSX.Element;
+  saveAddress: (address: string) => void;
+  defaultAddress: string;
 }
 
 const Dashboard: React.FC<Props> = ({
@@ -19,21 +22,36 @@ const Dashboard: React.FC<Props> = ({
   table,
   checkFunc,
   version,
+  saveAddress,
+  defaultAddress,
 }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(defaultAddress);
   const [requestedAddress, setRequestedAddress] = useState("");
   const [data, setData] = useState<Testnet3 | Testnet2 | null>();
   const [submited, setSubmited] = useState(false);
   const [loading, setLoading] = useState(false);
+  const abortController = new AbortController();
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (defaultAddress) onSubmit();
+
+    return () => abortController.abort();
+  }, []);
+
+  const onSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
     clear();
     setRequestedAddress(search);
+    setSearch("");
+    if (!search) {
+      saveAddress("");
+      return;
+    }
     try {
       setLoading(true);
       const response = await checkFunc(search);
       setData(response);
+      saveAddress(search);
     } catch {
     } finally {
       setSubmited(true);

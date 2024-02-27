@@ -132,104 +132,87 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
   }, [chartRef, historyInfo, openedStat]);
 
   return (
-    <div className="container pt-[22px] pb-[19px]">
-      <div className="relative flex lg:justify-between flex-wrap gap-[15px] md:gap-[30px]">
-        {renderItem({
-          id: "miners_active",
-          title: "Miners",
-          value: formatNumber(info.miners.active),
-        })}
-        {renderItem({
-          id: "solutions_confirmed",
-          title: "Solutions Found",
-          value: formatNumber(info.solutions.confirmed),
-        })}
-        {renderItem({
-          id: "balance_pool",
-          title: (
-            <>
-              Pool Rewards
-              <div
-                id="pool-rewards"
-                className="hover:text-primary cursor-pointer fill-current ml-2 mt-[2px]"
-              >
-                <MdInfoOutline size={22} color="inherit" />
+    <div className="container">
+      <div className="pt-[22px] pb-[19px]">
+        <div className="relative flex justify-center flex-wrap gap-10 lg:gap-16">
+          {renderItem({
+            id: "current_epoch",
+            title: "Current Epoch",
+            value: (
+              <div className="flex items-end">
+                <span>{formatNumber(info.blockchain.epoch)}</span>{" "}
+                <span className="text-xs pl-2 mb-1 text-grey">
+                  ({info.blockchain.height % 360}
+                  /360)
+                </span>
               </div>
-              <Tooltip
-                className={`
-                                text-[rgba(247,163,40,1)] 
-                                bg-[rgba(30,32,35,1)]
-                                border
-                                border-[rgba(255,255,255,0.15)]
-                                rounded-[5px] transition-none p-[14px]
-                                opacity-100
-                            `}
-                variant="info"
-                noArrow
-                place="bottom"
-                anchorId="pool-rewards"
-                events={["click"]}
+            ),
+          })}
+          {renderItem({
+            id: "blocks_height",
+            title: "Block Height",
+            value: `${formatNumber(info.blockchain.height)}`,
+          })}
+          {renderItem({
+            id: "hashrate_network",
+            title: "Network Speed",
+            value: `${formatNumber(info.hashrate.network)} c/s`,
+          })}
+          {renderItem({
+            id: "miners_active",
+            title: "Machines",
+            value: formatNumber(info.miners.active),
+          })}
+          {renderItem({
+            id: "hashrate_total",
+            title: "Pool Speed",
+            value: `${formatNumber(info.hashrate.total)} c/s`,
+          })}
+          {renderItem({
+            id: "pool_fee",
+            title: "Pool Fee",
+            value: `${formatNumber(Number(info.pool_fee) * 100)} %`,
+          })}
+        </div>
+        {openedStat && (
+          <div className="rounded-[5px] border-[1px] border-[rgba(108,118,131,0.16)] pt-4 px-4 pb-[25px] mt-[23px]">
+            <div className="flex justify-between">
+              <div
+                className="flex items-center font-medium select-none cursor-pointer"
+                onClick={(e) => {
+                  setOpenedStat(null);
+                }}
               >
-                Testnet3 credits
-              </Tooltip>
-            </>
-          ),
-          value: formatNumber(Math.round(info.balance)),
-        })}
-        {renderItem({
-          id: "hashrate_pool_estimated",
-          title: "Pool Hashrate",
-          value: `${formatNumber(info.hashrate.pool.estimated)} c/s`,
-        })}
-        {renderItem({
-          id: "hashrate_solo_estimated",
-          title: "Solo Hashrate",
-          value: `${formatNumber(info.hashrate.solo.estimated)} c/s`,
-        })}
-        {renderItem({
-          id: "hashrate_network",
-          title: "Network Hashrate",
-          value: `${formatNumber(info.hashrate.network)} c/s`,
-        })}
-      </div>
-      {openedStat && (
-        <div className="rounded-[5px] border-[1px] border-[rgba(108,118,131,0.16)] pt-4 px-4 pb-[25px] mt-[23px]">
-          <div className="flex justify-between">
-            <div
-              className="flex items-center font-medium select-none cursor-pointer"
-              onClick={(e) => {
-                setOpenedStat(null);
-              }}
-            >
-              <div className="icon cancel-black-icon w-[20px] h-[20px] mr-2"></div>
-              Hide Graph
+                <div className="icon cancel-black-icon w-[20px] h-[20px] mr-2"></div>
+                Hide Graph
+              </div>
+              {(openedStat === "hashrate_pool_estimated" ||
+                openedStat === "hashrate_solo_estimated" ||
+                openedStat === "hashrate_network") && (
+                <div className="text-default font-medium">c/s</div>
+              )}
+              {openedStat === "balance_pool" && (
+                <div className="text-default font-medium">Credits</div>
+              )}
             </div>
-            {(openedStat === "hashrate_pool_estimated" ||
-              openedStat === "hashrate_solo_estimated" ||
-              openedStat === "hashrate_network") && (
-              <div className="text-default font-medium">c/s</div>
-            )}
-            {openedStat === "balance_pool" && (
-              <div className="text-default font-medium">Credits</div>
-            )}
-          </div>
-          <canvas
-            ref={chartRef}
-            className={`
+            <canvas
+              ref={chartRef}
+              className={`
                     mt-[20px]
                     w-full
                     h-[150px]
                     min-h-[150px]
                     max-h-[150px]
                 `}
-          />
-        </div>
-      )}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 
   function openStatGraph(id: string) {
-    setOpenedStat(id);
+    openedStat === id ? setOpenedStat(null) : setOpenedStat(id);
     !historyInfo && updateHistoryInfo();
   }
 
@@ -237,11 +220,11 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
     return (
       <div
         className={
-          "flex w-8 h-8 ml-2 rounded-[5px] items-center justify-center" +
+          "flex w-5 h-5 ml-2 rounded-[5px] items-center justify-center" +
           ` ${bg}`
         }
       >
-        <i className={"icon block w-[20px] h-[13px]" + ` ${icon}`}></i>
+        <i className={"icon block w-[12px] h-[8px]" + ` ${icon}`}></i>
       </div>
     );
   }
@@ -250,22 +233,24 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
     return (
       <div
         className={`
-                flex flex-col h-max items-start
-                w-full
+                flex flex-col h-max items-center justify-center 
                 md:w-max
             `}
       >
         <div className="flex items-center text-default text-md font-medium">
           {props.title}
+          {(props.id === "hashrate_total" ||
+            props.id === "hashrate_network") && (
+            <div
+              className="cursor-pointer mt-[-8px]"
+              onClick={(e) => openStatGraph(props.id)}
+            >
+              {openedStat === props.id ? lightningIcon : lightning2Icon}
+            </div>
+          )}
         </div>
         <div className="flex items-center text-[22px] font-medium mt-[6px]">
           {props.value}
-          <div
-            className="cursor-pointer"
-            onClick={(e) => openStatGraph(props.id)}
-          >
-            {openedStat === props.id ? lightningIcon : lightning2Icon}
-          </div>
         </div>
       </div>
     );

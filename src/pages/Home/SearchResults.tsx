@@ -10,6 +10,7 @@ import {
 import EarningsGrid from "./components/Earnings/EarningsGrid";
 import { numberFormat as n } from "../../helpers/numbers";
 import MachinesGrid from "./components/MachinesGrid";
+import { setExtra } from "@sentry/react";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -21,9 +22,9 @@ export const SearchResults = ({
 }: SearchResultsProps) => {
   return (
     <div className="container font-secondary relative overflow-hidden">
-      {searchResults.map((result) => (
+      {searchResults.map((result, index) => (
         <SearchResult
-          key={result.address}
+          key={result.address + index}
           searchResult={result}
           deleteSearchResult={deleteSearchResult}
         />
@@ -46,11 +47,13 @@ interface SearchResultProps {
   deleteSearchResult: Function;
 }
 function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
-  const { address, data } = searchResult;
-  const { earnings, general_info, payouts, machines } = data!!;
-
   const [showCopied, setShowCopied] = useState(false);
   const [isEarnings, setIsEarnings] = useState(true);
+
+  if (!searchResult.data) return null;
+
+  const { address, data } = searchResult;
+  const { earnings, general_info, payouts, machines } = data;
 
   return (
     <div className="px-3 pt-3 sm:px-6 sm:pt-6 group/search-result top-line bg-surface font-medium">

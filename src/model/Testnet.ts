@@ -15,6 +15,7 @@ export type Testnet2 = {
   snapshot_reward: 0;
   status: TestnetStatus;
   txid: string;
+  mainnet_address: string;
 };
 
 export enum TestnetStatus {

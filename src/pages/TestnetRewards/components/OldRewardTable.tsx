@@ -43,7 +43,7 @@ const OldRewardTable = ({ address, data }: Props) => {
 
   return (
     <>
-      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none text-xs">
+      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none text-xs text-ellipsis overflow-hidden">
         {address}
       </p>
       <div className="bg-default p-4 rounded rounded-t-none text-xs flex flex-col flex-1">
@@ -109,9 +109,27 @@ const OldRewardTable = ({ address, data }: Props) => {
               </div>
             </div>
           )}
+          {data.status === TestnetStatus.REQUESTED && (
+            <div>
+              <label
+                htmlFor="mainnet-address"
+                className="block text-sm mb-[8px] text-default"
+              >
+                Mainnet address
+              </label>
+              <input
+                type="text"
+                id="mainnet-address"
+                value={data.mainnet_address}
+                disabled
+                placeholder="Mainnet address"
+                className="flex-1 px-4 py-4 w-full leading-[18px] rounded outline-none bg-default border-primary"
+              />
+            </div>
+          )}
           <div className="mt-auto">
             {data.status === TestnetStatus.REQUESTED && (
-              <div className="text-xs">
+              <div className="text-xs mt-3">
                 <div className="border border-primary rounded flex justify-between items-center w-full py-[10px] pr-[6px] px-4">
                   <div className="flex items-center justify-center w-full">
                     <span className="mr-1">
@@ -151,7 +169,9 @@ const OldRewardTable = ({ address, data }: Props) => {
               </div>
             )}
             {data.status === TestnetStatus.SENT && (
-              <SuccessSign txid={data.txid} />
+              <div className="mt-2">
+                <SuccessSign txid={data.txid} />
+              </div>
             )}
           </div>
         </form>
