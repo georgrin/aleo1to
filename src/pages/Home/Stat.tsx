@@ -220,11 +220,11 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
     return (
       <div
         className={
-          "flex w-6 h-6 ml-2 rounded-[5px] items-center justify-center" +
+          "flex w-5 h-5 ml-2 rounded-[5px] items-center justify-center" +
           ` ${bg}`
         }
       >
-        <i className={"icon block w-[16px] h-[10px]" + ` ${icon}`}></i>
+        <i className={"icon block w-[12px] h-[8px]" + ` ${icon}`}></i>
       </div>
     );
   }
