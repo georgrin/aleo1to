@@ -134,7 +134,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
   return (
     <div className="container">
       <div className="pt-[22px] pb-[19px]">
-        <div className="relative flex lg:justify-between flex-wrap gap-[15px] md:gap-[30px]">
+        <div className="relative flex justify-center flex-wrap gap-10 lg:gap-16">
           {renderItem({
             id: "current_epoch",
             title: "Current Epoch",
@@ -220,11 +220,11 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
     return (
       <div
         className={
-          "flex w-8 h-8 ml-2 rounded-[5px] items-center justify-center" +
+          "flex w-6 h-6 ml-2 rounded-[5px] items-center justify-center" +
           ` ${bg}`
         }
       >
-        <i className={"icon block w-[20px] h-[13px]" + ` ${icon}`}></i>
+        <i className={"icon block w-[16px] h-[10px]" + ` ${icon}`}></i>
       </div>
     );
   }
@@ -233,24 +233,24 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
     return (
       <div
         className={`
-                flex flex-col h-max items-start
+                flex flex-col h-max items-center justify-center 
                 md:w-max
             `}
       >
         <div className="flex items-center text-default text-md font-medium">
           {props.title}
-        </div>
-        <div className="flex items-center text-[22px] font-medium mt-[6px]">
-          {props.value}
           {(props.id === "hashrate_total" ||
             props.id === "hashrate_network") && (
             <div
-              className="cursor-pointer"
+              className="cursor-pointer mt-[-8px]"
               onClick={(e) => openStatGraph(props.id)}
             >
               {openedStat === props.id ? lightningIcon : lightning2Icon}
             </div>
           )}
+        </div>
+        <div className="flex items-center text-[22px] font-medium mt-[6px]">
+          {props.value}
         </div>
       </div>
     );
