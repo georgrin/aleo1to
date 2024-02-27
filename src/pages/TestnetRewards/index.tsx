@@ -23,7 +23,7 @@ const TestnetRewards: React.FC = () => {
       <div className="container pt-3 grid lg:grid-cols-2 grid-cols-1 gap-5 fit">
         <Dashboard
           title={
-            <div className="flex text-[32px] leading-[35px] font-orbiton">
+            <div className="flex text-[32px] leading-[35px] font-orbiton flex-wrap">
               <h2>Testnet 3&nbsp;</h2>
               <h2 className="gradient-main">Phase 2</h2>
             </div>

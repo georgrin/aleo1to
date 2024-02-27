@@ -53,7 +53,7 @@ const RewardRow = ({
 const NewPhaseRewardTable = ({ address, data }: Props) => {
   return (
     <>
-      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none text-xs leading-[15px]">
+      <p className="p-4 bottom-line mt-[8px] bg-default rounded rounded-b-none text-xs leading-[15px] text-ellipsis overflow-hidden">
         {address}
       </p>
       <div className="bg-default p-4 rounded rounded-t-none text-xs flex flex-col flex-1 leading-[15px]">

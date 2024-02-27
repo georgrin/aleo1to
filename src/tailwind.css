@@ -230,6 +230,10 @@
       160px 80px 100px 110px 130px 110px 90px 130px
       110px 90px 90px;
     justify-content: space-between;
-    /* flex-shrink: 0; */
+  }
+
+  .machine-grid {
+    grid-template-columns: repeat(11, minmax(100px, 1fr));
+    justify-content: space-between;
   }
 }

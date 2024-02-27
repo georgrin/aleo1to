@@ -42,6 +42,7 @@ const Dashboard: React.FC<Props> = ({
     e?.preventDefault();
     clear();
     setRequestedAddress(search);
+    setSearch("");
     if (!search) {
       saveAddress("");
       return;

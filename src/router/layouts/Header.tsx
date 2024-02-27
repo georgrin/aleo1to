@@ -130,6 +130,13 @@ export const Header = () => {
                   </a>
                 );
               })}
+              <a
+                className="block text-sm font-orbiton font-bold mr-[16px] last:mr-0 hover:text-primary transition-colors gradient-main"
+                href={Route.REWARDS}
+                onClick={(e) => navigate(e, Route.REWARDS)}
+              >
+                Testnet Rewards
+              </a>
             </div>
           </div>
         </div>

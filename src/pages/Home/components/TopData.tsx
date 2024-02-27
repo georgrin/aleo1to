@@ -30,7 +30,7 @@ export const EarningsMinersToggle = ({
 };
 
 const DataContainer = ({ children }: { children: JSX.Element }) => (
-  <div className="flex px-4 py-3 rounded-[4px] border-primary justify-between gap-x-14">
+  <div className="flex px-4 py-3 rounded-[4px] border-primary justify-between md:gap-x-14 gap-x-10">
     {children}
   </div>
 );
@@ -65,7 +65,7 @@ export const EarningsData = ({
   autoPayout,
 }: EarningsDataProps) => {
   return (
-    <div className="flex gap-x-[10px] mt-4">
+    <div className="flex gap-[10px] mt-4 flex-wrap">
       <div className="relative">
         <p className="text-xs text-grey px-1 absolute top-[-8px] left-[13px] bg-surface">
           Alltime
@@ -102,7 +102,7 @@ export const MachinesData = ({
   reported,
 }: MachinesDataProps) => {
   return (
-    <div className="flex gap-x-[10px] mt-4">
+    <div className="flex gap-x-[10px] mt-4 flex-wrap">
       <DataContainer>
         <>
           <DataItem name="Count" value={count} />
