@@ -200,8 +200,9 @@ const useSearch = () => {
                 (item) => item.address === result.address
               );
               const newResult = { ...results[index], data };
+              results[index] = { ...newResult };
 
-              return [...results, (results[index] = { ...newResult })];
+              return [...results];
             }
           });
         })

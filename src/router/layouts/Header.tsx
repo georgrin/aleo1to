@@ -13,10 +13,6 @@ export const Header = () => {
       value: "https://docs.aleo1.to/rewards/pool-rewards",
     },
     {
-      label: "Solo",
-      value: "https://docs.aleo1.to/rewards/solo-rewards",
-    },
-    {
       label: "Team",
       value: "https://docs.aleo1.to/about/team",
     },
