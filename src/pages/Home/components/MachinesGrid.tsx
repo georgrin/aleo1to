@@ -13,7 +13,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
 
   return (
     <>
-      <div className="font-default sm:mx-[-24px] mx-[-10px] mt-[20px] overflow-scroll">
+      <div className="font-default sm:mx-[-24px] mx-[-10px] mt-[20px] overflow-x-auto overflow-y-hidden">
         <div className="grid machine-grid items-center top-line text-grey py-2 px-6 text-xs min-w-min">
           <p>IP</p>
           <p className="col-span-2">Hostname</p>
