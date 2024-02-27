@@ -195,8 +195,14 @@ const useSearch = () => {
               results.findIndex((item) => item.address === result.address) < 0
             ) {
               return [result, ...results];
+            } else {
+              const index = results.findIndex(
+                (item) => item.address === result.address
+              );
+              const newResult = { ...results[index], data: data };
+
+              return [...results, (results[index] = newResult)];
             }
-            return [...results];
           });
         })
         .catch((error) => {
