@@ -141,7 +141,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
             value: (
               <div className="flex items-end">
                 <span>{formatNumber(info.blockchain.epoch)}</span>{" "}
-                <span className="text-xs pl-2 mb-1">
+                <span className="text-xs pl-2 mb-1 text-grey">
                   ({info.blockchain.height % 360}
                   /360)
                 </span>
@@ -212,7 +212,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
   );
 
   function openStatGraph(id: string) {
-    setOpenedStat(id);
+    openedStat === id ? setOpenedStat(null) : setOpenedStat(id);
     !historyInfo && updateHistoryInfo();
   }
 

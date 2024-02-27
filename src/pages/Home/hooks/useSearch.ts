@@ -6,7 +6,8 @@ import { SearchResult } from "../../../model";
 import { useSnackbar } from "../../../router/layouts/SnackbarProvider";
 import shortenAddress from "../../../helpers/shortenAddress";
 
-const UPDATE_INTERVAL = 1000 * 60 * 5; // 5 minutes;
+const UPDATE_INTERVAL = 1000 * 10;
+const SEARCH_UPDATE_INTERVAL = 1000 * 60;
 
 const useSearch = () => {
   const [info, setInfo] = useState<any>(null);
@@ -30,22 +31,33 @@ const useSearch = () => {
   );
 
   useEffect(() => {
+    const searchUpdate = () => {
+      while (searchAddresses.indexOf("") >= 0) {
+        const addressIndex = searchAddresses.indexOf("");
+        if (addressIndex >= 0) {
+          searchAddresses.splice(addressIndex, 1);
+          saveSearchAddresses();
+        }
+      }
+      searchAddresses.forEach(_searchAddress);
+    };
+
     updateInfo();
+    searchUpdate();
+
     const interval = setInterval(() => {
       updateInfo();
       updateHistoryInfo();
     }, UPDATE_INTERVAL);
 
-    while (searchAddresses.indexOf("") >= 0) {
-      const addressIndex = searchAddresses.indexOf("");
-      if (addressIndex >= 0) {
-        searchAddresses.splice(addressIndex, 1);
-        saveSearchAddresses();
-      }
-    }
-    searchAddresses.forEach(_searchAddress);
+    const searchInteval = setInterval(() => {
+      searchUpdate();
+    }, SEARCH_UPDATE_INTERVAL);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(searchInteval);
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -178,17 +190,12 @@ const useSearch = () => {
             data: data,
           };
 
-          if (!result.interval) {
-            setJoinPoolIsDown(true);
-            setJoinPoolCommand(null);
-            result.interval = setInterval(updateSearchResult, UPDATE_INTERVAL);
-          }
-
           setSearchResults((results) => {
-            if (results.indexOf(result) < 0) {
+            if (
+              results.findIndex((item) => item.address === result.address) < 0
+            ) {
               return [result, ...results];
             }
-
             return [...results];
           });
         })
@@ -231,8 +238,6 @@ const useSearch = () => {
       searchAddresses.splice(addressIndex, 1);
       saveSearchAddresses();
     }
-
-    searchResult.interval && clearInterval(searchResult.interval);
 
     setSearchResults((results) => {
       const index = results.indexOf(searchResult);

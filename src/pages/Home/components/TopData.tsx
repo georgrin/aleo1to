@@ -8,10 +8,10 @@ export const EarningsMinersToggle = ({
   setIsEarnings,
 }: EarningsMinersToggleProps) => {
   const activeButtonStyles = "rounded-md px-4 py-2 bg-[#0085FF] text-white";
-  const inactiveButtonStyles = "px-4 py-2 text-grey";
+  const inactiveButtonStyles = "px-4 py-2 text-grey bg-white/[0.1] rounded-md";
 
   return (
-    <div className="mt-4 flex text-sm ">
+    <div className="mt-4 flex text-sm gap-2">
       <button
         onClick={() => setIsEarnings(true)}
         className={isEarnings ? activeButtonStyles : inactiveButtonStyles}
