@@ -199,9 +199,9 @@ const useSearch = () => {
               const index = results.findIndex(
                 (item) => item.address === result.address
               );
-              const newResult = { ...results[index], data: data };
+              const newResult = { ...results[index], data };
 
-              return [...results, (results[index] = newResult)];
+              return [...results, (results[index] = { ...newResult })];
             }
           });
         })
