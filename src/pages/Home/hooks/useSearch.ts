@@ -8,6 +8,7 @@ import shortenAddress from "../../../helpers/shortenAddress";
 
 const UPDATE_INTERVAL = 1000 * 10;
 const SEARCH_UPDATE_INTERVAL = 1000 * 60;
+const HISTORY_UPDATE_INTERVAL = 1000 * 60 * 5;
 
 const useSearch = () => {
   const [info, setInfo] = useState<any>(null);
@@ -47,8 +48,11 @@ const useSearch = () => {
 
     const interval = setInterval(() => {
       updateInfo();
-      updateHistoryInfo();
     }, UPDATE_INTERVAL);
+
+    const historyInterval = setInterval(() => {
+      updateHistoryInfo();
+    }, HISTORY_UPDATE_INTERVAL);
 
     const searchInteval = setInterval(() => {
       searchUpdate();
@@ -57,6 +61,7 @@ const useSearch = () => {
     return () => {
       clearInterval(searchInteval);
       clearInterval(interval);
+      clearInterval(historyInterval);
     };
   }, []);
 
