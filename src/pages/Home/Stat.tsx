@@ -242,7 +242,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           {(props.id === "hashrate_total" ||
             props.id === "hashrate_network") && (
             <div
-              className="cursor-pointer mt-[-8px]"
+              className="cursor-pointer"
               onClick={(e) => openStatGraph(props.id)}
             >
               {openedStat === props.id ? lightningIcon : lightning2Icon}
