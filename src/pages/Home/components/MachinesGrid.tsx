@@ -64,8 +64,8 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
             </div>
             <p>{params.cuda_version}</p>
             <p>{params.version}</p>
-            <p>{formatNumber(hashrate)}</p>
             <p>{formatNumber(hashrate_estimated)}</p>
+            <p>{formatNumber(hashrate)}</p>
           </div>
         ))}
       </div>
