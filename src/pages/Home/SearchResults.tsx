@@ -2,11 +2,7 @@ import { MdClose } from "react-icons/md";
 import * as model from "../../model/SearchResult";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
-import {
-  EarningsData,
-  EarningsMinersToggle,
-  MachinesData,
-} from "./components/TopData";
+import { EarningsData, EarningsMinersToggle, MachinesData } from "./components/TopData";
 import EarningsGrid from "./components/Earnings/EarningsGrid";
 import { numberFormat as n } from "../../helpers/numbers";
 import MachinesGrid from "./components/MachinesGrid";
@@ -16,18 +12,11 @@ interface SearchResultsProps {
   searchResults: model.SearchResult[];
   deleteSearchResult: Function;
 }
-export const SearchResults = ({
-  searchResults,
-  deleteSearchResult,
-}: SearchResultsProps) => {
+export const SearchResults = ({ searchResults, deleteSearchResult }: SearchResultsProps) => {
   return (
     <div className="container font-secondary relative overflow-hidden">
       {searchResults.map((result, index) => (
-        <SearchResult
-          key={result.address + index}
-          searchResult={result}
-          deleteSearchResult={deleteSearchResult}
-        />
+        <SearchResult key={result.address + index} searchResult={result} deleteSearchResult={deleteSearchResult} />
       ))}
     </div>
   );
@@ -65,10 +54,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         {AddressCloseIcon()}
       </div>
 
-      <EarningsMinersToggle
-        isEarnings={isEarnings}
-        setIsEarnings={setIsEarnings}
-      />
+      <EarningsMinersToggle isEarnings={isEarnings} setIsEarnings={setIsEarnings} />
       {isEarnings ? (
         <>
           <EarningsData
@@ -83,7 +69,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
       ) : (
         <>
           <MachinesData
-            count={machines.general_info.total}
+            count={machines.general_info.active}
             estimated={n(machines.general_info.total_estimated_hashrate)}
             reported={n(machines.general_info.total_reported_hashrate)}
           />
@@ -97,9 +83,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
     return (
       <div className="font-medium mb-[-8px]">
         <span className="hidden md:block">{address}</span>
-        <span className="md:hidden">
-          {address.slice(0, 10) + "..." + address.slice(-10)}
-        </span>
+        <span className="md:hidden">{address.slice(0, 10) + "..." + address.slice(-10)}</span>
       </div>
     );
   }
@@ -124,10 +108,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         <Tooltip
           {...tooltipProps}
           isOpen={showCopied}
-          className={
-            tooltipProps.className +
-            "absolute top-[30px] left-1/2 translate-x-[-50%]"
-          }
+          className={tooltipProps.className + "absolute top-[30px] left-1/2 translate-x-[-50%]"}
         >
           Copied!
         </Tooltip>
@@ -137,15 +118,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
 
   function AddressCloseIcon() {
     return (
-      <div
-        className="cursor-pointer"
-        onClick={() => deleteSearchResult(searchResult)}
-      >
-        <MdClose
-          color=""
-          className="text-default hover:text-[rgb(255,66,90)]"
-          size={25}
-        />
+      <div className="cursor-pointer" onClick={() => deleteSearchResult(searchResult)}>
+        <MdClose color="" className="text-default hover:text-[rgb(255,66,90)]" size={25} />
       </div>
     );
   }
