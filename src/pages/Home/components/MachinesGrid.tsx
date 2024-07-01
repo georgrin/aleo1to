@@ -53,14 +53,16 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   {hardware.cpu?.[0].cores > 1 ? "cores" : "core"})
                 </span>
               </div>
-              <div className="pt-[2px] flex">
-                <span className="text-grey font-extrabold flex">
-                  <IconGPU />
-                  &nbsp;GPU:&nbsp;
-                </span>
-                {hardware.gpu.length}&nbsp;x&nbsp;
-                {hardware.gpu?.[0]?.model}
-              </div>
+              {hardware.gpu.length > 0 && (
+                <div className="pt-[2px] flex">
+                  <span className="text-grey font-extrabold flex">
+                    <IconGPU />
+                    &nbsp;GPU:&nbsp;
+                  </span>
+                  {hardware.gpu.length}&nbsp;x&nbsp;
+                  {hardware.gpu?.[0]?.model}
+                </div>
+              )}
             </div>
             <p>{params.cuda_version}</p>
             <p>{params.version}</p>
