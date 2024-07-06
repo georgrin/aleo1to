@@ -71,15 +71,17 @@ export interface BalanceOne {
 }
 
 export interface BalancePhase2 {
-  in_pool: {
-    total: number;
-    change_1h: number;
-    change_24h: number;
-  };
-  in_pool_incentivize: {
-    total: number;
-    change_1h: number;
-    change_24h: number;
+  balance: {
+    in_pool: {
+      total: number;
+      change_1h: number;
+      change_24h: number;
+    };
+    in_pool_incentivize: {
+      total: number;
+      change_1h: number;
+      change_24h: number;
+    };
   };
 }
 
@@ -89,6 +91,7 @@ export async function searchAddress(address: string) {
     axios.get<EarningsResponse>(`/api/earnings/${lowerAddress}`),
     axios.get<Array<Payouts>>(`/api/payouts/${lowerAddress}`),
     axios.get<MachinesResponse>(`/api/machines/${lowerAddress}`),
+    axios.get<BalancePhase2>(`/api/wallets/${lowerAddress}`),
   ]).then((response) => {
     response.forEach((res) => {
       if (typeof res.data === "string") {
@@ -99,6 +102,7 @@ export async function searchAddress(address: string) {
       ...response[0].data,
       payouts: response[1].data,
       machines: { ...response[2].data },
+      balance: { ...response[3].data },
     };
   });
 }
