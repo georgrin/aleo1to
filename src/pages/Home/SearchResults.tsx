@@ -42,7 +42,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
   if (!searchResult.data) return null;
 
   const { address, data } = searchResult;
-  const { earnings, general_info, payouts, machines } = data;
+  const { earnings, general_info, payouts, machines, balance } = data;
 
   return (
     <div className="px-3 pt-3 sm:px-6 sm:pt-6 group/search-result top-line bg-surface font-medium">
@@ -63,6 +63,7 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
             fees={general_info.fee_total}
             balance={general_info.balance}
             autoPayout={general_info.auto_payout}
+            incentivize={balance.balance.in_pool_incentivize.total}
           />
           <EarningsGrid earnings={earnings} payouts={payouts} />
         </>

@@ -1,4 +1,4 @@
-import { MachinesResponse } from "../api";
+import { BalancePhase2, MachinesResponse } from "../api";
 
 export interface SearchResult {
   address: string;
@@ -13,6 +13,7 @@ export interface SearchResult {
     };
     machines: MachinesResponse;
     payouts: Payouts[];
+    balance: BalancePhase2;
   } | null;
   interval?: any;
 }
