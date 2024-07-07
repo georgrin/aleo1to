@@ -1,10 +1,6 @@
 import { useWallet } from "@demox-labs/aleo-wallet-adapter-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  DecryptPermission,
-  WalletAdapterNetwork,
-  WalletNotConnectedError,
-} from "@demox-labs/aleo-wallet-adapter-base";
+import { DecryptPermission, WalletAdapterNetwork, WalletNotConnectedError } from "@demox-labs/aleo-wallet-adapter-base";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletSignStatus } from "../../../model";
 import { getChallenge } from "../../../api/testnet";
@@ -30,30 +26,18 @@ export const errorMsgMapping = (code: number) => {
 };
 
 export const useWalletSign = ({ address, action }: Props) => {
-  const {
-    publicKey,
-    wallet,
-    wallets,
-    select,
-    connecting,
-    connected,
-    connect,
-    disconnect,
-  } = useWallet();
+  const { publicKey, wallet, wallets, select, connecting, connected, connect, disconnect } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const leoWallet = wallets.find((item) => item.adapter.name === "Leo Wallet");
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleAccountChange = useCallback(
-    async ({ publicKey }: { publicKey: string }) => {
-      if (publicKey !== leoWallet?.adapter.publicKey) {
-        await disconnect();
-        connectWallet();
-      }
-    },
-    []
-  );
+  const handleAccountChange = useCallback(async ({ publicKey }: { publicKey: string }) => {
+    if (publicKey !== leoWallet?.adapter.publicKey) {
+      await disconnect();
+      connectWallet();
+    }
+  }, []);
 
   useEffect(() => {
     // @ts-ignore
@@ -74,9 +58,7 @@ export const useWalletSign = ({ address, action }: Props) => {
 
       setSignStatus(WalletSignStatus.PENDING);
 
-      const signatureBytes = await (
-        wallet?.adapter as LeoWalletAdapter
-      ).signMessage(bytes);
+      const signatureBytes = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytes);
 
       const signature = new TextDecoder().decode(signatureBytes);
 
@@ -90,11 +72,7 @@ export const useWalletSign = ({ address, action }: Props) => {
   };
 
   const connectWallet = () => {
-    connect(
-      DecryptPermission.NoDecrypt,
-      WalletAdapterNetwork.Testnet,
-      []
-    ).catch((error) => {
+    connect(DecryptPermission.NoDecrypt, WalletAdapterNetwork.TestnetBeta, []).catch((error) => {
       console.log("connectWallet error", { error: error });
     });
   };

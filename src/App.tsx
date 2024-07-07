@@ -7,10 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import "./index.scss";
 import { LeoWalletAdapter } from "@demox-labs/aleo-wallet-adapter-leo";
 import { WalletProvider } from "@demox-labs/aleo-wallet-adapter-react";
-import {
-  DecryptPermission,
-  WalletAdapterNetwork,
-} from "@demox-labs/aleo-wallet-adapter-base";
+import { DecryptPermission, WalletAdapterNetwork } from "@demox-labs/aleo-wallet-adapter-base";
 import { WalletModalProvider } from "@demox-labs/aleo-wallet-adapter-reactui";
 import { Header } from "./router/layouts/Header";
 import { Footer } from "./router/layouts/Footer";
@@ -50,7 +47,7 @@ function App() {
       <WalletProvider
         wallets={wallets}
         decryptPermission={DecryptPermission.UponRequest}
-        network={WalletAdapterNetwork.Testnet}
+        network={WalletAdapterNetwork.TestnetBeta}
       >
         <WalletModalProvider>
           <SnackbarProvider>{renderComponent()}</SnackbarProvider>
