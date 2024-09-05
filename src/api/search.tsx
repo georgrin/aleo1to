@@ -77,11 +77,6 @@ export interface BalancePhase2 {
       change_1h: number;
       change_24h: number;
     };
-    in_pool_incentivize: {
-      total: number;
-      change_1h: number;
-      change_24h: number;
-    };
   };
 }
 
