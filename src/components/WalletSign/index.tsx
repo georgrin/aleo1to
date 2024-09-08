@@ -40,7 +40,18 @@ const WalletSign = ({ dataToSign }: Prop) => {
   });
 
   const Content = () => {
-    if (status === WalletSignStatus.SUCCESS) return <RequestedSign />;
+    if (status === WalletSignStatus.SUCCESS) {
+      if (type === "combined") {
+        return (
+          <>
+            <RequestedSign text="Testnet 3 requested" />
+            <RequestedSign text="Testnet 4 requested" />
+          </>
+        );
+      } else {
+        return <RequestedSign />;
+      }
+    }
 
     if (status === WalletSignStatus.PENDING) return <PendingSign publicKey={publicKey as string} />;
 
