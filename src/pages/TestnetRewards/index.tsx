@@ -30,12 +30,14 @@ const TestnetRewards: React.FC = () => {
             </div>
           }
           description={
-            <div className="text-xs my-[8px] min-h-[100px]">
+            <div className="text-xs my-[8px] min-h-[128px]">
               <p>
                 Testnet 3 Phase 2 ran from <b>December 2, 2022, at 00:00 UTC until January 31, 2023, at 23:59 UTC</b>.
                 If you participated during this time, your rewards are now available for claim.
                 <br />
+                <br />
                 Testnet 4 ran from <b>July 1, 2024, at 16:00 UTC until July 15, 2024, at 16:00 UTC</b>.
+                <br />
                 <br />
                 We also promised to distribute 10% of the rewards allocated for the validator phase among Testnet 3 pool
                 participants. Having successfully reached this phase, your bonus is now included in the reward
@@ -53,7 +55,7 @@ const TestnetRewards: React.FC = () => {
         <Dashboard
           title={<h2 className="text-[32px] leading-[35px] font-orbiton">Testnet 2</h2>}
           description={
-            <div className="text-xs my-[8px] min-h-[100px]">
+            <div className="text-xs my-[8px] min-h-[128px]">
               <p>
                 <b>
                   Testnet 2 lasted from December 6, 2021, starting at 00:00 UTC, to February 15, 2022, ending at 23:59

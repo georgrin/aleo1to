@@ -53,13 +53,14 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
   const changeOpenedDropdown = (index: number) => {
     if (columnsAvailable < 3) return;
 
-    const newArr = openedIndex.includes(index)
-      ? openedIndex.filter((oIndex) => oIndex !== index)
-      : openedIndex.length < 2
-      ? [...openedIndex, index]
-      : [index];
-
-    setOpenedIndex(newArr);
+    if (openedIndex.includes(index)) {
+      setOpenedIndex(openedIndex.filter((oIndex) => oIndex !== index));
+    } else if (openedIndex.length === 2) {
+      setOpenedIndex([]);
+      setTimeout(() => setOpenedIndex([index]), 300);
+    } else {
+      setOpenedIndex([...openedIndex, index]);
+    }
   };
 
   useEffect(() => {
@@ -207,7 +208,7 @@ const DropdownItem = ({
   if (data === null) return null;
 
   return (
-    <div className={`group ${columnsAvailable > 2 && "cursor-pointer"} relative  w-full`} onClick={setOpenedIndex}>
+    <div className={`group ${columnsAvailable > 2 && "cursor-pointer"} relative w-full mb-4`} onClick={setOpenedIndex}>
       <div className="flex justify-between w-full items-center">
         <p className="mb-[8px]">{title}</p>
         {columnsAvailable > 2 && (
@@ -220,7 +221,7 @@ const DropdownItem = ({
         )}
       </div>
       <div
-        className={`transition-[max-height_,_margin] duration-300 overflow-hidden ${
+        className={`transition-[max-height_,_margin] duration-300 overflow-hidden pb-1 ${
           isOpen ? "max-h-[500px]" : "max-h-[0px]"
         }`}
       >
