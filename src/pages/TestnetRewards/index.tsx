@@ -2,8 +2,8 @@ import React from "react";
 import Dashboard from "./Dashboard";
 import NewPhaseRewardTable from "./components/NewRewardTable";
 import OldRewardTable from "./components/OldRewardTable";
-import { testnet2Check, testnet3Check } from "../../api/testnet";
-import { Testnet2, Testnet3 } from "../../model/Testnet";
+import { testnet2Check, combinedCheck } from "../../api/testnet";
+import { Testnet2, TestnetCombined } from "../../model/Testnet";
 import { useCookies } from "react-cookie";
 
 enum Testnet {
@@ -25,31 +25,28 @@ const TestnetRewards: React.FC = () => {
           title={
             <div className="flex text-[32px] leading-[35px] font-orbiton flex-wrap">
               <h2>Testnet 3&nbsp;</h2>
-              <h2 className="gradient-main">Phase 2</h2>
+              <h2 className="gradient-main">Phase 2&nbsp;</h2>
+              <h2> & Testnet 4</h2>
             </div>
           }
           description={
             <div className="text-xs my-[8px]">
               <p>
-                The incentivized period of&nbsp;
-                <b>
-                  Testnet 3 Phase 2 was from December 2, 2022, starting at 00:00 UTC, to January 31, 2023, ending at
-                  23:59 UTC.
-                </b>
-                &nbsp;If you participated in our pool during this timeframe, your rewards are available for claim.
-              </p>
-              <br />
-              <p>
-                Additionally, at the start of the testnet, we promised that if we progressed to the validator phase, we
-                would distribute 10% of the reward allocated for this phase proportionally among the pool participants.
-                Having successfully reached this phase, you can now see your bonus included in the reward calculations.
+                Testnet 3 Phase 2 ran from <b>December 2, 2022, at 00:00 UTC until January 31, 2023, at 23:59 UTC</b>.
+                If you participated during this time, your rewards are now available for claim.
+                <br />
+                Testnet 4 ran from <b>July 1, 2024, at 16:00 UTC until July 15, 2024, at 16:00 UTC</b>.
+                <br />
+                We also promised to distribute 10% of the rewards allocated for the validator phase among Testnet 3 pool
+                participants. Having successfully reached this phase, your bonus is now included in the reward
+                calculations.
               </p>
             </div>
           }
           style="gradient-bg bg-cover"
-          table={(address, data) => <NewPhaseRewardTable address={address} data={data as Testnet3} />}
-          version={3}
-          checkFunc={testnet3Check}
+          table={(address, data) => <NewPhaseRewardTable address={address} data={data as TestnetCombined} />}
+          version={"3 & 4"}
+          checkFunc={(address: string) => combinedCheck(address)}
           defaultAddress={cookies[Testnet.Testnet3]}
           saveAddress={(address) => saveTestnetSearch(Testnet.Testnet3, address)}
         />

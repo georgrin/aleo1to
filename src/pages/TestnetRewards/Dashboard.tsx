@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { IconDatabase } from "../../components/icons/IconDatabase";
 import IconNotFound from "../../components/icons/IconNoFound";
-import { Testnet2, Testnet3 } from "../../model/Testnet";
-import { useCookies } from "react-cookie";
+import { Testnet2, TestnetCombined } from "../../model/Testnet";
 
 interface Props {
   title: JSX.Element;
   description: JSX.Element;
   style?: string;
-  version: number;
-  checkFunc: (search: string) => Promise<Testnet3 | Testnet2>;
-  table: (address: string, data: Testnet3 | Testnet2) => JSX.Element;
+  version: string | number;
+  checkFunc: (search: string) => Promise<Testnet2 | TestnetCombined>;
+  table: (address: string, data: TestnetCombined | Testnet2) => JSX.Element;
   saveAddress: (address: string) => void;
   defaultAddress: string;
 }
@@ -27,7 +26,7 @@ const Dashboard: React.FC<Props> = ({
 }) => {
   const [search, setSearch] = useState(defaultAddress);
   const [requestedAddress, setRequestedAddress] = useState("");
-  const [data, setData] = useState<Testnet3 | Testnet2 | null>();
+  const [data, setData] = useState<TestnetCombined | Testnet2 | null>();
   const [submited, setSubmited] = useState(false);
   const [loading, setLoading] = useState(false);
   const abortController = new AbortController();
@@ -73,16 +72,10 @@ const Dashboard: React.FC<Props> = ({
       {title}
       <div>{description}</div>
       <div className="pt-2">
-        <label
-          htmlFor="testnet-address"
-          className="block text-sm mb-[8px] text-default"
-        >
+        <label htmlFor="testnet-address" className="block text-sm mb-[8px] text-default">
           Testnet {version} address
         </label>
-        <form
-          className="flex items-center rounded space-x-2 text-xs"
-          onSubmit={onSubmit}
-        >
+        <form className="flex items-center rounded space-x-2 text-xs" onSubmit={onSubmit}>
           <input
             type="text"
             id="testnet-address"
@@ -91,9 +84,7 @@ const Dashboard: React.FC<Props> = ({
             placeholder={`Testnet ${version} address`}
             className="flex-1 px-4 py-2 leading-[18px] rounded outline-none bg-default border-primary"
           />
-          <button className="px-4 py-2.5 rounded bg-primary-2 hover:shadow-primary font-bold">
-            Check
-          </button>
+          <button className="px-4 py-2.5 rounded bg-primary-2 hover:shadow-primary font-bold">Check</button>
         </form>
       </div>
 

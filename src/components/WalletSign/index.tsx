@@ -14,7 +14,8 @@ import RequestedSign from "./RequestedSign";
 interface Prop {
   dataToSign: {
     address: string;
-    action: (address: string, signature: string) => void;
+    type: "testnet3" | "testnet4" | "combined";
+    claimText: string;
   };
 }
 
@@ -32,6 +33,8 @@ const WalletSign = ({ dataToSign }: Prop) => {
     publicKey,
     disconnectedWalletMsg,
     errorMsg,
+    type,
+    claimText,
   } = useWalletSign({
     ...dataToSign,
   });
@@ -39,32 +42,23 @@ const WalletSign = ({ dataToSign }: Prop) => {
   const Content = () => {
     if (status === WalletSignStatus.SUCCESS) return <RequestedSign />;
 
-    if (status === WalletSignStatus.PENDING)
-      return <PendingSign publicKey={publicKey as string} />;
+    if (status === WalletSignStatus.PENDING) return <PendingSign publicKey={publicKey as string} />;
 
     if (status === WalletSignStatus.ERROR)
-      return (
-        <ErrorSign
-          resetStatus={resetStatus}
-          publicKey={publicKey as string}
-          errorMsg={errorMsg}
-        />
-      );
+      return <ErrorSign resetStatus={resetStatus} publicKey={publicKey as string} errorMsg={errorMsg} />;
 
     if (leoWallet && leoWallet.readyState === WalletReadyState.Installed) {
       if (connected) {
         return addressMatch ? (
           <Connected
+            claimText={claimText}
             sign={sign}
             signStatus={status}
             publicKey={publicKey as string}
             disconnect={disconnect}
           />
         ) : (
-          <WalletDoesnMatch
-            publicKey={publicKey as string}
-            disconnect={disconnect}
-          />
+          <WalletDoesnMatch publicKey={publicKey as string} disconnect={disconnect} />
         );
       } else {
         return (
