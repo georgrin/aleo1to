@@ -46,10 +46,10 @@ interface EarningsDataProps {
   fees: number;
   balance: number;
   autoPayout: string;
-  incentivize: number;
+  // incentivize: number;
 }
 
-export const EarningsData = ({ earnings, payout, fees, balance, autoPayout, incentivize }: EarningsDataProps) => {
+export const EarningsData = ({ earnings, payout, fees, balance, autoPayout }: EarningsDataProps) => {
   return (
     <div className="flex gap-[10px] mt-4 flex-wrap">
       <div className="relative">
@@ -57,7 +57,7 @@ export const EarningsData = ({ earnings, payout, fees, balance, autoPayout, ince
         <DataContainer>
           <>
             <DataItem name="Earnings" value={earnings} />
-            <DataItem name="Incentivized" value={incentivize} />
+            {/* <DataItem name="Incentivized" value={incentivize} /> */}
             <DataItem name="Payouts" value={payout} />
             <DataItem name="Fees" value={fees} />
           </>
