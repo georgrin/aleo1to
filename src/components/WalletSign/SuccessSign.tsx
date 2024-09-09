@@ -2,7 +2,7 @@ import shortenAddress from "../../helpers/shortenAddress";
 import { IconCheckSmall } from "../icons/IconCheckSmall";
 
 const SuccessSign = ({ txid, text }: { txid: string; text?: string }) => (
-  <div className="text-xs">
+  <div className="text-xs w-full">
     <div className="border border-primary rounded flex justify-between items-center w-full py-[10px] pr-[6px] px-4">
       <div className="flex items-center justify-center w-full">
         <span className="mr-1">

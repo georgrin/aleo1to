@@ -47,8 +47,6 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
   const { testnet3, testnet4 } = data;
   const columnsAvailable = (!!testnet3 ? 2 : 0) + (testnet4 ? 1 : 0);
   const [openedIndex, setOpenedIndex] = useState<Array<number>>(!testnet4 ? [0, 1] : [2]);
-  const [type, setType] = useState<"testnet3" | "testnet4" | "combined">();
-  const [claimText, setClaimText] = useState<string>("Claim");
 
   const changeOpenedDropdown = (index: number) => {
     if (columnsAvailable < 3) return;
@@ -62,19 +60,6 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
       setOpenedIndex([...openedIndex, index]);
     }
   };
-
-  useEffect(() => {
-    if (testnet3?.status === TestnetStatus.READY && testnet4?.status === TestnetStatus.READY) {
-      setType("combined");
-      setClaimText("Claim for testnet 3");
-    } else if (testnet3?.status === TestnetStatus.READY) {
-      setType("testnet3");
-      setClaimText(!testnet4 ? "Claim" : "Claim for testnet 3");
-    } else if (testnet4?.status === TestnetStatus.READY) {
-      setType("testnet4");
-      setClaimText(!testnet3 ? "Claim" : "Claim for testnet 4");
-    }
-  }, [data]);
 
   return (
     <>
@@ -98,7 +83,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
             )
           }
           title="Testnet 3 Phase 2"
-          titleRight={`Mainnet rewards: ${testnet3?.total_reward}`}
+          titleRight={`${testnet3?.total_reward}`}
           opened={openedIndex.find((index) => index === 0) !== undefined}
           setOpenedIndex={() => changeOpenedDropdown(0)}
           columnsAvailable={columnsAvailable}
@@ -124,7 +109,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
             )
           }
           title="Validator phase bonus"
-          titleRight={`Your validator phase bonus: ${testnet3?.address_validator_phase_bonus}`}
+          titleRight={`${testnet3?.address_validator_phase_bonus}`}
           opened={!!openedIndex.find((index) => index === 1)}
           setOpenedIndex={() => changeOpenedDropdown(1)}
           columnsAvailable={columnsAvailable}
@@ -145,7 +130,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
             )
           }
           title="Testnet 4"
-          titleRight={`Mainnet rewards: ${testnet4?.total_reward}`}
+          titleRight={`${testnet4?.total_reward}`}
           opened={!!openedIndex.find((index) => index === 2)}
           setOpenedIndex={() => changeOpenedDropdown(2)}
           columnsAvailable={columnsAvailable}
@@ -159,12 +144,12 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
           <WalletSign
             dataToSign={{
               address: address,
-              type: type!,
-              claimText: claimText,
+              testnet3: testnet3?.total_reward || null,
+              testnet4: testnet4?.total_reward || null,
             }}
           />
         ) : (
-          <div className="mt-auto">
+          <div className="mt-auto flex flex-col gap-2 md:flex-row">
             {testnet3?.status === TestnetStatus.REQUESTED && (
               <RequestedSign text={testnet4 ? "Testnet 3 requested" : undefined} />
             )}

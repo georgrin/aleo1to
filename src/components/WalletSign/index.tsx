@@ -14,8 +14,8 @@ import RequestedSign from "./RequestedSign";
 interface Prop {
   dataToSign: {
     address: string;
-    type: "testnet3" | "testnet4" | "combined";
-    claimText: string;
+    testnet3: null | number;
+    testnet4: null | number;
   };
 }
 
@@ -33,7 +33,6 @@ const WalletSign = ({ dataToSign }: Prop) => {
     publicKey,
     disconnectedWalletMsg,
     errorMsg,
-    type,
     claimText,
   } = useWalletSign({
     ...dataToSign,
@@ -41,12 +40,12 @@ const WalletSign = ({ dataToSign }: Prop) => {
 
   const Content = () => {
     if (status === WalletSignStatus.SUCCESS) {
-      if (type === "combined") {
+      if (dataToSign.testnet3 !== null && dataToSign.testnet4 !== null) {
         return (
-          <>
+          <div className="flex flex-col gap-2 md:flex-row">
             <RequestedSign text="Testnet 3 requested" />
             <RequestedSign text="Testnet 4 requested" />
-          </>
+          </div>
         );
       } else {
         return <RequestedSign />;

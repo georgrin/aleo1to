@@ -7,8 +7,8 @@ import { getChallenge, getTestnet4Challenge, testnet3Payout, testnet4Payout } fr
 
 interface Props {
   address: string;
-  type: "testnet3" | "testnet4" | "combined";
-  claimText: string;
+  testnet3: null | number;
+  testnet4: null | number;
 }
 
 export const errorMsgMapping = (code: number) => {
@@ -26,12 +26,13 @@ export const errorMsgMapping = (code: number) => {
   }
 };
 
-export const useWalletSign = ({ address, type, claimText }: Props) => {
+export const useWalletSign = ({ address, testnet3, testnet4 }: Props) => {
   const { publicKey, wallet, wallets, select, connecting, connected, connect, disconnect } = useWallet();
   const base58 = useMemo(() => publicKey?.toString(), [publicKey]);
   const leoWallet = wallets.find((item) => item.adapter.name === "Leo Wallet");
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
   const [errorMsg, setErrorMsg] = useState("");
+  const [claimText, setClaimText] = useState(testnet3 !== null && testnet4 !== null ? "Claim for Testnet 3" : "Claim");
 
   const handleAccountChange = useCallback(async ({ publicKey }: { publicKey: string }) => {
     if (publicKey !== leoWallet?.adapter.publicKey) {
@@ -39,6 +40,18 @@ export const useWalletSign = ({ address, type, claimText }: Props) => {
       connectWallet();
     }
   }, []);
+
+  useEffect(() => {
+    if (testnet3 !== null && testnet4 !== null) {
+      if (testnet3 === 0) {
+        setClaimText("Claim for Testnet 4");
+      } else {
+        setClaimText("Claim for Testnet 3");
+      }
+    } else {
+      setClaimText("Claim");
+    }
+  }, [testnet3, testnet4]);
 
   useEffect(() => {
     // @ts-ignore
@@ -52,7 +65,7 @@ export const useWalletSign = ({ address, type, claimText }: Props) => {
   const sign = async () => {
     if (!publicKey) throw new WalletNotConnectedError();
 
-    if (type === "testnet3") {
+    if (testnet3 && !testnet4) {
       try {
         const challenge = await getChallenge(address);
         const bytes = new TextEncoder().encode(challenge);
@@ -65,7 +78,7 @@ export const useWalletSign = ({ address, type, claimText }: Props) => {
         setSignStatus(WalletSignStatus.ERROR);
         setErrorMsg(errorMsgMapping(error.request.status));
       }
-    } else if (type === "testnet4") {
+    } else if (testnet4 && !testnet3) {
       try {
         const challenge = await getTestnet4Challenge(address);
         const bytes = new TextEncoder().encode(challenge);
@@ -87,6 +100,7 @@ export const useWalletSign = ({ address, type, claimText }: Props) => {
         const signatureTestnet3 = new TextDecoder().decode(signatureBytesTestnet3);
         await testnet3Payout(address, signatureTestnet3);
 
+        setClaimText("Claim for Testnet 4");
         const challenge = await getTestnet4Challenge(address);
         const bytes = new TextEncoder().encode(challenge);
         const signatureBytes = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytes);
@@ -129,7 +143,6 @@ export const useWalletSign = ({ address, type, claimText }: Props) => {
     status: signStatus,
     publicKey,
     errorMsg,
-    type,
     claimText,
     resetStatus: () => setSignStatus(WalletSignStatus.DEFAULT),
   };
