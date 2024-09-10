@@ -11,6 +11,19 @@ export type Testnet3 = {
   total_reward: number;
 };
 
+export type Testnet4 = {
+  status: TestnetStatus;
+  testnet_credits: number;
+  testnet_mainnet_rate: number;
+  total_reward: number;
+  txid: string;
+};
+
+export type TestnetCombined = {
+  testnet3: Testnet3 | null;
+  testnet4: Testnet4 | null;
+};
+
 export type Testnet2 = {
   snapshot_reward: 0;
   status: TestnetStatus;

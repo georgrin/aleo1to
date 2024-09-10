@@ -7,9 +7,10 @@ interface Prop {
   signStatus: WalletSignStatus;
   publicKey: string;
   disconnect: () => void;
+  claimText: string;
 }
 
-const Connected = ({ sign, signStatus, publicKey, disconnect }: Prop) => (
+const Connected = ({ sign, signStatus, publicKey, disconnect, claimText }: Prop) => (
   <div className="text-xs">
     <div className="border-primary rounded flex justify-between items-center w-full py-[6px] pr-[6px] px-4">
       <div className="flex items-center font-medium">
@@ -25,15 +26,12 @@ const Connected = ({ sign, signStatus, publicKey, disconnect }: Prop) => (
     </div>
     <footer className="mt-4 w-full font-extrabold">
       {signStatus === WalletSignStatus.PENDING ? (
-        <button
-          className="w-full bg-aleo-cyan/50 rounded h-[50px] text-black font-bold"
-          onClick={sign}
-        >
+        <button className="w-full bg-aleo-cyan/50 rounded h-[50px] text-black font-bold" onClick={sign}>
           Sign message in your wallet
         </button>
       ) : (
         <button className="w-full btn font-bold" onClick={sign}>
-          Sign
+          {claimText || "claim"}
         </button>
       )}
     </footer>

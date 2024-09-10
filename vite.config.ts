@@ -9,7 +9,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: process.env.VITE_API_URL,
+          target: "https://aleo1.to/api",
           changeOrigin: true,
           timeout: 1000,
           rewrite: (path) => path.replace(/^\/api/, ""),
@@ -21,4 +21,3 @@ export default ({ mode }) => {
     },
   });
 };
-
