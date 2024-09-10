@@ -40,8 +40,7 @@ const TestnetRewards: React.FC = () => {
                 <br />
                 <br />
                 We also promised to distribute 10% of the rewards allocated for the validator phase among Testnet 3 pool
-                participants. Having successfully reached this phase, your bonus is now included in the reward
-                calculations.
+                participants, but Aleo has canceled the rewards for the validator phase.
               </p>
             </div>
           }

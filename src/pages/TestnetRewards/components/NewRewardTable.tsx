@@ -45,8 +45,8 @@ const RewardRow = ({ text, data, main }: { text: string; data: string | number; 
 
 const NewPhaseRewardTable = ({ address, data }: Props) => {
   const { testnet3, testnet4 } = data;
-  const columnsAvailable = (!!testnet3 ? 2 : 0) + (testnet4 ? 1 : 0);
-  const [openedIndex, setOpenedIndex] = useState<Array<number>>(!testnet4 ? [0, 1] : [2]);
+  const columnsAvailable = (!!testnet3 ? 1 : 0) + (testnet4 ? 1 : 0);
+  const [openedIndex, setOpenedIndex] = useState<Array<number>>([0, 1]);
 
   const changeOpenedDropdown = (index: number) => {
     if (columnsAvailable < 3) return;
@@ -88,7 +88,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
           setOpenedIndex={() => changeOpenedDropdown(0)}
           columnsAvailable={columnsAvailable}
         />
-        <DropdownItem
+        {/* <DropdownItem
           data={
             testnet3 && (
               <div>
@@ -113,7 +113,7 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
           opened={!!openedIndex.find((index) => index === 1)}
           setOpenedIndex={() => changeOpenedDropdown(1)}
           columnsAvailable={columnsAvailable}
-        />
+        /> */}
         <DropdownItem
           data={
             testnet4 && (
@@ -131,8 +131,8 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
           }
           title="Testnet 4"
           titleRight={`${testnet4?.total_reward}`}
-          opened={!!openedIndex.find((index) => index === 2)}
-          setOpenedIndex={() => changeOpenedDropdown(2)}
+          opened={!!openedIndex.find((index) => index === 1)}
+          setOpenedIndex={() => changeOpenedDropdown(1)}
           columnsAvailable={columnsAvailable}
         />
         <div className="flex justify-between items-center py-[8px]">
@@ -144,8 +144,8 @@ const NewPhaseRewardTable = ({ address, data }: Props) => {
           <WalletSign
             dataToSign={{
               address: address,
-              testnet3: testnet3?.total_reward || null,
-              testnet4: testnet4?.total_reward || null,
+              testnet3: testnet3?.status === TestnetStatus.READY ? testnet3?.total_reward : null,
+              testnet4: testnet4?.status === TestnetStatus.READY ? testnet4?.total_reward : null,
             }}
           />
         ) : (

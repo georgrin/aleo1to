@@ -33,6 +33,7 @@ export const useWalletSign = ({ address, testnet3, testnet4 }: Props) => {
   const [signStatus, setSignStatus] = useState(WalletSignStatus.DEFAULT);
   const [errorMsg, setErrorMsg] = useState("");
   const [claimText, setClaimText] = useState(testnet3 !== null && testnet4 !== null ? "Claim for Testnet 3" : "Claim");
+  const [testnet3Claimed, setTestnet3Claimed] = useState(false);
 
   const handleAccountChange = useCallback(async ({ publicKey }: { publicKey: string }) => {
     if (publicKey !== leoWallet?.adapter.publicKey) {
@@ -93,14 +94,17 @@ export const useWalletSign = ({ address, testnet3, testnet4 }: Props) => {
       }
     } else {
       try {
-        const challengeTestnet3 = await getChallenge(address);
-        const bytesTestnet3 = new TextEncoder().encode(challengeTestnet3);
-        setSignStatus(WalletSignStatus.PENDING);
-        const signatureBytesTestnet3 = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytesTestnet3);
-        const signatureTestnet3 = new TextDecoder().decode(signatureBytesTestnet3);
-        await testnet3Payout(address, signatureTestnet3);
+        if (!testnet3Claimed) {
+          const challengeTestnet3 = await getChallenge(address);
+          const bytesTestnet3 = new TextEncoder().encode(challengeTestnet3);
+          setSignStatus(WalletSignStatus.PENDING);
+          const signatureBytesTestnet3 = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytesTestnet3);
+          const signatureTestnet3 = new TextDecoder().decode(signatureBytesTestnet3);
+          await testnet3Payout(address, signatureTestnet3);
+          setClaimText("Claim for Testnet 4");
+          setTestnet3Claimed(true);
+        }
 
-        setClaimText("Claim for Testnet 4");
         const challenge = await getTestnet4Challenge(address);
         const bytes = new TextEncoder().encode(challenge);
         const signatureBytes = await (wallet?.adapter as LeoWalletAdapter).signMessage(bytes);
