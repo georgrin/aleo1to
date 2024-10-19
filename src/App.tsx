@@ -46,8 +46,8 @@ function App() {
 
       <WalletProvider
         wallets={wallets}
-        decryptPermission={DecryptPermission.UponRequest}
-        network={WalletAdapterNetwork.TestnetBeta}
+        decryptPermission={DecryptPermission.NoDecrypt}
+        network={WalletAdapterNetwork.MainnetBeta}
       >
         <WalletModalProvider>
           <SnackbarProvider>{renderComponent()}</SnackbarProvider>

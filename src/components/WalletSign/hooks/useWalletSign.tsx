@@ -120,7 +120,7 @@ export const useWalletSign = ({ address, testnet3, testnet4 }: Props) => {
   };
 
   const connectWallet = () => {
-    connect(DecryptPermission.NoDecrypt, WalletAdapterNetwork.TestnetBeta, []).catch((error) => {
+    connect(DecryptPermission.NoDecrypt, WalletAdapterNetwork.MainnetBeta, []).catch((error) => {
       console.log("connectWallet error", { error: error });
     });
   };

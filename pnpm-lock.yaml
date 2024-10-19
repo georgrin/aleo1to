@@ -15,14 +15,14 @@ importers:
         specifier: ^0.0.22
         version: 0.0.22
       '@demox-labs/aleo-wallet-adapter-leo':
-        specifier: ^0.0.22
-        version: 0.0.22
+        specifier: ^0.0.24
+        version: 0.0.24
       '@demox-labs/aleo-wallet-adapter-react':
         specifier: ^0.0.21
         version: 0.0.21(react@18.2.0)
       '@demox-labs/aleo-wallet-adapter-reactui':
-        specifier: ^0.0.34
-        version: 0.0.34(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.0.35
+        version: 0.0.35(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@sentry/react':
         specifier: ^7.49.0
         version: 7.100.1(react@18.2.0)
@@ -210,16 +210,16 @@ packages:
   '@demox-labs/aleo-wallet-adapter-base@0.0.22':
     resolution: {integrity: sha512-6xkfiovSCb+vNf6xEBFOr0vzlktztZgOcgbTvbAK9BkQ+NyEfz0+PVa9iMF/4eJjN3dxFmEyiWvECl/HLbnSZQ==}
 
-  '@demox-labs/aleo-wallet-adapter-leo@0.0.22':
-    resolution: {integrity: sha512-Am1J+n0VQSdv5Fff68jno1zaNp/xA/YE5ivoCuJrkmM73BT+FG7WDS3nOwwNsbHR3HviBCxBksXDP2pA33BA8A==}
+  '@demox-labs/aleo-wallet-adapter-leo@0.0.24':
+    resolution: {integrity: sha512-P43XO34sxae9ipD/p0dkCQVDkfh5dD0NwaMmy3MpO7IGYmu0mW6Rls/Jne9L8jGHwavERRSinJAs3y0mybczow==}
 
   '@demox-labs/aleo-wallet-adapter-react@0.0.21':
     resolution: {integrity: sha512-EWRvcsPA9Pzr8XIl2fjNX+JibO2m8XNoVtRk6WLUOTTU93KI7peR09XyXSBiroVruafIclQtgQ+g7ZYD6QPUAg==}
     peerDependencies:
       react: ^18.2.0
 
-  '@demox-labs/aleo-wallet-adapter-reactui@0.0.34':
-    resolution: {integrity: sha512-xxerT9z6Z95Xk0FMyiRErYRK0SazXZW1DZGttazLp2miwDXJ+/rFNP07fXDVibVMwZiujnZdjDwu1yPGOCeOVQ==}
+  '@demox-labs/aleo-wallet-adapter-reactui@0.0.35':
+    resolution: {integrity: sha512-RtGFams66suW6mchePmAQZwoTRewNFJGgiktqh/ZI+bso+VKI/c3eNZ+opZFNO/cRAuHZHGcafkhcBihbMqWvA==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -2372,7 +2372,7 @@ snapshots:
     dependencies:
       eventemitter3: 4.0.7
 
-  '@demox-labs/aleo-wallet-adapter-leo@0.0.22':
+  '@demox-labs/aleo-wallet-adapter-leo@0.0.24':
     dependencies:
       '@demox-labs/aleo-wallet-adapter-base': 0.0.21
       nanoid: 4.0.2
@@ -2382,7 +2382,7 @@ snapshots:
       '@demox-labs/aleo-wallet-adapter-base': 0.0.22
       react: 18.2.0
 
-  '@demox-labs/aleo-wallet-adapter-reactui@0.0.34(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@demox-labs/aleo-wallet-adapter-reactui@0.0.35(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@demox-labs/aleo-wallet-adapter-base': 0.0.22
       '@demox-labs/aleo-wallet-adapter-react': 0.0.21(react@18.2.0)
