@@ -53,7 +53,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
             }
           >
             <p>{ip}</p>
-            <p className="text-grey col-span-2 ov mr-4">{hostname}</p>
+            <p className="text-grey col-span-2 overflow-scroll mr-4">{hostname}</p>
             <div className="col-span-4">
               <div className="flex">
                 <span className="text-grey font-extrabold flex">
@@ -66,17 +66,20 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   {hardware.cpu?.[0].cores > 1 ? "cores" : "core"})
                 </span>
               </div>
-              {hardware.gpu.length > 0 &&
-                groupByModel(hardware.gpu).map((model) => (
-                  <div className="pt-[2px] flex">
-                    <span className="text-grey font-extrabold flex">
-                      <IconGPU />
-                      &nbsp;GPU:&nbsp;
-                    </span>
-                    {model.length}&nbsp;x&nbsp;
-                    {model?.[0]?.model}
-                  </div>
-                ))}
+              {hardware.gpu.length > 0 && (
+                <div className="pt-[2px] flex">
+                  <span className="text-grey font-extrabold flex">
+                    <IconGPU />
+                    &nbsp;GPU:&nbsp;
+                  </span>
+                  {groupByModel(hardware.gpu).map((model) => (
+                    <div className="flex flex-col gap-[2px]">
+                      {model.length}&nbsp;x&nbsp;
+                      {model?.[0]?.model}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <p>{params.cuda_version}</p>
             <p>{params.version}</p>
