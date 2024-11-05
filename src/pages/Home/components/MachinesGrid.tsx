@@ -54,7 +54,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
           >
             <p>{ip}</p>
             <p
-              className="text-grey col-span-2 overflow-x-scroll mr-4 
+              className="text-grey col-span-2 overflow-x-auto mr-4 
             
             [&::-webkit-scrollbar]:w-1
             [&::-webkit-scrollbar]:h-1
@@ -85,12 +85,14 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                     <IconGPU />
                     &nbsp;GPU:&nbsp;
                   </span>
-                  {groupByModel(hardware.gpu).map((model) => (
-                    <div className="flex flex-col gap-[2px]">
-                      {model.length}&nbsp;x&nbsp;
-                      {model?.[0]?.model}
-                    </div>
-                  ))}
+                  <div className="flex flex-col gap-[2px]">
+                    {groupByModel(hardware.gpu).map((model) => (
+                      <span>
+                        {model.length}&nbsp;x&nbsp;
+                        {model?.[0]?.model}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
