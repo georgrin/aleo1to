@@ -7,14 +7,8 @@ import Chart from "chart.js/auto";
 
 export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
   const [openedStat, setOpenedStat] = useState<null | string>(null);
-  const lightningIcon = renderLightningIcon(
-    `bg-[rgb(0,255,240)]`,
-    `lightning-icon`
-  );
-  const lightning2Icon = renderLightningIcon(
-    `bg-[rgba(0,133,255,0.1)]`,
-    `lightning-2-icon`
-  );
+  const lightningIcon = renderLightningIcon(`bg-[rgb(0,255,240)]`, `lightning-icon`);
+  const lightning2Icon = renderLightningIcon(`bg-[rgba(0,133,255,0.1)]`, `lightning-2-icon`);
   const chartRef = useRef<null | HTMLCanvasElement>(null);
   const [chart, setChart] = useState<null | Chart>(null);
 
@@ -78,12 +72,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
                   const str = (value as number).toFixed(0);
                   const k = Math.floor((str.length - 1) / 3);
                   if (str.slice(-k * 3, -k * 3 + 1) !== "0") {
-                    return (
-                      str.slice(0, -k * 3) +
-                      "." +
-                      str.slice(-k * 3, -k * 3 + 1) +
-                      Array(k).fill("k").join("")
-                    );
+                    return str.slice(0, -k * 3) + "." + str.slice(-k * 3, -k * 3 + 1) + Array(k).fill("k").join("");
                   }
                   return str.slice(0, -k * 3) + Array(k).fill("k").join("");
                 },
@@ -113,12 +102,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
       });
       setChart(chart);
       function resize() {
-        const gradient = ctx?.createLinearGradient(
-          0,
-          0,
-          chartRef.current!.clientWidth,
-          1
-        );
+        const gradient = ctx?.createLinearGradient(0, 0, chartRef.current!.clientWidth, 1);
         gradient?.addColorStop(0, "rgba(0, 255, 171, 0.2)");
         gradient?.addColorStop(0.7, "rgba(0, 117, 255, 0.15)");
         gradient?.addColorStop(1, "rgba(0, 117, 255, 0.15)");
@@ -156,7 +140,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           {renderItem({
             id: "hashrate_network",
             title: "Network Speed",
-            value: `${formatNumber(info.hashrate.network)} c/s`,
+            value: `${formatNumber(Math.floor(info.hashrate.network / 1000))} Gc/s`,
           })}
           {renderItem({
             id: "miners_active",
@@ -166,7 +150,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           {renderItem({
             id: "hashrate_total",
             title: "Pool Speed",
-            value: `${formatNumber(info.hashrate.total)} c/s`,
+            value: `${formatNumber(Math.floor(Number(info.hashrate.total / 1000)))} Gc/s`,
           })}
           {renderItem({
             id: "pool_fee",
@@ -188,12 +172,8 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
               </div>
               {(openedStat === "hashrate_pool_estimated" ||
                 openedStat === "hashrate_solo_estimated" ||
-                openedStat === "hashrate_network") && (
-                <div className="text-default font-medium">c/s</div>
-              )}
-              {openedStat === "balance_pool" && (
-                <div className="text-default font-medium">Credits</div>
-              )}
+                openedStat === "hashrate_network") && <div className="text-default font-medium">c/s</div>}
+              {openedStat === "balance_pool" && <div className="text-default font-medium">Credits</div>}
             </div>
             <canvas
               ref={chartRef}
@@ -218,12 +198,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
 
   function renderLightningIcon(bg: string, icon: string) {
     return (
-      <div
-        className={
-          "flex w-5 h-5 ml-2 rounded-[5px] items-center justify-center" +
-          ` ${bg}`
-        }
-      >
+      <div className={"flex w-5 h-5 ml-2 rounded-[5px] items-center justify-center" + ` ${bg}`}>
         <i className={"icon block w-[12px] h-[8px]" + ` ${icon}`}></i>
       </div>
     );
@@ -239,19 +214,13 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
       >
         <div className="flex items-center text-default text-md font-medium">
           {props.title}
-          {(props.id === "hashrate_total" ||
-            props.id === "hashrate_network") && (
-            <div
-              className="cursor-pointer"
-              onClick={(e) => openStatGraph(props.id)}
-            >
+          {(props.id === "hashrate_total" || props.id === "hashrate_network") && (
+            <div className="cursor-pointer" onClick={(e) => openStatGraph(props.id)}>
               {openedStat === props.id ? lightningIcon : lightning2Icon}
             </div>
           )}
         </div>
-        <div className="flex items-center text-[22px] font-medium mt-[6px]">
-          {props.value}
-        </div>
+        <div className="flex items-center text-[22px] font-medium mt-[6px]">{props.value}</div>
       </div>
     );
   }

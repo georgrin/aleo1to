@@ -70,8 +70,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         <>
           <MachinesData
             count={machines.general_info.active}
-            estimated={n(machines.general_info.total_estimated_hashrate)}
-            reported={n(machines.general_info.total_reported_hashrate)}
+            estimated={n(Math.floor(machines.general_info.total_estimated_hashrate / 1000))}
+            reported={n(Math.floor(machines.general_info.total_reported_hashrate / 1000))}
           />
           <MachinesGrid machines={machines.machines} />
         </>

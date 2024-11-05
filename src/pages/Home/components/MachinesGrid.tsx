@@ -11,6 +11,19 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
     data: machines,
   });
 
+  type GPU = { model: string };
+
+  function groupByModel(gpu: GPU[]): GPU[][] {
+    return Object.values(
+      gpu.reduce((acc: { [key: string]: GPU[] }, item: GPU) => {
+        const key = item.model;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(item);
+        return acc;
+      }, {})
+    );
+  }
+
   return (
     <>
       <div className="font-default sm:mx-[-24px] mx-[-10px] mt-[20px] overflow-x-auto overflow-y-hidden">
@@ -40,7 +53,7 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
             }
           >
             <p>{ip}</p>
-            <p className="text-grey col-span-2">{hostname}</p>
+            <p className="text-grey col-span-2 ov mr-4">{hostname}</p>
             <div className="col-span-4">
               <div className="flex">
                 <span className="text-grey font-extrabold flex">
@@ -53,16 +66,17 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                   {hardware.cpu?.[0].cores > 1 ? "cores" : "core"})
                 </span>
               </div>
-              {hardware.gpu.length > 0 && (
-                <div className="pt-[2px] flex">
-                  <span className="text-grey font-extrabold flex">
-                    <IconGPU />
-                    &nbsp;GPU:&nbsp;
-                  </span>
-                  {hardware.gpu.length}&nbsp;x&nbsp;
-                  {hardware.gpu?.[0]?.model}
-                </div>
-              )}
+              {hardware.gpu.length > 0 &&
+                groupByModel(hardware.gpu).map((model) => (
+                  <div className="pt-[2px] flex">
+                    <span className="text-grey font-extrabold flex">
+                      <IconGPU />
+                      &nbsp;GPU:&nbsp;
+                    </span>
+                    {model.length}&nbsp;x&nbsp;
+                    {model?.[0]?.model}
+                  </div>
+                ))}
             </div>
             <p>{params.cuda_version}</p>
             <p>{params.version}</p>

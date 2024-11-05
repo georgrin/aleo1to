@@ -87,8 +87,8 @@ export const MachinesData = ({ count, estimated, reported }: MachinesDataProps) 
       <DataContainer>
         <>
           <DataItem name="Count" value={count} />
-          <DataItem name="Estimated speed, c/s" value={estimated} />
-          <DataItem name="Reported speed, c/s" value={reported} />
+          <DataItem name="Estimated speed, Gc/s" value={estimated} />
+          <DataItem name="Reported speed, Gc/s" value={reported} />
         </>
       </DataContainer>
     </div>
