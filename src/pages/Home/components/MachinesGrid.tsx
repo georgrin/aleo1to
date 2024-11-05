@@ -53,7 +53,19 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
             }
           >
             <p>{ip}</p>
-            <p className="text-grey col-span-2 overflow-scroll mr-4">{hostname}</p>
+            <p
+              className="text-grey col-span-2 overflow-x-scroll mr-4 
+            
+            [&::-webkit-scrollbar]:w-2
+            [&::-webkit-scrollbar]:h-2
+          [&::-webkit-scrollbar-track]:bg-gray-100
+          [&::-webkit-scrollbar-thumb]:bg-gray-300
+          dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+          dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500
+            "
+            >
+              {hostname}
+            </p>
             <div className="col-span-4">
               <div className="flex">
                 <span className="text-grey font-extrabold flex">
