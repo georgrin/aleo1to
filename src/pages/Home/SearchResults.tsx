@@ -7,6 +7,7 @@ import EarningsGrid from "./components/Earnings/EarningsGrid";
 import { numberFormat as n } from "../../helpers/numbers";
 import MachinesGrid from "./components/MachinesGrid";
 import { setExtra } from "@sentry/react";
+import { toGigaNumber } from "../../formatNumber";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
@@ -70,8 +71,8 @@ function SearchResult({ searchResult, deleteSearchResult }: SearchResultProps) {
         <>
           <MachinesData
             count={machines.general_info.active}
-            estimated={n(Math.floor(machines.general_info.total_estimated_hashrate / 1000))}
-            reported={n(Math.floor(machines.general_info.total_reported_hashrate / 1000))}
+            estimated={n(toGigaNumber(machines.general_info.total_estimated_hashrate))}
+            reported={n(toGigaNumber(machines.general_info.total_reported_hashrate))}
           />
           <MachinesGrid machines={machines.machines} />
         </>

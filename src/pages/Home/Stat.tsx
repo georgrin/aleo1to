@@ -1,7 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { formatNumber } from "../../formatNumber";
-import { MdInfoOutline } from "react-icons/md";
-import { Tooltip } from "react-tooltip";
+import { formatNumber, toGigaNumber } from "../../formatNumber";
 // TODO: Add dynamic load
 import Chart from "chart.js/auto";
 
@@ -140,7 +138,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           {renderItem({
             id: "hashrate_network",
             title: "Network Speed",
-            value: `${formatNumber(Math.floor(info.hashrate.network / 1000))} Gc/s`,
+            value: `${formatNumber(toGigaNumber(info.hashrate.network))} Gc/s`,
           })}
           {renderItem({
             id: "miners_active",
@@ -150,7 +148,7 @@ export const Stat = ({ info, historyInfo, updateHistoryInfo }: any) => {
           {renderItem({
             id: "hashrate_total",
             title: "Pool Speed",
-            value: `${formatNumber(Math.floor(Number(info.hashrate.total / 1000)))} Gc/s`,
+            value: `${formatNumber(toGigaNumber(info.hashrate.total))} Gc/s`,
           })}
           {renderItem({
             id: "pool_fee",
