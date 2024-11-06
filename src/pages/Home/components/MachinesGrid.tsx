@@ -11,6 +11,19 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
     data: machines,
   });
 
+  type GPU = { model: string };
+
+  function groupByModel(gpu: GPU[]): GPU[][] {
+    return Object.values(
+      gpu.reduce((acc: { [key: string]: GPU[] }, item: GPU) => {
+        const key = item.model;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(item);
+        return acc;
+      }, {})
+    );
+  }
+
   return (
     <>
       <div className="font-default sm:mx-[-24px] mx-[-10px] mt-[20px] overflow-x-auto overflow-y-hidden">
@@ -40,7 +53,20 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
             }
           >
             <p>{ip}</p>
-            <p className="text-grey col-span-2">{hostname}</p>
+            <p
+              className="text-grey col-span-2 overflow-x-auto mr-4 
+            
+            [&::-webkit-scrollbar]:w-1
+            [&::-webkit-scrollbar]:h-1
+          [&::-webkit-scrollbar-track]:bg-gray-100
+          [&::-webkit-scrollbar-thumb]:bg-gray-300
+          dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+          dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500
+            [&::-webkit-scrollbar-track]:rounded-md
+            "
+            >
+              {hostname}
+            </p>
             <div className="col-span-4">
               <div className="flex">
                 <span className="text-grey font-extrabold flex">
@@ -59,8 +85,14 @@ const MachinesGrid = ({ machines }: { machines: Machines[] }) => {
                     <IconGPU />
                     &nbsp;GPU:&nbsp;
                   </span>
-                  {hardware.gpu.length}&nbsp;x&nbsp;
-                  {hardware.gpu?.[0]?.model}
+                  <div className="flex flex-col gap-[2px]">
+                    {groupByModel(hardware.gpu).map((model) => (
+                      <span>
+                        {model.length}&nbsp;x&nbsp;
+                        {model?.[0]?.model}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
