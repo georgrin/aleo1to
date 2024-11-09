@@ -12,9 +12,7 @@ const HISTORY_UPDATE_INTERVAL = 1000 * 60 * 5;
 
 const useSearch = () => {
   const [info, setInfo] = useState<any>(null);
-  const [historyInfo, setHistoryInfo] = useState<
-    api.IGetHistoryInfoResponse[] | null
-  >(null);
+  const [historyInfo, setHistoryInfo] = useState<api.IGetHistoryInfoResponse[] | null>(null);
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const { showSnackbar } = useSnackbar();
 
@@ -27,9 +25,7 @@ const useSearch = () => {
 
   const searchAddresses = loadSearchAddresses();
 
-  const addressFromGet = new URL(window.location.href).searchParams.get(
-    "address"
-  );
+  const addressFromGet = new URL(window.location.href).searchParams.get("address");
 
   useEffect(() => {
     const searchUpdate = () => {
@@ -69,9 +65,7 @@ const useSearch = () => {
     if (addressFromGet) {
       if (searchAddresses.length === searchResults.length) {
         if (searchAddresses.includes(addressFromGet)) {
-          const index = searchResults.findIndex(
-            (result) => result.address === addressFromGet
-          );
+          const index = searchResults.findIndex((result) => result.address === addressFromGet);
           if (index >= 1) {
             const data = searchResults[index];
             searchResults.splice(index, 1);
@@ -93,10 +87,7 @@ const useSearch = () => {
   }
 
   function saveSearchAddresses() {
-    setCookie(
-      "searchAddresses",
-      encodeURIComponent(JSON.stringify(searchAddresses))
-    );
+    setCookie("searchAddresses", encodeURIComponent(JSON.stringify(searchAddresses)));
   }
 
   async function updateInfo() {
@@ -160,7 +151,7 @@ const useSearch = () => {
   }
 
   function searchAddress(address: string) {
-    const lowerAddress = address.toLowerCase();
+    const lowerAddress = address.toLowerCase().replace(/\s+/g, "");
     if (searchResults.find((result) => result.address === address)) {
       return;
     }
@@ -196,14 +187,10 @@ const useSearch = () => {
           };
 
           setSearchResults((results) => {
-            if (
-              results.findIndex((item) => item.address === result.address) < 0
-            ) {
+            if (results.findIndex((item) => item.address === result.address) < 0) {
               return [result, ...results];
             } else {
-              const index = results.findIndex(
-                (item) => item.address === result.address
-              );
+              const index = results.findIndex((item) => item.address === result.address);
               const newResult = { ...results[index], data };
               results[index] = { ...newResult };
 
@@ -214,21 +201,15 @@ const useSearch = () => {
         .catch((error) => {
           if (error?.response?.status === 500) {
             setJoinPoolIsDown(false);
-            setJoinPoolCommand(
-              `curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`
-            );
+            setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
             loadingBarRef.current?.complete();
 
-            deleteSearchResult({ address, data: null });
+            // deleteSearchResult({ address, data: null });
             return;
           }
 
-          showSnackbar(
-            `Error getting ${shortenAddress(address)}, try again later`
-          );
-          const index = searchAddresses.findIndex(
-            (address) => address === address
-          );
+          showSnackbar(`Error getting ${shortenAddress(address)}, try again later`);
+          const index = searchAddresses.findIndex((address) => address === address);
           if (index >= 0) {
             searchAddresses.splice(index, 1);
             saveSearchAddresses();
@@ -272,6 +253,7 @@ const useSearch = () => {
     searchAddress,
     searchResults,
     deleteSearchResult,
+    searchAddresses,
   };
 };
 

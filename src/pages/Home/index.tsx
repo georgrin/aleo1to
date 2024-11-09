@@ -17,6 +17,7 @@ const HomePage = () => {
     searchResults,
     deleteSearchResult,
     loadingBarRef,
+    searchAddresses,
   } = useSearch();
 
   if (!info) return null;
@@ -32,22 +33,14 @@ const HomePage = () => {
 
   return (
     <>
-      <LoadingBar
-        color="rgba(0,117,255,1)"
-        height={4}
-        shadow
-        ref={loadingBarRef}
-      />
+      <LoadingBar color="rgba(0,117,255,1)" height={4} shadow ref={loadingBarRef} />
       <div className="min-h-[100vh] pt-[68px] sm:pt-[56px] pb-[10px] overflow-x-hidden">
-        <Stat
-          info={info}
-          historyInfo={historyInfo}
-          updateHistoryInfo={updateHistoryInfo}
-        />
+        <Stat info={info} historyInfo={historyInfo} updateHistoryInfo={updateHistoryInfo} />
         <Search search={searchAddress} />
         {!joinPoolIsDown && joinPool}
         <SearchResults
           searchResults={searchResults}
+          searchAddresses={searchAddresses}
           deleteSearchResult={deleteSearchResult}
         />
         {joinPoolIsDown && joinPool}

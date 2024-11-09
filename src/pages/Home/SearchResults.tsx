@@ -6,16 +6,48 @@ import { EarningsData, EarningsMinersToggle, MachinesData } from "./components/T
 import EarningsGrid from "./components/Earnings/EarningsGrid";
 import { numberFormat as n } from "../../helpers/numbers";
 import MachinesGrid from "./components/MachinesGrid";
-import { setExtra } from "@sentry/react";
 import { toGigaNumber } from "../../formatNumber";
 
 interface SearchResultsProps {
   searchResults: model.SearchResult[];
   deleteSearchResult: Function;
+  searchAddresses: string[];
 }
-export const SearchResults = ({ searchResults, deleteSearchResult }: SearchResultsProps) => {
+export const SearchResults = ({ searchResults, deleteSearchResult, searchAddresses }: SearchResultsProps) => {
+  console.log(searchResults);
+
   return (
     <div className="container font-secondary relative overflow-hidden">
+      {searchAddresses.map((address, index) => {
+        if (searchResults.find((result) => result.address === address)) {
+          return null;
+        } else {
+          return (
+            <div className="px-3 pt-3 sm:px-6 sm:pt-6 top-line bg-surface font-medium">
+              <div className="flex justify-between items-center gap-4">
+                <div className="md:w-[728px] flex justify-between flex-wrap px-4 py-1.5 gap-4 bg-primary-2 group-[:nth-of-type(2n)]/search-result:bg-secondary-2 outline-none rounded-[5px]">
+                  <div className="font-medium mb-[-8px]">
+                    <span className="hidden md:block">{address}</span>
+                    <span className="md:hidden">{address.slice(0, 10) + "..." + address.slice(-10)}</span>
+                  </div>
+                  <div
+                    className="relative flex items-center cursor-pointer"
+                    onClick={() => navigator.clipboard.writeText(address)}
+                  >
+                    <div className="w-[20px] h-[20px] icon copy-blue-icon group-[:nth-of-type(2n)]/search-result:copy-green-icon"></div>
+                    <span className="ml-4 text-primary group-[:nth-of-type(2n)]/search-result:text-secondary font-medium">
+                      Copy
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center flex-col flex-1 justify-center py-10">
+                <span className="loader-big"></span>
+              </div>
+            </div>
+          );
+        }
+      })}
       {searchResults.map((result, index) => (
         <SearchResult key={result.address + index} searchResult={result} deleteSearchResult={deleteSearchResult} />
       ))}
