@@ -204,7 +204,7 @@ const useSearch = () => {
             setJoinPoolCommand(`curl -sSf -L https://1to.sh/join | sudo sh -s -- ${address}`);
             loadingBarRef.current?.complete();
 
-            deleteSearchResult({ address, data: null });
+            // deleteSearchResult({ address, data: null });
             return;
           }
 
@@ -253,6 +253,7 @@ const useSearch = () => {
     searchAddress,
     searchResults,
     deleteSearchResult,
+    searchAddresses,
   };
 };
 
